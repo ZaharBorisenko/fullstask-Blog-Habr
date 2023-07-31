@@ -7,3 +7,7 @@ export const registerValid = [
     body('email', 'Некорректная почта').isEmail(),
     body('password','Пароль должен состоять минимум из 5 символов').isLength({min:5}),
 ]
+export const loginValid = [
+    body('email', 'Некорректная почта').isEmail(),
+    body('password','Пароль должен состоять минимум из 5 символов').isLength({min:5}),
+]
