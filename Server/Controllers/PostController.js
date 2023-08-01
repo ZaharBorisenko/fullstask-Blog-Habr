@@ -55,3 +55,60 @@ export const create = async (req, res) => {
         })
     }
 }
+
+export const remove = async (req, res) => {
+    try {
+        const postId = req.params.id;
+
+        const deletedPost = await PostModel.findOneAndDelete(
+            { _id: postId }
+        );
+
+        if (!deletedPost) {
+            return res.status(404).json({
+                message: 'Статья с указанным ID не найдена'
+            });
+        }
+
+        res.json({
+            message: 'Статья успешно удалена',
+            deletedPost
+        });
+
+
+    } catch (e) {
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось удалить статью'
+        })
+    }
+}
+
+export const update = async (req, res) => {
+    const data = req.body;
+    try {
+        const postId = req.params.id;
+
+        await PostModel.updateOne(
+            {_id: postId},
+            {
+                title: data.title,
+                text: data.text,
+                tags: data.tags,
+                imagePost: data.imagePost,
+                keywords: data.keywords,
+                user: data.userId
+            }
+        )
+
+        res.json({
+            answer: true
+        });
+
+    }catch (e) {
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось обновить статью'
+        })
+    }
+}

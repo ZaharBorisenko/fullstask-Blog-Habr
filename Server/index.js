@@ -3,8 +3,10 @@ import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
 import {login, profile, register} from "./Controllers/UserController.js";
-import {create, getAll, getOnePost} from "./Controllers/PostController.js";
-import {createPostValidation} from "./validation/post.js";
+import {create, getAll, getOnePost, remove, update} from "./Controllers/PostController.js";
+import {createPostValidation, updatePostValidation} from "./validation/post.js";
+import multer from 'multer'
+import validationErrors from "./middleware/validationErrors.js";
 
 const app = express();
 app.use(express.json());
@@ -12,19 +14,31 @@ mongoose.connect('mongodb+srv://ZaharWeb:3660253zahar@cluster0.rnt64hw.mongodb.n
     .then(() => console.log('connect'))
     .catch((e) => console.log(`error ${e}`))
 
-//запросы на сервер req - принимаем данные,res отправляем данные
+//=== загрузка картинок на сервер.
+app.use('/uploads',express.static('uploads'))
+
+const storage = multer.diskStorage({
+    destination: (_, __, cb) => cb(null, 'uploads'),
+    filename: (_, file, cb) => cb(null, file.originalname)
+});
+const upload = multer({ storage })
+app.post('/upload', checkAuth, upload.single('image'),(req,res) => {
+    res.json({
+        url: `uploads/${req.file.originalname}`
+    })
+});
+
 //РЕГИСТРАЦИЯ
-app.post('/register', registerValid, register)
-app.post('/login', loginValid, login);
+app.post('/register', registerValid, validationErrors  , register)
+app.post('/login', loginValid,validationErrors , login);
 app.get('/profile', checkAuth, profile)
 
 //ПОСТЫ
 app.get('/posts', getAll)
 app.get('/posts/:id', getOnePost)
-app.post('/posts',checkAuth,createPostValidation, create)
-// app.delete('/posts', delete)
-//app.patch('/posts', update)
-
+app.post('/posts',checkAuth,createPostValidation,validationErrors , create)
+app.delete('/posts/:id', checkAuth, remove)
+app.patch('/posts/:id', checkAuth, updatePostValidation,validationErrors, update)
 
 
 

@@ -4,14 +4,8 @@ import Users from "../Models/User.js";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
+    const data = req.body;
     try {
-
-        const errors = validationResult(req);
-        const data = req.body;
-
-        if (!errors.isEmpty()) {
-            return res.status(400).json(errors.array())
-        }
 
         const password = data.password;
         const salt = await bcrypt.genSalt(10);
