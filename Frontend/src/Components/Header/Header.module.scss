@@ -1,0 +1,67 @@
+.header{
+  position: sticky;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+  -moz-box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+  box-shadow: 0px 5px 5px -5px rgba(34, 60, 80, 0.6);
+
+
+}
+.container{
+  height: 65px;
+  max-width: 1100px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+}
+.info{
+  display: flex;
+  align-items: baseline;
+  gap: 0 50px;
+}
+
+.authorization{
+  display: flex;
+  align-items: center;
+  gap: 0 30px;
+}
+
+.logo{
+  text-decoration: none;
+  color: #000;
+  font-size: 26px;
+  font-weight: 500;
+  font-family: 'Roboto Slab', serif;
+}
+.author{
+  padding: 6px 8px;
+  border:1px solid #6f7577;
+  border-radius: 3px;
+  text-decoration: none;
+  color: #ff0028;
+  font-size: 18px;
+  letter-spacing: .0125rem;
+}
+.authorizationLinkContainer{
+  position: relative;
+  cursor: pointer;
+}
+.correction{
+  cursor: pointer;
+}
+.profileIcon{
+  width: 40px;
+}
+
+.addPost{
+  padding: 6px 8px;
+  border-radius: 3px;
+  text-decoration: none;
+  font-size: 18px;
+  letter-spacing: .0125rem;
+  background-color: #1132ff;
+  color: #fff;
+}

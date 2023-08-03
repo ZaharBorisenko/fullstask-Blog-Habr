@@ -1,0 +1,103 @@
+//#737373 img 740 na 417
+
+.post{
+  margin-top: 100px;
+  max-width: 73%;
+
+  -webkit-box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+}
+.container{
+  padding: 15px 20px;
+}
+.user{
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
+  margin-bottom: 10px;
+}
+.avatar{
+  border-radius: 10px;
+  width: 26px;
+  height: 26px;
+}
+.name{
+  font-weight: 600;
+  font-size: 16px;
+}
+.timeAgo{
+  font-size: 16px;
+  color: #909090;
+}
+
+.title{
+  font-weight: 500;
+  font-size: 20px;
+  color: #548eaa;
+  text-decoration: none;
+}
+
+
+.info{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 0 15px;
+  margin-bottom: 10px;
+}
+.readingTime, .viewCount{
+  display: flex;
+  align-items: center;
+  gap: 0 8px;
+  img{
+    width: 20px;
+  }
+  div{
+    color: #929ca5;
+    font-size: 16px;
+    font-weight: 500;
+  }
+}
+
+.keywords{
+  margin-bottom: 15px;
+  span{
+    cursor: pointer;
+    color: #6f7577;
+    font-size: 14px;
+  }
+}
+
+.img{
+  max-width: 740px;
+  max-height: 417px;
+}
+
+.text{
+  margin-top: 15px;
+  font-size: 16px;
+  color: #333;
+  line-height: 1.5rem;
+  margin-bottom: 30px;
+}
+
+.button{
+  color: #548eaa;
+  cursor: pointer;
+  font-size: 13px;
+  text-decoration: none;
+  padding: 10px 13px;
+  border: 1px solid #007aff;
+  border-radius: 3px;
+}
+
+.items{
+  margin-top: 30px;
+}
+.item{
+  display: flex;
+  align-items: center;
+  gap: 0 8px;
+}
