@@ -3,8 +3,21 @@ import PostModel from "../Models/Post.js";
 
 export const getAll = async (req, res) => {
     try {
-        const posts = await PostModel.find().populate('user').exec();
+        const posts = await PostModel.find().populate('user').sort({createdAt: -1}).exec();
         res.json(posts)
+    } catch (e) {
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось получить статьи'
+        })
+    }
+}
+
+
+export const getPopularity = async (req, res) => {
+    try {
+        const postsPopularity = await PostModel.find().sort({ viewCount: -1 }).limit(3).exec();
+        res.json(postsPopularity)
     } catch (e) {
         console.log(e)
         res.status(403).json({

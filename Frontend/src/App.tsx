@@ -7,6 +7,7 @@ import Profile from "./Pages/Auth/Profile/Profile";
 import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
 import AddPost from "./Pages/AddPost/AddPost";
+import PostDetails from "./Pages/PostDetails/PostDetails";
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
            <div>
                <Routes>
                    <Route path="/" element={<Home/>}/>
+                   <Route path="/posts/:id" element={<PostDetails/>}/>
                    <Route path="/start" element={<BecomeAuthor/>}/>
                    <Route path="/profile" element={<Profile/>}/>
                    <Route path="/register" element={<Register/>}/>

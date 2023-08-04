@@ -1,35 +1,45 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
 import axios from "axios";
 
-// type array = string[];
-//
-// type Post = {
-//     id: string,
-//     title:string,
-//     text: string,
-//     tags: array,
-//     keywords:array,
-//     imagePost: string,
-//     difficultyLevel: string,
-//     viewCount: number,
-//     readingTime: number,
-//     user: {},
-// }
-// type postState = {
-//     posts: Post[]
-//     status: string,
-// }
-// const initialState: postState = {
-//     posts: [],
-//     status: ''
-// }
-
-const initialState = {
-    posts: [],
-    status: ''
+export interface User {
+    avatar: string,
+    createdAt?: string;
+    email: string;
+    nickName: string;
+    passwordHash?: string;
+    updatedAt?: string;
+    __v?: number;
+    _id: string;
 }
 
-export const fetchPost = createAsyncThunk(
+export interface PostType {
+    createdAt?: string;
+    difficultyLevel: string;
+    imagePost: string;
+    keywords: string[];
+    readingTime: number;
+    tags: string[];
+    text: string;
+    title: string;
+    updatedAt?: string;
+    user: User;
+    viewCount: number;
+    __v?: number;
+    _id: string;
+}
+
+ type postState = {
+    posts: PostType[]
+    status: string,
+
+}
+const initialState: postState = {
+    posts: [],
+    status: '',
+}
+
+
+export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
     'posts/fetchPost',
     async () => {
         const {data}  = await axios.get('http://localhost:4000/posts')
@@ -46,15 +56,15 @@ const postSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchPost.pending, (state:Draft<any>) => {
+            .addCase(fetchPost.pending, (state:Draft<postState>) => {
                 state.posts = []
                 state.status = 'loading';
             })
-            .addCase(fetchPost.fulfilled, (state:Draft<any>,action) => {
-                state.posts = action.payload
+            .addCase(fetchPost.fulfilled, (state:Draft<postState>,action:PayloadAction<any>) => {
+                state.posts = action.payload;
                 state.status = 'loaded';
             })
-            .addCase(fetchPost.rejected, (state:Draft<any>) => {
+            .addCase(fetchPost.rejected, (state:Draft<postState>) => {
                 state.posts = []
                 state.status = 'error';
             })

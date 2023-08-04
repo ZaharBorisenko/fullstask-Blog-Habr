@@ -1,9 +1,7 @@
 //#737373 img 740 na 417
 
 .post{
-  margin-top: 100px;
-  max-width: 73%;
-
+  margin-bottom: 30px;
   -webkit-box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
   -moz-box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
   box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
@@ -11,6 +9,7 @@
 }
 .container{
   padding: 15px 20px;
+  max-width: 740px;
 }
 .user{
   display: flex;
@@ -19,16 +18,16 @@
   margin-bottom: 10px;
 }
 .avatar{
-  border-radius: 10px;
+  border-radius: 50%;
   width: 26px;
   height: 26px;
 }
 .name{
   font-weight: 600;
-  font-size: 16px;
+  font-size: 13px;
 }
 .timeAgo{
-  font-size: 16px;
+  font-size: 13px;
   color: #909090;
 }
 
@@ -71,8 +70,8 @@
 }
 
 .img{
-  max-width: 740px;
-  max-height: 417px;
+  max-width: 700px;
+  max-height: 350px;
 }
 
 .text{

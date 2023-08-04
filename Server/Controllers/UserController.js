@@ -16,6 +16,7 @@ export const register = async (req, res) => {
             firstName: data.firstName,
             lastName: data.lastName,
             avatar: data.avatar,
+            nickName: data.nickName,
             email: data.email,
             passwordHash,
         })

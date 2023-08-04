@@ -11,16 +11,17 @@ const PostSchema = new mongoose.Schema({
         },
         tags: {
             type: Array,
-            require: true
+            default: [],
         },
         keywords: {
             type: Array,
-            default: []
+            require: true
         },
         imagePost: String,
         difficultyLevel: {
             type: String,
             default: 'Не указан',
+            require:true
         },
         viewCount: {
             type: Number,

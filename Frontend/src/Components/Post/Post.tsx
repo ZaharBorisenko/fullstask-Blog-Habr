@@ -1,29 +1,23 @@
 import React from 'react';
 import st from './Post.module.scss'
-import user from '../../assets/img/profileIcon.png'
 import time from '../../assets/img/time.png'
 import view from '../../assets/img/view.png'
 import comments from '../../assets/img/comments.png'
-import {Link} from "react-router-dom";
-const Post = ({post}) => {
-        const createdAt = post.createdAt;
-        const createdDate = new Date(createdAt);
-        const currentTime = new Date();
-        const timeDifferenceInMilliseconds = currentTime - createdDate;
-        const timeDifferenceInMinutes = Math.floor(timeDifferenceInMilliseconds / (1000 * 60));
-        const timeAgoString = `${timeDifferenceInMinutes} минут назад`;
+import {Link, useNavigate} from "react-router-dom";
+import {formatDate} from "../../utils/formatDate";
 
+const Post = ({post}) => {
 
     return (
         <div className={st.post}>
             <div className={st.container}>
                 <div className={st.user}>
-                    <img className={st.avatar} src={user} alt=""/>
+                    <img className={st.avatar} src={post.user.avatar} alt=""/>
                     <p className={st.name}>{post.user.nickName}</p>
-                    <p className={st.timeAgo}>{timeAgoString}</p>
+                    <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
                 </div>
 
-                <Link className={st.title} to="/">{post.title}</Link>
+                <Link className={st.title} to={`/posts/${post._id}`}>{post.title}</Link>
 
                 <div className={st.info}>
                     <div className={st.readingTime}>
@@ -50,7 +44,7 @@ const Post = ({post}) => {
                     {post.text}
                 </div>
 
-                <Link className={st.button} to="/">Читать далее</Link>
+                <Link className={st.button} to={`/posts/${post._id}`}>Читать далее</Link>
 
 
                 <div className={st.items}>

@@ -3,12 +3,13 @@ import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
 import {login, profile, register} from "./Controllers/UserController.js";
-import {create, getAll, getOnePost, remove, update} from "./Controllers/PostController.js";
+import {create, getAll, getOnePost, getPopularity, remove, update} from "./Controllers/PostController.js";
 import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
 import validationErrors from "./middleware/validationErrors.js";
-
+import cors from 'cors'
 const app = express();
+app.use(cors())
 app.use(express.json());
 mongoose.connect('mongodb+srv://ZaharWeb:3660253zahar@cluster0.rnt64hw.mongodb.net/blog')
     .then(() => console.log('connect'))
@@ -29,12 +30,13 @@ app.post('/upload', checkAuth, upload.single('image'),(req,res) => {
 });
 
 //РЕГИСТРАЦИЯ
-app.post('/register', registerValid, validationErrors  , register)
+app.post('/register', registerValid, validationErrors  , register);
 app.post('/login', loginValid,validationErrors , login);
-app.get('/profile', checkAuth, profile)
+app.get('/profile', checkAuth, profile);
 
 //ПОСТЫ
 app.get('/posts', getAll)
+app.get('/posts/popularity', getPopularity)
 app.get('/posts/:id', getOnePost)
 app.post('/posts',checkAuth,createPostValidation,validationErrors , create)
 app.delete('/posts/:id', checkAuth, remove)
