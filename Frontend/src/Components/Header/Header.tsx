@@ -4,9 +4,11 @@ import st from './Header.module.scss';
 import {useRef, useState} from "react";
 import AuthorizationLink from "./authorizationLink/AuthorizationLink";
 import profileIcon from '../../assets/img/profileIcon.png'
+import {useAppSelector} from "../../redux/hook/hook";
+import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 
 const Header = () => {
-    let isAuth = false;
+    let isAuth = useAppSelector(selectIsAuthenticated);
     const [openAuthorization, setOpenAuthorization] = useState<boolean>(false);
     const isOpenAuthorization = (isOpen: boolean): void => {
         setOpenAuthorization(isOpen)

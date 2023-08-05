@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from '../../axios'
 
 export interface User {
     avatar: string,
@@ -42,7 +42,7 @@ const initialState: postState = {
 export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
     'posts/fetchPost',
     async () => {
-        const {data}  = await axios.get('http://localhost:4000/posts')
+        const {data}  = await axios.get('/posts')
         return data
     }
 )

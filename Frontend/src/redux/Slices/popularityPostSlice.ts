@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from '../../axios'
 interface User {
     avatar: string,
     createdAt?: string;
@@ -40,7 +40,7 @@ const initialState: postState = {
 export const fetchPopularity = createAsyncThunk<Partial<PostType[]>>(
     'posts/fetchPopularity',
     async () => {
-        const {data}  = await axios.get('http://localhost:4000/posts/popularity')
+        const {data}  = await axios.get('/posts/popularity')
         return data
     }
 )

@@ -8,8 +8,18 @@ import Register from "./Pages/Auth/Register/Register";
 import Login from "./Pages/Auth/Login/Login";
 import AddPost from "./Pages/AddPost/AddPost";
 import PostDetails from "./Pages/PostDetails/PostDetails";
+import {useAppDispatch, useAppSelector} from "./redux/hook/hook";
+import {useEffect} from "react";
+import {fetchLogin, selectIsAuthenticated} from "./redux/Slices/authSlice";
 
 const App = () => {
+    let isAuth = useAppSelector(selectIsAuthenticated);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchLogin())
+    },[])
+
     return (
        <>
            <Header/>

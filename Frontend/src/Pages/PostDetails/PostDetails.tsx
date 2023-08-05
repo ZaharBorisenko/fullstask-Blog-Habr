@@ -1,21 +1,26 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {fetchOnePost} from "../../redux/Slices/OnePostSlice";
+import axios from "../../axios";
+import {PostType} from "../../redux/Slices/postSlice";
 
 const PostDetails = () => {
-    const params = useParams();
-    console.log(params.id);
-    const dispatch = useAppDispatch();
-    const post = useAppSelector(state => state.onePost.onePost)
+    const {id} = useParams();
+    const [post, setPost] = useState<PostType>({});
+
+    const fetchPost = async () => {
+        const response = await axios.get(`/posts/${id}`);
+        const data = await response.data;
+        setPost(data)
+    }
     console.log(post)
+
     useEffect(() => {
-        dispatch(fetchOnePost(params.id))
+        fetchPost()
     },[])
     return (
         <div>
-            <div>{post._id}</div>
-            <div>{post.title}</div>
+            <h1>{post.title}</h1>
+            <h3>{post._id}</h3>
         </div>
     );
 };

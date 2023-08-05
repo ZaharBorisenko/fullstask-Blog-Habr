@@ -33,6 +33,7 @@ export const getOnePost = async (req, res) => {
             {_id: postId},
             {$inc: {viewCount: 1}},
             {updatedDocument: 'after'})
+            .populate('user')
             .then(doc => res.json(doc))
             .catch(err => res.status(403).json({message: 'статья не найдена'}))
     } catch (e) {

@@ -1,13 +1,13 @@
 import {configureStore} from "@reduxjs/toolkit";
 import postSlice from "../Slices/postSlice";
 import popularityPostSlice from "../Slices/popularityPostSlice";
-import onePostSlice from "../Slices/OnePostSlice";
+import authSlice from "../Slices/authSlice";
 
 const store = configureStore({
     reducer: {
         posts: postSlice,
         postsPopularity: popularityPostSlice,
-        onePost: onePostSlice,
+        auth: authSlice,
     }
 })
 
