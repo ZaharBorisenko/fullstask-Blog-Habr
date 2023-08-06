@@ -10,15 +10,14 @@ export const AddPost = () => {
     const navigate = useNavigate();
     let isAuth = useAppSelector(selectIsAuthenticated);
     const imageUrl = '';
-    const [value, setValue] = useState('');
-
+    const [value, setValue] = useState(''); //text
 
     const handleChangeFile = () => {};
 
     const onClickRemoveImage = () => {};
 
     useEffect(() => {
-        if (!isAuth) navigate('/login')
+        if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')
         document.title = "IT Odyssey | CreatePost"
     },[]);
 
@@ -43,7 +42,7 @@ export const AddPost = () => {
     );
 
     return (
-        <div style={{ padding: 30 }}>
+        <div>
             <input type="file" onChange={handleChangeFile} />
             {imageUrl && (
                 <button onClick={onClickRemoveImage}>
@@ -53,13 +52,23 @@ export const AddPost = () => {
             {imageUrl && (
                 <img src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
             )}
-            <br />
-            <br />
+
             <input placeholder="Заголовок статьи..."/>
+            <input placeholder="Введите теги статьи..." />
             <input placeholder="Введите ключевые слова..." />
+
+            <select>
+                <option value="default">Не указан</option>
+                <option value="easy">Простой</option>
+                <option value="middle">Средний</option>
+                <option value="hard">Сложный</option>
+            </select>
+
+            <div>Время на прочтение: (Автоматически)</div>
+
             <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
             <div>
-                <button> Опубликовать</button>
+                <button> Опубликовать пост</button>
                 <Link to="/"><button>Отмена</button></Link>
             </div>
         </div>
