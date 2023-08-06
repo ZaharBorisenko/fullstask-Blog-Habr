@@ -9,7 +9,6 @@ import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 const Header = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const user = useAppSelector(state => state.auth.data);
-    console.log(user)
     const [openAuthorization, setOpenAuthorization] = useState<boolean>(false);
     const isOpenAuthorization = (isOpen: boolean): void => {
         setOpenAuthorization(isOpen)

@@ -11,6 +11,7 @@ const Home = () => {
     const status = useAppSelector(state => state.posts.status);
 
     useEffect(() => {
+        document.title = "IT Odyssey | Home"
         dispatch(fetchPost())
     },[])
 

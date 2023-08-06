@@ -10,12 +10,13 @@ const Profile = () => {
     console.log(user)
     const dispatch = useAppDispatch();
     useEffect(() => {
+        if (!isAuth) navigate('/login')
         dispatch(fetchProfile())
+        document.title = "IT Odyssey | Profile"
     },[])
 
     return (
         <div>
-            {!isAuth && <h1>У вас нет доступа к этой странице, авторизуйтесь...</h1>}
             Добро пожаловать в личный кабинет.
             <h1>{user.nickName}</h1>
         </div>

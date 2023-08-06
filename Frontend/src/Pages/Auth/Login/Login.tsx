@@ -36,6 +36,7 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuth) navigate('/');
+        document.title = "IT Odyssey | Login"
     }, [isAuth, navigate])
 
     return (

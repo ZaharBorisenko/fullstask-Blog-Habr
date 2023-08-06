@@ -1,16 +1,26 @@
-import React, {useCallback, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import SimpleMDE from 'react-simplemde-editor';
 import 'easymde/dist/easymde.min.css';
 import styles from './AddPost.module.scss';
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useAppSelector} from "../../redux/hook/hook";
+import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 
 export const AddPost = () => {
+    const navigate = useNavigate();
+    let isAuth = useAppSelector(selectIsAuthenticated);
     const imageUrl = '';
     const [value, setValue] = useState('');
+
 
     const handleChangeFile = () => {};
 
     const onClickRemoveImage = () => {};
+
+    useEffect(() => {
+        if (!isAuth) navigate('/login')
+        document.title = "IT Odyssey | CreatePost"
+    },[]);
 
     const onChange = useCallback((value) => {
         setValue(value);

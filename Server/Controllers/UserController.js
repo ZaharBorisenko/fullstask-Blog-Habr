@@ -7,6 +7,13 @@ export const register = async (req, res) => {
     const data = req.body;
     try {
 
+        const userEmail =  await Users.findOne({email: req.body.email});
+        if (userEmail){
+            return res.status(404).json({
+                message: 'Такой пользователь уже существует'
+            });
+        }
+
         const password = data.password;
         const salt = await bcrypt.genSalt(10);
         const passwordHash = await bcrypt.hash(password,salt)
@@ -44,7 +51,7 @@ export const login = async (req,res) => {
         const user =  await Users.findOne({email: req.body.email});
         if (!user){
             return res.status(404).json({
-                message: 'Пользователь не найден'
+                message: 'Неверный логин или пароль'
             });
         }
         const isValidPost = await bcrypt.compare(req.body.password, user.passwordHash);

@@ -37,6 +37,7 @@ const Register = () => {
 
     useEffect(() => {
         if (isAuth) navigate('/');
+        document.title = "IT Odyssey | Register"
     }, [isAuth, navigate])
 
     return (

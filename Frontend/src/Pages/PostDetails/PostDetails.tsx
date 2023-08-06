@@ -12,15 +12,16 @@ const PostDetails = () => {
         const data = await response.data;
         setPost(data)
     }
-    console.log(post)
 
     useEffect(() => {
-        fetchPost()
-    },[])
+        fetchPost();
+        document.title = `IT Odyssey | ${post?.title}`
+    },[post.title])
     return (
         <div>
             <h1>{post.title}</h1>
             <h3>{post._id}</h3>
+            <p>{post.text}</p>
         </div>
     );
 };
