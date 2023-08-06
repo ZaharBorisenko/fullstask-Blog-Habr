@@ -10,16 +10,14 @@ import AddPost from "./Pages/AddPost/AddPost";
 import PostDetails from "./Pages/PostDetails/PostDetails";
 import {useAppDispatch, useAppSelector} from "./redux/hook/hook";
 import {useEffect} from "react";
-import {fetchLogin, selectIsAuthenticated} from "./redux/Slices/authSlice";
+import {fetchProfile, selectIsAuthenticated} from "./redux/Slices/authSlice";
 
 const App = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const dispatch = useAppDispatch();
-
     useEffect(() => {
-        dispatch(fetchLogin())
+        dispatch(fetchProfile())
     },[])
-
     return (
        <>
            <Header/>

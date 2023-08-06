@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
 import axios from '../../axios'
 
-export interface User {
+export interface IUser {
     avatar: string,
     createdAt?: string;
     email: string;
@@ -22,7 +22,7 @@ export interface PostType {
     text: string;
     title: string;
     updatedAt?: string;
-    user: User;
+    user: IUser;
     viewCount: number;
     __v?: number;
     _id: string;

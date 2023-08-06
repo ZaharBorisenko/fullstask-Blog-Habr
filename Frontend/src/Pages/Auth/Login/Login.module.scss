@@ -1,0 +1,87 @@
+.container{
+  margin-top:50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.content{
+  border-radius: 10px;
+  max-width: 500px;
+  background-color: white;
+  padding: 20px 30px;
+
+
+  -webkit-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+.title{
+  font-size: 28px;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.labelText{
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+.input{
+  width: 320px;
+  color: #000;
+  font-size: 16px;
+  outline: none;
+  border: 1px solid #797979;
+  border-radius: 10px;
+  padding: 15px 60px;
+  margin-bottom: 20px;
+}
+
+.btn{
+  cursor: pointer;
+  outline: none;
+  border: none;
+  padding: 20px 0;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
+  margin-top: 10px;
+  width: 320px;
+  margin-bottom: 30px;
+  border-radius: 10px;
+
+  background: rgb(255,167,167);
+  background: linear-gradient(90deg, rgb(255, 94, 94) 30%, rgba(255,1,78,1) 80%);
+}
+
+.errorMessage{
+  color: red;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+.inputError{
+  border: 3px solid red;
+}
+.registerLink{
+  text-align: center;
+  font-size: 18px;
+  a{
+    text-decoration: none;
+  }
+}
+.containerLabel{
+  position: relative;
+}
+.icon{
+  position: absolute;
+  left: 15px;
+  top: 38px;
+}
+.iconShow{
+  transition: color 0.3s ease;
+  cursor: pointer;
+  position: absolute;
+  top: 38px;
+  transform: translateX(-50px);
+}

@@ -5,12 +5,27 @@ import view from '../../assets/img/view.png'
 import comments from '../../assets/img/comments.png'
 import {Link, useNavigate} from "react-router-dom";
 import {formatDate} from "../../utils/formatDate";
+import {useAppSelector} from "../../redux/hook/hook";
 
 const Post = ({post}) => {
+    const currentUserId = useAppSelector(state => state.auth.data._id);
 
     return (
         <div className={st.post}>
             <div className={st.container}>
+
+
+                {
+                    post?.user._id === currentUserId
+                        ?
+                        <div className={st.interaction}>
+                            <button>Редактирование</button>
+                            <button>Удаление</button>
+                        </div>
+                        :
+                        ''
+                }
+
                 <div className={st.user}>
                     <img className={st.avatar} src={post.user.avatar} alt=""/>
                     <p className={st.name}>{post.user.nickName}</p>

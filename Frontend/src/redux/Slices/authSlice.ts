@@ -1,30 +1,63 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft, createSelector} from "@reduxjs/toolkit";
 import axios from "../../axios";
+import {IUser} from "./postSlice";
 
 
 interface ILoginState {
     data: any
     status: string,
+    error: string
 }
 
+export interface IValues {
+    email: string,
+    password: string,
+}
+
+export interface IData extends IUser {
+    token: string,
+}
 const initialState:ILoginState = {
     data: {
-
     },
-    status: ''
+    status: '',
+    error: ''
 }
-
-
-export const fetchUser = createAsyncThunk(
-    'auth/fetchUser',
-    async (params) => {
-        const {data} = await axios.post('/login', params)
-        return data;
-    }
-)
 
 export const fetchLogin = createAsyncThunk(
     'auth/fetchLogin',
+    async (params:IValues, { rejectWithValue }) => {
+        try {
+            const {data} = await axios.post('/login', params)
+            return data;
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            }
+            return rejectWithValue('Произошла ошибка входа');
+        }
+    }
+);
+
+
+export const fetchRegister = createAsyncThunk(
+    'auth/fetchRegister',
+    async (params:IValues, {rejectWithValue}) => {
+        try {
+            const {data} = await axios.post('/register',params)
+            return data;
+        }catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                return rejectWithValue(error.response.data.message);
+            }
+            return rejectWithValue('Произошла ошибка регистрации');
+        }
+
+    }
+)
+
+export const fetchProfile = createAsyncThunk(
+    'auth/fetchProfile',
     async (params) => {
         const {data} = await axios.get('/profile')
         return data;
@@ -43,16 +76,6 @@ const authSlice = createSlice({
     },
     extraReducers: (builder => {
         builder
-            .addCase(fetchUser.pending, (state:Draft<ILoginState>) => {
-                state.status = 'loading'
-            })
-            .addCase(fetchUser.fulfilled, (state:Draft<ILoginState>, action:PayloadAction<any>) => {
-                state.data = action.payload
-                state.status = 'loaded'
-            })
-            .addCase(fetchUser.rejected, (state:Draft<ILoginState>) => {
-                state.status = 'error'
-            })
             .addCase(fetchLogin.pending, (state:Draft<ILoginState>) => {
                 state.status = 'loading'
             })
@@ -60,10 +83,31 @@ const authSlice = createSlice({
                 state.data = action.payload
                 state.status = 'loaded'
             })
-            .addCase(fetchLogin.rejected, (state:Draft<ILoginState>) => {
+            .addCase(fetchLogin.rejected, (state:Draft<ILoginState>,action:PayloadAction<any>) => {
+                state.status = 'error'
+                state.error = action.payload;
+            })
+            .addCase(fetchProfile.pending, (state:Draft<ILoginState>) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchProfile.fulfilled, (state:Draft<ILoginState>, action:PayloadAction<any>) => {
+                state.data = action.payload
+                state.status = 'loaded'
+            })
+            .addCase(fetchProfile.rejected, (state:Draft<ILoginState>) => {
                 state.status = 'error'
             })
-
+            .addCase(fetchRegister.pending, (state:Draft<ILoginState>) => {
+                state.status = 'loading'
+            })
+            .addCase(fetchRegister.fulfilled, (state:Draft<ILoginState>, action:PayloadAction<any>) => {
+                state.data = action.payload
+                state.status = 'loaded'
+            })
+            .addCase(fetchRegister.rejected, (state:Draft<ILoginState>,action:PayloadAction<any>) => {
+                state.status = 'error'
+                state.error = action.payload;
+            })
     })
 })
 

@@ -1,5 +1,4 @@
 import {Link} from "react-router-dom";
-import {AiOutlineUser} from "react-icons/ai";
 import st from './Header.module.scss';
 import {useRef, useState} from "react";
 import AuthorizationLink from "./authorizationLink/AuthorizationLink";
@@ -9,6 +8,8 @@ import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 
 const Header = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
+    const user = useAppSelector(state => state.auth.data);
+    console.log(user)
     const [openAuthorization, setOpenAuthorization] = useState<boolean>(false);
     const isOpenAuthorization = (isOpen: boolean): void => {
         setOpenAuthorization(isOpen)
@@ -49,7 +50,7 @@ const Header = () => {
                             ref={profile}
                             onClick={() => setOpenAuthorization(!openAuthorization)}
                             className={st.profileIcon}
-                            src={profileIcon} alt=""/>
+                            src={isAuth ? user.avatar : profileIcon} alt=""/>
 
 
                         {openAuthorization && <AuthorizationLink isAuth={isAuth} openAuthorization={openAuthorization}
