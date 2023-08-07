@@ -6,6 +6,7 @@ import comments from '../../assets/img/comments.png'
 import {Link, useNavigate} from "react-router-dom";
 import {formatDate} from "../../utils/formatDate";
 import {useAppSelector} from "../../redux/hook/hook";
+import ReactMarkdown from "react-markdown";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
@@ -43,6 +44,7 @@ const Post = ({post}) => {
                         <img src={view} alt=""/>
                         <div>{post.viewCount}</div>
                     </div>
+                    <p>сложность {post.difficultyLevel}</p>
                 </div>
 
                 <div className={st.keywords}>
@@ -56,7 +58,7 @@ const Post = ({post}) => {
                 <img src={post.imagePost} className={st.img} alt=""/>
 
                 <div className={st.text}>
-                    {post.text}
+                    <ReactMarkdown children={post.text}/>,
                 </div>
 
                 <Link className={st.button} to={`/posts/${post._id}`}>Читать далее</Link>
