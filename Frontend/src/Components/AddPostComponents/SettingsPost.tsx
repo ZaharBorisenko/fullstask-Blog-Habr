@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import ReactQuill from "react-quill";
 import {IUser} from "../../redux/Slices/postSlice";
 import 'react-quill/dist/quill.snow.css';
@@ -11,8 +11,9 @@ type propsTypes = {
     text: string,
     handleSetText: (value: string) => void,
     currentUser: IUser
+    validation :boolean
 }
-const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitle, currentUser}) => {
+const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitle, currentUser,validation}) => {
     const modules = {
         toolbar: [
             [{ 'header': 1 }, { 'header': 2 }],
@@ -31,6 +32,7 @@ const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitl
             ["image", "video", "link"],
         ]
     }
+    console.log(validation)
     return (
         <div>
 
@@ -47,10 +49,16 @@ const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitl
                         onChange={event => handleSetTitle(event.target.value)}
                         placeholder="Заголовок..."
                     />
+                    {
+                        !validation && title.length < 1 ? <p className={st.error}>Длинна заголовка не менее 1 символа</p> : ''
+                    }
                 </div>
 
                 <div className={st.editor}>
                     <ReactQuill theme="snow" value={text} onChange={handleSetText} modules={modules}/>
+                    {
+                        !validation && text.length < 1 ? <p className={st.error}>Длинна текста не менее 1 символа</p> : ''
+                    }
                 </div>
             </div>
         </div>

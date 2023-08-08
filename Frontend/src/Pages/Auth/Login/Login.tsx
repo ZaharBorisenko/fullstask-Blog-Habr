@@ -22,11 +22,10 @@ const Login = () => {
     const {register, handleSubmit, setError, formState: {errors, isValid}} = useForm({
         defaultValues: {
             email: '',
-            password: '12',
+            password: '',
         },
         mode: "onSubmit"
     })
-    console.log(errors)
 
     const onSubmit = async (values: IValues) => {
         const data = await dispatch(fetchLogin(values));

@@ -14,7 +14,7 @@ type PropsType = {
     onClickRemoveImage: () => void
 };
 
-const AdvancedSettingsPost:FC<PropsType> = ({tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage,createSubmitPost}) => {
+const AdvancedSettingsPost:FC<PropsType> = ({tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
     return (
         <div>
 

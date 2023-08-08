@@ -22,6 +22,7 @@ export const AddPost = () => {
     const [keywords, setKeywords] = useState('');
     const [level, setLevel] = useState('Не указан');
     // const [readingTime, setReadingTime] = useState(0);
+    const [validation, setValidation] = useState(true);
     const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
     console.log({title,text,tags,imageUrl,keywords,level});
 
@@ -40,6 +41,18 @@ export const AddPost = () => {
     const handleSetText = (value) => {
         setText(value)
     }
+
+    const isValidation = () => {
+        if (title.length < 1 || text.length < 1) {
+            setValidation(false)
+            setStageAdvancedSettings(false)
+        }
+        else {
+            setValidation(true)
+            setStageAdvancedSettings(true)
+        }
+    }
+    console.log(text.length)
 
     const handleChangeFile = async (event) => {
         try {
@@ -97,6 +110,7 @@ export const AddPost = () => {
                                 text={text}
                                 handleSetText={handleSetText}
                                 currentUser={currentUser}
+                                validation={validation}
                             /> :
                             <AdvancedSettingsPost
                                 tags={tags}
@@ -108,14 +122,15 @@ export const AddPost = () => {
                                 handleChangeFile={handleChangeFile}
                                 imageUrl={imageUrl}
                                 onClickRemoveImage={onClickRemoveImage}
-                                createSubmitPost={createSubmitPost}
                             />
 
                     }
 
                     {
                         !stageAdvancedSettings ?
-                            <button className={st.button} onClick={() => setStageAdvancedSettings(true)}>Далее к настройкам</button>
+                            <button className={st.button} onClick={() => {
+                                isValidation()
+                            }}>Далее к настройкам</button>
                             :
                             <div className={st.containerBtn}>
                                 <button className={`${st.button} ${st.publicBtn}`} onClick={createSubmitPost}>Опубликовать пост</button>

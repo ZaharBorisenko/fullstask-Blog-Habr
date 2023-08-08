@@ -10,7 +10,9 @@ body{
     font-size: 16px;
     background-color: #f0f0f0;
 }
-
+input{
+    outline: none;
+}
 
 /*//редактор*/
 .ql-toolbar.ql-snow .ql-formats {
