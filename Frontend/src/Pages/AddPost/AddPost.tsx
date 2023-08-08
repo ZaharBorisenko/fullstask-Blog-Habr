@@ -1,30 +1,45 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import st from './AddPost.module.scss';
 import {Link, useNavigate} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
 import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 import axios from "../../axios";
-
-//редактор
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import AdvancedSettingsPost from "../../Components/AddPostComponents/advancedSettingsPost";
+import PostMini from "../../Components/MiniPost/PostMini";
+import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
 
 
 export const AddPost = () => {
     const navigate = useNavigate();
     let isAuth = useAppSelector(selectIsAuthenticated);
+    const currentUser = useAppSelector(state => state.auth.data);
 
     const [title, setTitle] = useState('');
     const [text, setText] = useState(''); //text
     const [tags, setTags] = useState('');
-    console.log(text)
-
     const [imageUrl, setImageUrl] = useState('');
-
     const [keywords, setKeywords] = useState('');
     const [level, setLevel] = useState('Не указан');
     // const [readingTime, setReadingTime] = useState(0);
-    // console.log({title,text,tags,keywords,level,imageUrl});
+    const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
+    console.log({title,text,tags,imageUrl,keywords,level});
+
+    const handleSetTags = (value) => {
+        setTags(value)
+    }
+    const handleSetKeywords = (value) => {
+        setKeywords(value)
+    }
+    const handleSetLevel = (value) => {
+        setLevel(value)
+    }
+    const handleSetTitle = (value) => {
+        setTitle(value)
+    }
+    const handleSetText = (value) => {
+        setText(value)
+    }
 
     const handleChangeFile = async (event) => {
         try {
@@ -40,11 +55,6 @@ export const AddPost = () => {
     const onClickRemoveImage = () => {
         setImageUrl('');
     };
-    //readingTime
-    //формула: легкий лвл * 1.5, средний: 2,5: тяжелый: 4
-    const textLength = text.length;
-    const readingTime = (textLength * 2.5) / 120;
-
 
     const createSubmitPost = async () => {
         try {
@@ -55,7 +65,7 @@ export const AddPost = () => {
                 imagePost: `http://localhost:4000/${imageUrl}`,
                 keywords: keywords,
                 difficultyLevel: level,
-                readingTime:readingTime,
+                // readingTime:readingTime,
             };
             const { data } = await axios.post('/posts', params);
 
@@ -72,70 +82,52 @@ export const AddPost = () => {
         document.title = "IT Odyssey | CreatePost"
     }, []);
 
-    const modules = {
-        toolbar: [
-            [{header: [1,2,3,4,5,6,false]}],
-            [{font: []}],
-            [{size: []}],
-            ["bold", "italic", "underline", "strike", "blockquote"],
-            [
-                {list: "ordered"},
-                {list: "bullet"},
-                {indent: "-1"},
-                {indent: "+1"},
-            ],
-            ["image", "video", "link"],
-        ]
-    }
-
 
     return (
-        <div>
-            <input type="file" onChange={handleChangeFile}/>
+        <div className={st.container}>
 
-            {imageUrl && (
+            <div className={st.containerPost}>
+                <div className={st.post}>
 
-                <div>
-                    <img src={`http://localhost:4000/${imageUrl}`} alt="Uploaded"/>
+                    {
+                        !stageAdvancedSettings ?
+                            <SettingsPost
+                                title={title}
+                                handleSetTitle={handleSetTitle}
+                                text={text}
+                                handleSetText={handleSetText}
+                                currentUser={currentUser}
+                            /> :
+                            <AdvancedSettingsPost
+                                tags={tags}
+                                handleSetTags={handleSetTags}
+                                keywords={keywords}
+                                handleSetKeywords={handleSetKeywords}
+                                level={level}
+                                handleSetLevel={handleSetLevel}
+                                handleChangeFile={handleChangeFile}
+                                imageUrl={imageUrl}
+                                onClickRemoveImage={onClickRemoveImage}
+                                createSubmitPost={createSubmitPost}
+                            />
 
-                    <button onClick={onClickRemoveImage}>
-                        Удалить
-                    </button>
+                    }
+
+                    {
+                        !stageAdvancedSettings ?
+                            <button className={st.button} onClick={() => setStageAdvancedSettings(true)}>Далее к настройкам</button>
+                            :
+                            <div className={st.containerBtn}>
+                                <button className={`${st.button} ${st.publicBtn}`} onClick={createSubmitPost}>Опубликовать пост</button>
+                                <button className={st.button} onClick={() => setStageAdvancedSettings(false)}>Вернуться к тексту</button>
+                                {/*<button className={`${st.button} ${st.exitBtn}`} onClick={() => navigate('/')}>На главную</button>*/}
+                            </div>
+                    }
                 </div>
-            )}
-
-            <div>
-                <input value={title} onChange={event => setTitle(event.target.value)} placeholder="Заголовок статьи..."/>
             </div>
 
-            <div>
-                <input value={tags} onChange={event => setTags(event.target.value)} placeholder="Введите ключевые слова..."/>
-            </div>
+            <PostMini/>
 
-            <div>
-                <input value={keywords} onChange={event => setKeywords(event.target.value)} placeholder="Введите теги статьи..."/>
-            </div>
-
-
-            <select value={level} onChange={event => setLevel(event.target.value)}>
-                <option>Выберите уровень</option>
-                <option value="Простой">Простой</option>
-                <option value="Средний">Средний</option>
-                <option value="Сложный">Сложный</option>
-            </select>
-
-            <div>Время на прочтение: (Автоматически)</div>
-
-            <div className={st.editor}>
-                <ReactQuill theme="snow" value={text} onChange={setText} modules={modules}/>
-            </div>
-
-            <div>
-                <button onClick={createSubmitPost}>Опубликовать пост</button>
-                <Link to="/">
-                    <button>Отмена</button>
-                </Link>
-            </div>
         </div>
     );
 };

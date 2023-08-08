@@ -1,0 +1,32 @@
+.user{
+  display: flex;
+  align-items: center;
+  gap: 0 15px;
+  margin-bottom: 10px;
+}
+.avatar{
+  border-radius: 50%;
+  width:  26px;
+  height: 26px;
+}
+.name{
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.inputs{
+  margin-top: 20px;
+}
+.titleInput{
+  outline: none;
+  border: none;
+
+  color: #343434;
+  font-weight: 600;
+  font-size: 32px;
+  letter-spacing: 1px;
+}
+
+.editor{
+  margin-top: 30px;
+}

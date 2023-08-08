@@ -57,9 +57,9 @@ const Post = ({post}) => {
 
                 <img src={post.imagePost} className={st.img} alt=""/>
 
-                <div className={st.text}>
-                    <div dangerouslySetInnerHTML={{__html: post.text}}></div>
-                </div>
+                {/*<div className={st.text}>*/}
+                {/*    <div dangerouslySetInnerHTML={{__html: post.text}}></div>*/}
+                {/*</div>*/}
 
                 <Link className={st.button} to={`/posts/${post._id}`}>Читать далее</Link>
 
