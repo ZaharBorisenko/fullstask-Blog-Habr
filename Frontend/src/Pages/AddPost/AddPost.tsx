@@ -1,11 +1,14 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import SimpleMDE from 'react-simplemde-editor';
-import 'easymde/dist/easymde.min.css';
-import styles from './AddPost.module.scss';
+import st from './AddPost.module.scss';
 import {Link, useNavigate} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
 import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 import axios from "../../axios";
+
+//редактор
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 
 export const AddPost = () => {
     const navigate = useNavigate();
@@ -14,6 +17,7 @@ export const AddPost = () => {
     const [title, setTitle] = useState('');
     const [text, setText] = useState(''); //text
     const [tags, setTags] = useState('');
+    console.log(text)
 
     const [imageUrl, setImageUrl] = useState('');
 
@@ -68,25 +72,22 @@ export const AddPost = () => {
         document.title = "IT Odyssey | CreatePost"
     }, []);
 
-    const onChange = useCallback((value) => {
-        setText(value);
-    }, []);
+    const modules = {
+        toolbar: [
+            [{header: [1,2,3,4,5,6,false]}],
+            [{font: []}],
+            [{size: []}],
+            ["bold", "italic", "underline", "strike", "blockquote"],
+            [
+                {list: "ordered"},
+                {list: "bullet"},
+                {indent: "-1"},
+                {indent: "+1"},
+            ],
+            ["image", "video", "link"],
+        ]
+    }
 
-    const options = useMemo(
-        () => ({
-            spellChecker: false,
-            maxHeight: '400px',
-            autofocus: true,
-            placeholder: 'Введите текст...',
-            status: false,
-            autosave: {
-                enabled: true,
-                delay: 10000,
-                uniqueId: 'bond007',
-            },
-        }),
-        [],
-    );
 
     return (
         <div>
@@ -125,7 +126,10 @@ export const AddPost = () => {
 
             <div>Время на прочтение: (Автоматически)</div>
 
-            <SimpleMDE value={text} onChange={onChange} options={options}/>
+            <div className={st.editor}>
+                <ReactQuill theme="snow" value={text} onChange={setText} modules={modules}/>
+            </div>
+
             <div>
                 <button onClick={createSubmitPost}>Опубликовать пост</button>
                 <Link to="/">
