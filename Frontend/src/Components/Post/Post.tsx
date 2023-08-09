@@ -24,7 +24,9 @@ const Post = ({post}) => {
                         ?
                         <div className={st.interaction}>
                             <button>Редактирование</button>
-                            <button onClick={() => removePost(post._id)}>Удаление</button>
+                            <button onClick={() => {
+                                if (window.confirm('Вы точно хотите удалить пост?',)) removePost(post._id)
+                            }}>Удалить пост</button>
                         </div>
                         :
                         ''
@@ -38,7 +40,12 @@ const Post = ({post}) => {
 
                 <Link className={st.title} to={`/posts/${post._id}`}>{post.title}</Link>
 
+
                 <div className={st.info}>
+                    {post.difficultyLevel === 'Простой' && <p className={`${st.level} ${st.levelEasy}`}>{post.difficultyLevel}</p>}
+                    {post.difficultyLevel === 'Средний' && <p className={`${st.level} ${st.levelMiddle}`}>{post.difficultyLevel}</p>}
+                    {post.difficultyLevel === 'Сложный' && <p className={`${st.level} ${st.levelHard}`}>{post.difficultyLevel}</p>}
+
                     <div className={st.readingTime}>
                         <img src={time} alt=""/>
                         <div>{`${post.readingTime} мин`}</div>
@@ -47,13 +54,12 @@ const Post = ({post}) => {
                         <img src={view} alt=""/>
                         <div>{post.viewCount}</div>
                     </div>
-                    <p>сложность {post.difficultyLevel}</p>
                 </div>
 
                 <div className={st.keywords}>
                     {
-                        post.keywords.map(p => (
-                            <span key={p}>{p}  </span>
+                        post.keywords.map((p, index) => (
+                            <span key={index}>{p}* </span>
                         ))
                     }
                 </div>

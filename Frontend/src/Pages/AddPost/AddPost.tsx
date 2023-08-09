@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import st from './AddPost.module.scss';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
 import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 import axios from "../../axios";
@@ -14,18 +14,16 @@ export const AddPost = () => {
     const navigate = useNavigate();
     let isAuth = useAppSelector(selectIsAuthenticated);
     const currentUser = useAppSelector(state => state.auth.data);
-
     const [title, setTitle] = useState('');
     const [text, setText] = useState(''); //text
     const [tags, setTags] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [keywords, setKeywords] = useState('');
     const [level, setLevel] = useState('Не указан');
-    // const [readingTime, setReadingTime] = useState(0);
+    const [readingTime, setReadingTime] = useState(0);
     const [validation, setValidation] = useState(true);
     const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
-    // console.log({title,text,tags,imageUrl,keywords,level});
-    const [errorMessage, setErrorMessage] = useState<object[]>([]);
+    const [errorMessage, setErrorMessage] = useState<[]>([]);
 
     const handleSetTags = (value) => {
         setTags(value)
@@ -41,6 +39,25 @@ export const AddPost = () => {
     }
     const handleSetText = (value) => {
         setText(value)
+    }
+    console.log(text)
+
+    //ТАК КАК РЕДАКТОР ДОБАВЛЯЕТ НЕКОТОРЫЕ ТЕГИ В ТЕКСТ,НУЖНО ИХ УБРАТЬ C ПОМОЩЬЮ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ,
+    // ЧТОБЫ ВРЕМЯ ПРОЧТЕНИЯ СЧИТАЛОСЬ КОРРЕКТНО
+    const calculatingReadingTime = (value) => {
+        let textReg = text.replace(/<[^>]*>/g, '');
+        console.log(`ОТРЕДАКТИРОВАННЫЙ ТЕКСТ: ${textReg}`);
+        const averageReadingSpeed = 300;
+        let additionalTime = 0;
+
+        if (value === 'Простой') {
+            additionalTime = 1;
+        } else if (value === 'Средний') {
+            additionalTime = 3;
+        } else if (value === 'Сложный') {
+            additionalTime = 4;
+        }else additionalTime = 0;
+        setReadingTime(Math.ceil((textReg.length / 300) + additionalTime));
     }
 
     const isValidation = () => {
@@ -78,7 +95,7 @@ export const AddPost = () => {
                 imagePost: `http://localhost:4000/${imageUrl}`,
                 keywords: keywords,
                 difficultyLevel: level,
-                // readingTime:readingTime,
+                readingTime: readingTime,
             };
             const { data } = await axios.post('/posts', params);
             const idPost = data._id;
@@ -124,6 +141,8 @@ export const AddPost = () => {
                                 imageUrl={imageUrl}
                                 onClickRemoveImage={onClickRemoveImage}
                                 errorMessage={errorMessage}
+                                readingTime={readingTime}
+                                calculatingReadingTime={calculatingReadingTime}
                             />
 
                     }
@@ -132,12 +151,12 @@ export const AddPost = () => {
                         !stageAdvancedSettings ?
                             <button className={st.button} onClick={() => {
                                 isValidation()
+                                calculatingReadingTime('Не указано');
                             }}>Далее к настройкам</button>
                             :
                             <div className={st.containerBtn}>
-                                <button className={`${st.button} ${st.publicBtn}`} onClick={createSubmitPost}>Опубликовать пост</button>
-                                <button className={st.button} onClick={() => setStageAdvancedSettings(false)}>Вернуться к тексту</button>
-                                {/*<button className={`${st.button} ${st.exitBtn}`} onClick={() => navigate('/')}>На главную</button>*/}
+                                <button className={`${st.button} ${st.buttonPublic}`} onClick={createSubmitPost}>Опубликовать пост</button>
+                                <button className={`${st.button} ${st.buttonBack}`} onClick={() => setStageAdvancedSettings(false)}>Назад</button>
                             </div>
                     }
                 </div>

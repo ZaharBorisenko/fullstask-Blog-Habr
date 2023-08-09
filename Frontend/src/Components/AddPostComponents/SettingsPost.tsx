@@ -32,7 +32,6 @@ const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitl
             ["image", "video", "link"],
         ]
     }
-    console.log(validation)
     return (
         <div>
 
