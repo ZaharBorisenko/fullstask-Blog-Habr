@@ -50,9 +50,9 @@ export const create = async (req, res) => {
         const doc = new PostModel({
             title: data.title,
             text: data.text,
-            tags: data.tags,
+            tags: data.tags.split(' '),
             imagePost: data.imagePost,
-            keywords: data.keywords,
+            keywords: data.keywords.split(' '),
             difficultyLevel: data.difficultyLevel,
             readingTime: data.readingTime,
 

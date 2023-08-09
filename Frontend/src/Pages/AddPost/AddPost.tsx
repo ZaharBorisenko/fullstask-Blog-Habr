@@ -24,7 +24,8 @@ export const AddPost = () => {
     // const [readingTime, setReadingTime] = useState(0);
     const [validation, setValidation] = useState(true);
     const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
-    console.log({title,text,tags,imageUrl,keywords,level});
+    // console.log({title,text,tags,imageUrl,keywords,level});
+    const [errorMessage, setErrorMessage] = useState<object[]>([]);
 
     const handleSetTags = (value) => {
         setTags(value)
@@ -52,7 +53,6 @@ export const AddPost = () => {
             setStageAdvancedSettings(true)
         }
     }
-    console.log(text.length)
 
     const handleChangeFile = async (event) => {
         try {
@@ -81,12 +81,13 @@ export const AddPost = () => {
                 // readingTime:readingTime,
             };
             const { data } = await axios.post('/posts', params);
-
             const idPost = data._id;
-
             navigate(`/posts/${idPost}`);
-        }catch (e) {
-            console.log(`Ошибка создания поста ${e}`);
+        }catch (error) {
+            if (error.response || error.response.data || error.response.data.message) {
+                console.log();
+                setErrorMessage(error.response.data)
+            }
         }
     }
 
@@ -122,6 +123,7 @@ export const AddPost = () => {
                                 handleChangeFile={handleChangeFile}
                                 imageUrl={imageUrl}
                                 onClickRemoveImage={onClickRemoveImage}
+                                errorMessage={errorMessage}
                             />
 
                     }

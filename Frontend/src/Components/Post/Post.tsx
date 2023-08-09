@@ -5,12 +5,15 @@ import view from '../../assets/img/view.png'
 import comments from '../../assets/img/comments.png'
 import {Link, useNavigate} from "react-router-dom";
 import {formatDate} from "../../utils/formatDate";
-import {useAppSelector} from "../../redux/hook/hook";
-import ReactMarkdown from "react-markdown";
+import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
+import {fetchDeletePost} from "../../redux/Slices/postSlice";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
-
+    const dispatch = useAppDispatch();
+    const removePost = (id) => {
+        dispatch(fetchDeletePost(id))
+    }
     return (
         <div className={st.post}>
             <div className={st.container}>
@@ -21,7 +24,7 @@ const Post = ({post}) => {
                         ?
                         <div className={st.interaction}>
                             <button>Редактирование</button>
-                            <button>Удаление</button>
+                            <button onClick={() => removePost(post._id)}>Удаление</button>
                         </div>
                         :
                         ''

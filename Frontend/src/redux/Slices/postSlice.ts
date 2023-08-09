@@ -47,6 +47,13 @@ export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
     }
 )
 
+export const fetchDeletePost = createAsyncThunk<any>(
+    'post/fetchRemovePost',
+    async (id) => {
+        const { data } = await axios.delete(`/posts/${id}`)
+    }
+)
+
 const postSlice = createSlice({
     name: 'post',
     initialState,
@@ -68,6 +75,9 @@ const postSlice = createSlice({
                 state.posts = []
                 state.status = 'error';
             })
+            .addCase(fetchDeletePost.pending, (state:Draft<postState>,action:PayloadAction<any>) => {
+                state.posts = state.posts.filter(post => post._id !== action.meta.arg)
+            } )
     }
 })
 
