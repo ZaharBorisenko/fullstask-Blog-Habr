@@ -12,8 +12,9 @@ type propsTypes = {
     handleSetText: (value: string) => void,
     currentUser: IUser
     validation :boolean
+    isEditPost:boolean
 }
-const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitle, currentUser,validation}) => {
+const SettingsPost: FC<propsTypes> = ({isEditPost,title, text, handleSetText, handleSetTitle, currentUser,validation}) => {
     const modules = {
         toolbar: [
             [{ 'header': 1 }, { 'header': 2 }],
@@ -34,11 +35,12 @@ const SettingsPost: FC<propsTypes> = ({title, text, handleSetText, handleSetTitl
     }
     return (
         <div>
+            {isEditPost ? <div className={st.editTitle}>Редактирование публикации</div> : ''}
 
-            <div className={st.user}>
+            {!isEditPost ? <div className={st.user}>
                 <img className={st.avatar} src={currentUser.avatar} alt=""/>
                 <p className={st.name}>{currentUser.nickName}</p>
-            </div>
+            </div> : ''}
 
             <div className={st.inputs}>
                 <div>

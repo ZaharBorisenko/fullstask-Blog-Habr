@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import st from './AddPost.module.scss';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
 import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 import axios from "../../axios";
@@ -12,18 +12,21 @@ import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
 
 export const AddPost = () => {
     const navigate = useNavigate();
+    const {id} = useParams();
     let isAuth = useAppSelector(selectIsAuthenticated);
     const currentUser = useAppSelector(state => state.auth.data);
     const [title, setTitle] = useState('');
     const [text, setText] = useState(''); //text
     const [tags, setTags] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState('uploads/Image-Place-Holder.jpg');
     const [keywords, setKeywords] = useState('');
     const [level, setLevel] = useState('Не указан');
     const [readingTime, setReadingTime] = useState(0);
     const [validation, setValidation] = useState(true);
     const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
     const [errorMessage, setErrorMessage] = useState<[]>([]);
+
+    const isEditPost = Boolean(id);
 
     const handleSetTags = (value) => {
         setTags(value)
@@ -40,13 +43,11 @@ export const AddPost = () => {
     const handleSetText = (value) => {
         setText(value)
     }
-    console.log(text)
 
     //ТАК КАК РЕДАКТОР ДОБАВЛЯЕТ НЕКОТОРЫЕ ТЕГИ В ТЕКСТ,НУЖНО ИХ УБРАТЬ C ПОМОЩЬЮ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ,
     // ЧТОБЫ ВРЕМЯ ПРОЧТЕНИЯ СЧИТАЛОСЬ КОРРЕКТНО
     const calculatingReadingTime = (value) => {
         let textReg = text.replace(/<[^>]*>/g, '');
-        console.log(`ОТРЕДАКТИРОВАННЫЙ ТЕКСТ: ${textReg}`);
         const averageReadingSpeed = 300;
         let additionalTime = 0;
 
@@ -86,23 +87,40 @@ export const AddPost = () => {
         setImageUrl('');
     };
 
+    useEffect(() => {
+       if (id){
+            axios.get(`/posts/${id}`).then( ({data}) => {
+                setTitle(data.title);
+                setText(data.text);
+                setTags(data.tags);
+                setKeywords(data.keywords)
+                setLevel(data.difficultyLevel)
+                setReadingTime(data.readingTime)
+                setImageUrl(data.imagePost)
+            })
+       }
+    },[])
+
     const createSubmitPost = async () => {
         try {
             const params = {
                 title:title,
                 text:text,
                 tags:tags,
-                imagePost: `http://localhost:4000/${imageUrl}`,
+                imagePost: `${imageUrl === '' ? 'uploads/Image-Place-Holder.jpg' : imageUrl}`,
                 keywords: keywords,
                 difficultyLevel: level,
                 readingTime: readingTime,
             };
-            const { data } = await axios.post('/posts', params);
-            const idPost = data._id;
+
+            const { data } = isEditPost ? await axios.patch(`/posts/${id}`, params) : await axios.post('/posts', params);
+
+
+            const idPost = isEditPost ? id : data._id;
+
             navigate(`/posts/${idPost}`);
         }catch (error) {
             if (error.response || error.response.data || error.response.data.message) {
-                console.log();
                 setErrorMessage(error.response.data)
             }
         }
@@ -110,9 +128,12 @@ export const AddPost = () => {
 
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')
-        document.title = "IT Odyssey | CreatePost"
+        if (isEditPost) {
+            document.title = "IT Odyssey | UpdatePost"
+        }else {
+            document.title = "IT Odyssey | CreatePost"
+        }
     }, []);
-
 
     return (
         <div className={st.container}>
@@ -129,6 +150,8 @@ export const AddPost = () => {
                                 handleSetText={handleSetText}
                                 currentUser={currentUser}
                                 validation={validation}
+                                isEditPost={isEditPost}
+
                             /> :
                             <AdvancedSettingsPost
                                 tags={tags}
@@ -143,6 +166,7 @@ export const AddPost = () => {
                                 errorMessage={errorMessage}
                                 readingTime={readingTime}
                                 calculatingReadingTime={calculatingReadingTime}
+                                isEditPost={isEditPost}
                             />
 
                     }
@@ -152,10 +176,10 @@ export const AddPost = () => {
                             <button className={st.button} onClick={() => {
                                 isValidation()
                                 calculatingReadingTime('Не указано');
-                            }}>Далее к настройкам</button>
+                            }}>{isEditPost ? 'Далее к редактированию': 'Далее к настройкам'}</button>
                             :
                             <div className={st.containerBtn}>
-                                <button className={`${st.button} ${st.buttonPublic}`} onClick={createSubmitPost}>Опубликовать пост</button>
+                                <button className={`${st.button} ${st.buttonPublic}`} onClick={createSubmitPost}>{isEditPost ? 'Отредактировать' : 'Опубликовать пост'}</button>
                                 <button className={`${st.button} ${st.buttonBack}`} onClick={() => setStageAdvancedSettings(false)}>Назад</button>
                             </div>
                     }

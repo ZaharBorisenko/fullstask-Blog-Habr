@@ -1,10 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios from "../../axios";
 import {PostType} from "../../redux/Slices/postSlice";
-import ReactMarkdown from 'react-markdown'
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
+import st from '../../Components/Post/Post.module.scss'
+import PostMini from "../../Components/MiniPost/PostMini";
+import {formatDate} from "../../utils/formatDate";
+import time from "../../assets/img/time.png";
+import view from "../../assets/img/view.png";
 
 const PostDetails = () => {
     const {id} = useParams();
@@ -19,19 +22,78 @@ const PostDetails = () => {
     useEffect(() => {
         fetchPost();
         document.title = `IT Odyssey | ${post?.title}`
-    },[post.title])
+    }, [post.title])
+
+    console.log()
     return (
-        <div style={{marginLeft: "100px"}}>
-            <h1>Заголовок {post.title}</h1>
-            <p>Теги {post.tags?.map((tag,index) => <span key={index}>{tag}</span>)}</p>
-            <p>Ключевые слова {post.keywords?.map((keyword,index) => <span key={index}>{keyword}</span>)}</p>
-            <img src={post.imagePost} alt="error"/>
+        <div className={st.containerPostDetails}>
+            <div className={st.detailsPostDetails}>
+                <div className={st.contentPostDetails}>
+                    {
+                        'user' in post && (
+                            <div>
+                                <div className={st.user}>
+                                    <img className={st.avatar} src={post.user.avatar} alt=""/>
+                                    <p className={st.name}>{post.user.nickName}</p>
+                                    <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
+                                </div>
 
+                                <h1>Заголовок {post.title}</h1>
 
-            <div>
-                <div dangerouslySetInnerHTML={{__html: post.text}}></div>
+                                <div className={st.info}>
+
+                                    {post.difficultyLevel === 'Простой' && <p className={`${st.level} ${st.levelEasy}`}>{post.difficultyLevel}</p>}
+                                    {post.difficultyLevel === 'Средний' && <p className={`${st.level} ${st.levelMiddle}`}>{post.difficultyLevel}</p>}
+                                    {post.difficultyLevel === 'Сложный' && <p className={`${st.level} ${st.levelHard}`}>{post.difficultyLevel}</p>}
+
+                                    <div className={st.readingTime}>
+                                        <img src={time} alt=""/>
+                                        <div>{`${post.readingTime} мин`}</div>
+                                    </div>
+                                    <div className={st.viewCount}>
+                                        <img src={view} alt=""/>
+                                        <div>{post.viewCount}</div>
+                                    </div>
+                                </div>
+
+                                <div className={st.keywords}>
+                                    {
+                                        post.keywords.map((p, index) => (
+                                            <span key={index}>{p}* </span>
+                                        ))
+                                    }
+                                </div>
+                            </div>
+
+                        )
+                    }
+                    <img className={st.img} src={`http://localhost:4000/${post.imagePost}`} alt="error"/>
+                    <div>
+                        <div dangerouslySetInnerHTML={{__html: post.text}}></div>
+                    </div>
+
+                    <div className={st.tagsDetails}>
+                        <p>Теги:</p>
+                        {
+                            post.tags?.map((tags,index) => (
+                                <Link to={`/`} key={index}>{tags}</Link>
+                            ))
+                        }
+                    </div>
+
+                    <div className={st.keywordsDetails}>
+                        <p>Ключевые слова:</p>
+                        {
+                            post.keywords?.map((keyword,index) => (
+                                <Link to={`/`} key={index}>{keyword}</Link>
+                            ))
+                        }
+                    </div>
+
+                </div>
             </div>
 
+            <PostMini/>
         </div>
     );
 };

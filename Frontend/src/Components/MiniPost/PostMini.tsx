@@ -16,7 +16,7 @@ const PostMini = () => {
 
     return (
         <div className={st.container}>
-            <div className={st.title}>Популярные публикации</div>
+            <div className={st.title}>Читают сейчас</div>
 
             {
                 postPopularity?.map(post => (

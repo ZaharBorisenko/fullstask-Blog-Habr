@@ -13,10 +13,11 @@ type PropsType = {
     onClickRemoveImage: () => void,
     errorMessage: [],
     readingTime: number,
-    calculatingReadingTime: (value:string) => void
+    calculatingReadingTime: (value:string) => void,
+    isEditPost:boolean
 };
 
-const AdvancedSettingsPost:FC<PropsType> = ({ calculatingReadingTime, readingTime,errorMessage,tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
+const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime, readingTime,errorMessage,tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
 
     //правильное склонение
     function declOfNum(number, words) {
@@ -28,7 +29,7 @@ const AdvancedSettingsPost:FC<PropsType> = ({ calculatingReadingTime, readingTim
     return (
         <div>
 
-            <div className={st.title}>Настройки публикации</div>
+            <div className={st.title}>{isEditPost ? 'Редактирование статьи' : 'Настройки публикации'}</div>
 
             <div className={st.container}>
 
@@ -85,7 +86,6 @@ const AdvancedSettingsPost:FC<PropsType> = ({ calculatingReadingTime, readingTim
 
                         <div>
                             <img className={st.img} src={`http://localhost:4000/${imageUrl}`} alt="Uploaded"/>
-
                             <button className={st.removeBtn} onClick={onClickRemoveImage}>
                                 Удалить превью
                             </button>

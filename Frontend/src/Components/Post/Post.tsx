@@ -7,6 +7,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {formatDate} from "../../utils/formatDate";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchDeletePost} from "../../redux/Slices/postSlice";
+import UserInfoPost from "../UserInfoPost/UserInfoPost";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
@@ -23,7 +24,9 @@ const Post = ({post}) => {
                     post?.user._id === currentUserId
                         ?
                         <div className={st.interaction}>
-                            <button>Редактирование</button>
+                            <Link to={`/posts/${post._id}/edit`}>
+                                <button>Редактирование</button>
+                            </Link>
                             <button onClick={() => {
                                 if (window.confirm('Вы точно хотите удалить пост?',)) removePost(post._id)
                             }}>Удалить пост</button>
@@ -32,11 +35,7 @@ const Post = ({post}) => {
                         ''
                 }
 
-                <div className={st.user}>
-                    <img className={st.avatar} src={post.user.avatar} alt=""/>
-                    <p className={st.name}>{post.user.nickName}</p>
-                    <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
-                </div>
+                <UserInfoPost post={post}/>
 
                 <Link className={st.title} to={`/posts/${post._id}`}>{post.title}</Link>
 
@@ -64,11 +63,7 @@ const Post = ({post}) => {
                     }
                 </div>
 
-                <img src={post.imagePost} className={st.img} alt=""/>
-
-                {/*<div className={st.text}>*/}
-                {/*    <div dangerouslySetInnerHTML={{__html: post.text}}></div>*/}
-                {/*</div>*/}
+                <img src={`http://localhost:4000/${post.imagePost}`} className={st.img} alt=""/>
 
                 <Link className={st.button} to={`/posts/${post._id}`}>Читать далее</Link>
 
