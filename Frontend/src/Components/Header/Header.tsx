@@ -9,6 +9,7 @@ import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 const Header = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const user = useAppSelector(state => state.auth.data);
+    const userId = user._id;
     const [openAuthorization, setOpenAuthorization] = useState<boolean>(false);
     const isOpenAuthorization = (isOpen: boolean): void => {
         setOpenAuthorization(isOpen)
@@ -52,7 +53,7 @@ const Header = () => {
                             src={isAuth ? user.avatar : profileIcon} alt=""/>
 
 
-                        {openAuthorization && <AuthorizationLink isAuth={isAuth} openAuthorization={openAuthorization}
+                        {openAuthorization && <AuthorizationLink userId={userId} isAuth={isAuth} openAuthorization={openAuthorization}
                                                                  setOpenAuthorization={setOpenAuthorization}/>}
                     </div>
                 </div>

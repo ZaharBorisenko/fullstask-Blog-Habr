@@ -98,3 +98,20 @@ export const profile = async (req,res) => {
         console.log(e);
     }
 }
+
+export const profileUser = async (req, res) => {
+    try {
+        const requestedUserId = req.params.id; // Получаем ID пользователя из параметра URL
+        const user = await Users.findById(requestedUserId);
+        if (!user) {
+            return res.status(404).json({
+                message: 'Пользователь с таким id не найден'
+            });
+        }
+
+        // Вернуть информацию о пользователе в response
+        res.json(user);
+    } catch (e) {
+        console.log(e);
+    }
+};

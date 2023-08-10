@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
-import {login, profile, register} from "./Controllers/UserController.js";
+import {login, profile, profileUser, register} from "./Controllers/UserController.js";
 import {create, getAll, getOnePost, getPopularity, remove, update} from "./Controllers/PostController.js";
 import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
@@ -33,6 +33,7 @@ app.post('/upload', checkAuth, upload.single('image'),(req,res) => {
 app.post('/register', registerValid, validationErrors  , register);
 app.post('/login', loginValid,validationErrors , login);
 app.get('/profile', checkAuth, profile);
+app.get('/user/:id', checkAuth, profileUser);
 
 //ПОСТЫ
 app.get('/posts', getAll)
