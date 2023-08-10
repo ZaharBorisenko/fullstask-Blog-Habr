@@ -1,0 +1,26 @@
+.containerInfo{
+  max-width: 300px;
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+}
+
+.info{
+  padding: 15px 20px;
+}
+.avatar{
+  border: 2px solid #000;
+  border-radius: 5px;
+  width:200px;
+}
+
+.name,.dateRegister{
+  margin-top: 10px;
+  margin-bottom: 15px;
+  font-size: 20px;
+  font-weight: 400;
+  font-family: 'Roboto Slab', serif;
+  span{
+    font-weight: 600;
+
+  }
+}

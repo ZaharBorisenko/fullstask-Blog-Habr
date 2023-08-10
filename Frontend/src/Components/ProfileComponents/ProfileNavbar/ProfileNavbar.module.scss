@@ -1,0 +1,18 @@
+.navbar{
+  display: flex;
+  gap: 0 50px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.link{
+  cursor: pointer;
+  color: #333333;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 500;
+}
+.linkActive{
+  color: #548eaa;
+  padding-bottom: 8px;
+  border-bottom: 3.5px solid #548eaa;
+}

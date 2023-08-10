@@ -10,6 +10,8 @@ export interface IUser {
     updatedAt?: string;
     __v?: number;
     _id: string;
+    firstName?: string,
+    lastName?: string,
 }
 
 export interface PostType {

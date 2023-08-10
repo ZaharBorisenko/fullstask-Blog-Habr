@@ -1,26 +1,55 @@
 .container{
   margin: 30px auto 100px auto;
   max-width: 1100px;
+  display: flex;
+  gap: 0 20px;
+  align-items: flex-start;
+}
+
+.containerInfo{
+  max-width: 300px;
   box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
   background-color: white;
 }
-.info{
+
+.editUserInfo{
+  width: 600px;
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+}
+
+.editContent{
   padding: 15px 20px;
 }
-.avatar{
-  border: 2px solid #000;
-  border-radius: 5px;
-  width: 300px;
+.title{
+  margin-top: 10px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 26px;
+  font-weight: 500;
 }
 
-.name,.dateRegister{
-  margin-top: 10px;
-  margin-bottom: 15px;
-  font-size: 20px;
-  font-weight: 400;
-  font-family: 'Roboto Slab', serif;
-  span{
-    font-weight: 600;
+.label{
+  margin-top: 20px;
+  margin-bottom: 5px;
+  font-weight: 500;
+  display: block;
+}
+.input{
+  width: 100%;
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-bottom: 1px solid #444444;
+}
 
-  }
+.button{
+  margin-top: 15px;
+  background-color: #ff5b13;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  color: #fff;
+  font-weight: 500;
 }

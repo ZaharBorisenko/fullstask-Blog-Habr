@@ -5,10 +5,18 @@ import {useNavigate, useParams} from "react-router-dom";
 import axios from "../../../axios";
 import st from './Profile.module.scss';
 import {IUser} from "../../../redux/Slices/postSlice";
+import ProfileNavbar from "../../../Components/ProfileComponents/ProfileNavbar/ProfileNavbar";
+import GeneralsInformation from "../../../Components/ProfileComponents/GeneralsInformation/GeneralsInformation";
+import ProfileInfo from "../../../Components/ProfileComponents/ProfileInfo/ProfileInfo";
+import ProfileSettings from "../../../Components/ProfileComponents/ProfileSettings/ProfileSettings";
+import ProfileUpdate from "../../../Components/ProfileComponents/ProfileUpdate/ProfileUpdate";
 
 const Profile = () => {
     const [userInfo, setUserInfo] = useState<IUser | null>(null);
-    const currentUser = useAppSelector(state => state.auth.data)
+    const [subPagesProfile, setSubPagesProfile] = useState(1);
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
     const navigate = useNavigate();
     const {id} = useParams();
@@ -17,43 +25,70 @@ const Profile = () => {
     const userProfile = async () => {
         const response = await axios.get(`/user/${id}`)
         const data = response.data;
+        setFirstName(data.firstName || '')
+        setLastName(data.lastName || '')
         setUserInfo(data);
     }
-    //функция для преобразования времени:
-    function formatDate(dateString) {
-        const months = [
-            "января", "февраля", "марта", "апреля", "мая", "июня",
-            "июля", "августа", "сентября", "октября", "ноября", "декабря"
-        ];
 
-        const date = new Date(dateString);
-        const day = date.getDate();
-        const month = months[date.getMonth()];
-        const year = date.getFullYear();
-
-        return `${day} ${month} ${year}`;
+    const handleFirstName = (value) => {
+        setFirstName(value)
+    }
+    const handleLastName = (value) => {
+        setLastName(value)
     }
 
-    // const dispatch = useAppDispatch();
+    const handleSubPagesProfile = (number) => {
+        setSubPagesProfile(number);
+    }
+
+    const updateProfile = async () => {
+        try {
+            const params = {
+                firstName,
+                lastName,
+            }
+
+            const {data} = await axios.patch(`/user/${currentUserId}`, params)
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')
         userProfile();
         document.title = "IT Odyssey | Profile"
-    },[id])
+    }, [id, subPagesProfile])
 
     return (
         <div className={st.container}>
-            {
-                userInfo === null ? '' :
-                    <div className={st.info}>
-                        <img className={st.avatar} src={userInfo.avatar} alt=""/>
-                        <div className={st.name}>
-                            {currentUserId === userInfo._id ? 'Ваш никнейм: ' : 'Никнейм пользователя: '}
-                            <span>{userInfo.nickName}</span>
-                        </div>
-                        <p className={st.dateRegister}>Дата регистрации: <span>{formatDate(userInfo.createdAt)}</span></p>
-                    </div>
-            }
+
+            <GeneralsInformation userInfo={userInfo} currentUserId={currentUserId}/>
+
+            <div className={st.editUserInfo}>
+                <div className={st.editContent}>
+
+                    <ProfileNavbar
+                        handleSubPagesProfile={handleSubPagesProfile}
+                        subPagesProfile={subPagesProfile}
+                    />
+
+                    {subPagesProfile === 1 && <ProfileInfo subPagesProfile={subPagesProfile}/>}
+                    {subPagesProfile === 2 &&
+                        <ProfileUpdate
+                            subPagesProfile={subPagesProfile}
+                            handleFirstName={handleFirstName}
+                            handleLastName={handleLastName}
+                            firstName={firstName}
+                            lastName={lastName}
+                            updateProfile={updateProfile}
+                        />}
+                    {subPagesProfile === 3 && <ProfileSettings subPagesProfile={subPagesProfile}/>}
+
+                </div>
+            </div>
+
         </div>
     );
 };

@@ -99,6 +99,36 @@ export const profile = async (req,res) => {
     }
 }
 
+
+
+export const updateProfiles = async (req,res) => {
+    try {
+        const user = await Users.findById(req.userId);
+
+
+        const newFirstName = req.body.firstName;
+        const newLastName = req.body.lastName;
+
+        if (newFirstName) {
+            user.firstName = newFirstName;
+        }
+
+        if (newLastName) {
+            user.lastName = newLastName;
+        }
+
+        await user.save();
+
+        res.json(user._doc);
+
+    }catch (e){
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось обновить профиль'
+        })
+    }
+}
+
 export const profileUser = async (req, res) => {
     try {
         const requestedUserId = req.params.id; // Получаем ID пользователя из параметра URL
