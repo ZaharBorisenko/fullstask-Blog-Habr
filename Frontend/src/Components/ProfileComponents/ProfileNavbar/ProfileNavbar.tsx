@@ -13,16 +13,6 @@ const ProfileNavbar:FC<propsType> = ({handleSubPagesProfile,subPagesProfile}) =>
                 onClick={() => handleSubPagesProfile(1)}>
                 Профиль
             </div>
-            <div
-                className={`${st.link} ${subPagesProfile === 2 ? st.linkActive : ''}`}
-                onClick={() => handleSubPagesProfile(2)}>
-                Обновить данные
-            </div>
-            <div
-                className={`${st.link} ${subPagesProfile === 3 ? st.linkActive : ''}`}
-                onClick={() => handleSubPagesProfile(3)}>
-                Настройки
-            </div>
         </div>
     );
 };

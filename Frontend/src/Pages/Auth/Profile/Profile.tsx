@@ -7,7 +7,6 @@ import st from './Profile.module.scss';
 import {IUser} from "../../../redux/Slices/postSlice";
 import ProfileNavbar from "../../../Components/ProfileComponents/ProfileNavbar/ProfileNavbar";
 import GeneralsInformation from "../../../Components/ProfileComponents/GeneralsInformation/GeneralsInformation";
-import ProfileInfo from "../../../Components/ProfileComponents/ProfileInfo/ProfileInfo";
 import ProfileSettings from "../../../Components/ProfileComponents/ProfileSettings/ProfileSettings";
 import ProfileUpdate from "../../../Components/ProfileComponents/ProfileUpdate/ProfileUpdate";
 
@@ -16,19 +15,26 @@ const Profile = () => {
     const [subPagesProfile, setSubPagesProfile] = useState(1);
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
+    const [aboutMe, setAboutMe] = useState("");
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
     const navigate = useNavigate();
     const {id} = useParams();
     let isAuth = useAppSelector(selectIsAuthenticated);
 
+
     const userProfile = async () => {
         const response = await axios.get(`/user/${id}`)
         const data = response.data;
         setFirstName(data.firstName || '')
         setLastName(data.lastName || '')
+        setAboutMe(data.aboutMe || '')
         setUserInfo(data);
     }
+
+    const handleAboutMe = (value) => {
+        setAboutMe(value);
+    };
 
     const handleFirstName = (value) => {
         setFirstName(value)
@@ -36,7 +42,6 @@ const Profile = () => {
     const handleLastName = (value) => {
         setLastName(value)
     }
-
     const handleSubPagesProfile = (number) => {
         setSubPagesProfile(number);
     }
@@ -46,9 +51,9 @@ const Profile = () => {
             const params = {
                 firstName,
                 lastName,
+                aboutMe,
             }
-
-            const {data} = await axios.patch(`/user/${currentUserId}`, params)
+            const {data} = await axios.patch(`/user/${currentUserId}`, params);
         } catch (e) {
             console.log(e);
         }
@@ -64,28 +69,40 @@ const Profile = () => {
     return (
         <div className={st.container}>
 
-            <GeneralsInformation userInfo={userInfo} currentUserId={currentUserId}/>
+            <GeneralsInformation
+                userInfo={userInfo} currentUserId={currentUserId}
+            />
 
             <div className={st.editUserInfo}>
                 <div className={st.editContent}>
+                    <div>
 
-                    <ProfileNavbar
-                        handleSubPagesProfile={handleSubPagesProfile}
-                        subPagesProfile={subPagesProfile}
-                    />
+                        {currentUserId === id ?
+                            <ProfileNavbar
+                                handleSubPagesProfile={handleSubPagesProfile}
+                                subPagesProfile={subPagesProfile}
+                            /> :
+                            <div className={st.profileNoId}>Профиль пользователя</div>
+                        }
 
-                    {subPagesProfile === 1 && <ProfileInfo subPagesProfile={subPagesProfile}/>}
-                    {subPagesProfile === 2 &&
-                        <ProfileUpdate
-                            subPagesProfile={subPagesProfile}
-                            handleFirstName={handleFirstName}
-                            handleLastName={handleLastName}
-                            firstName={firstName}
-                            lastName={lastName}
-                            updateProfile={updateProfile}
-                        />}
-                    {subPagesProfile === 3 && <ProfileSettings subPagesProfile={subPagesProfile}/>}
 
+                        {currentUserId === id ?
+                            <div>
+                                {subPagesProfile === 1 &&
+                                    <ProfileUpdate
+                                        subPagesProfile={subPagesProfile}
+                                        handleFirstName={handleFirstName}
+                                        handleLastName={handleLastName}
+                                        firstName={firstName}
+                                        lastName={lastName}
+                                        aboutMe={aboutMe}
+                                        updateProfile={updateProfile}
+                                        handleAboutMe={handleAboutMe}
+                                    />}
+                            </div> : "Пользователь скрыл информацию"
+                        }
+
+                    </div>
                 </div>
             </div>
 

@@ -22,6 +22,7 @@ export const register = async (req, res) => {
         const doc = new Users({
             firstName: data.firstName,
             lastName: data.lastName,
+            aboutMe: data.aboutMe,
             avatar: data.avatar,
             nickName: data.nickName,
             email: data.email,
@@ -108,6 +109,7 @@ export const updateProfiles = async (req,res) => {
 
         const newFirstName = req.body.firstName;
         const newLastName = req.body.lastName;
+        const newAboutMe = req.body.aboutMe;
 
         if (newFirstName) {
             user.firstName = newFirstName;
@@ -115,6 +117,9 @@ export const updateProfiles = async (req,res) => {
 
         if (newLastName) {
             user.lastName = newLastName;
+        }
+        if (newAboutMe) {
+            user.aboutMe = newAboutMe;
         }
 
         await user.save();

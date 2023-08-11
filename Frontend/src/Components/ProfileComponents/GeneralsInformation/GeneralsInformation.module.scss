@@ -24,3 +24,16 @@
 
   }
 }
+
+.containerPrivate{
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
+
+  label{
+    font-weight: 600;
+    font-size: 14px;
+    color: #333;
+    line-height: 16px;
+  }
+}

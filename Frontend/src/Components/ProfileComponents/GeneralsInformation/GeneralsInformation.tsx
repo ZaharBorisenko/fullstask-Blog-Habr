@@ -5,10 +5,10 @@ import {formatDate} from "../../../utils/formatDateUser";
 
 type propsType = {
     userInfo: IUser | null;
-    currentUserId:number
+    currentUserId: number;
 }
 
-const GeneralsInformation:FC<propsType> = ({userInfo,currentUserId}) => {
+const GeneralsInformation: FC<propsType> = ({userInfo, currentUserId}) => {
     return (
         <div className={st.containerInfo}>
             {
@@ -20,7 +20,8 @@ const GeneralsInformation:FC<propsType> = ({userInfo,currentUserId}) => {
                             <span>{userInfo.nickName}</span>
                         </div>
                         <div className={st.dateRegister}><p>Дата регистрации:</p>
-                            <span>{formatDate(userInfo.createdAt)}</span></div>
+                            <span>{formatDate(userInfo.createdAt)}</span>
+                        </div>
                     </div>
             }
         </div>
