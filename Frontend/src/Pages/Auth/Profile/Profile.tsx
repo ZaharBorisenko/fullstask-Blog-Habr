@@ -21,14 +21,17 @@ const Profile = () => {
     const navigate = useNavigate();
     const {id} = useParams();
     let isAuth = useAppSelector(selectIsAuthenticated);
-
+    const [privateProfile, setPrivateProfile] = useState<boolean>(true);
+    const [profileUpdated, setProfileUpdated] = useState(false);
+    console.log(`profileUp ${profileUpdated}`)
 
     const userProfile = async () => {
         const response = await axios.get(`/user/${id}`)
         const data = response.data;
-        setFirstName(data.firstName || '')
-        setLastName(data.lastName || '')
-        setAboutMe(data.aboutMe || '')
+        setFirstName(data.firstName || '');
+        setLastName(data.lastName || '');
+        setAboutMe(data.aboutMe || '');
+        setPrivateProfile(data.privateProfile);
         setUserInfo(data);
     }
 
@@ -46,14 +49,20 @@ const Profile = () => {
         setSubPagesProfile(number);
     }
 
+    const handlePrivateProfile = (value) => {
+        setPrivateProfile(value)
+    }
+
     const updateProfile = async () => {
         try {
             const params = {
                 firstName,
                 lastName,
                 aboutMe,
+                privateProfile,
             }
             const {data} = await axios.patch(`/user/${currentUserId}`, params);
+            setProfileUpdated(true)
         } catch (e) {
             console.log(e);
         }
@@ -64,13 +73,19 @@ const Profile = () => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')
         userProfile();
         document.title = "IT Odyssey | Profile"
-    }, [id, subPagesProfile])
+        console.log('RERENDER')
+        setProfileUpdated(false);
+    }, [id, profileUpdated])
 
     return (
         <div className={st.container}>
 
             <GeneralsInformation
-                userInfo={userInfo} currentUserId={currentUserId}
+                userInfo={userInfo}
+                currentUserId={currentUserId}
+                privateProfile={privateProfile}
+                handlePrivateProfile={handlePrivateProfile}
+                updateProfile={updateProfile}
             />
 
             <div className={st.editUserInfo}>
@@ -82,24 +97,38 @@ const Profile = () => {
                                 handleSubPagesProfile={handleSubPagesProfile}
                                 subPagesProfile={subPagesProfile}
                             /> :
-                            <div className={st.profileNoId}>Профиль пользователя</div>
+                            <div className={st.profileNoId}>Информация о пользователе</div>
                         }
 
 
-                        {currentUserId === id ?
-                            <div>
-                                {subPagesProfile === 1 &&
-                                    <ProfileUpdate
-                                        subPagesProfile={subPagesProfile}
-                                        handleFirstName={handleFirstName}
-                                        handleLastName={handleLastName}
-                                        firstName={firstName}
-                                        lastName={lastName}
-                                        aboutMe={aboutMe}
-                                        updateProfile={updateProfile}
-                                        handleAboutMe={handleAboutMe}
-                                    />}
-                            </div> : "Пользователь скрыл информацию"
+
+                        {
+                            currentUserId === id ?
+                                <div>
+                                    {subPagesProfile === 1 &&
+                                        <ProfileUpdate
+                                            subPagesProfile={subPagesProfile}
+                                            handleFirstName={handleFirstName}
+                                            handleLastName={handleLastName}
+                                            firstName={firstName}
+                                            lastName={lastName}
+                                            aboutMe={aboutMe}
+                                            updateProfile={updateProfile}
+                                            handleAboutMe={handleAboutMe}
+                                        />}
+                                </div>  : ''
+                        }
+
+                        {
+                            userInfo?.privateProfile === true && currentUserId !== id && <h1>Профиль пользователя закрыт</h1>
+                        }
+                        {
+                            userInfo?.privateProfile !== true && currentUserId !== id && (
+                                <div>
+                                    <p>Имя пользователя: <span>{userInfo?.firstName}</span></p>
+                                    <p>Фамилия пользователя: <span>{userInfo?.lastName}</span></p>
+                                </div>
+                            )
                         }
 
                     </div>

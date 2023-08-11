@@ -14,7 +14,6 @@ type propsType = {
     handleAboutMe: (value:string) => void;
 }
 const ProfileUpdate:FC<propsType> = ({aboutMe,handleAboutMe, updateProfile, subPagesProfile,handleFirstName,handleLastName,firstName,lastName}) => {
-
     const modules = {
         toolbar: [
             [{header: [1, 2, 3, 4, 5, 6, false]}],

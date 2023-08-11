@@ -25,15 +25,32 @@
   }
 }
 
-.containerPrivate{
-  display: flex;
-  align-items: center;
-  gap: 0 10px;
-
-  label{
-    font-weight: 600;
-    font-size: 14px;
-    color: #333;
-    line-height: 16px;
+.clickPrivateProfile{
+  cursor: pointer;
+  border: 2px solid #d5dddf;
+  border-radius: 5px;
+  padding: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  text-align: center;
+}
+.current{
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #777;
+  font-weight: 500;
+  span{
+    display: block;
+    font-weight: 700;
+    color: #000000;
   }
+}
+.exitProfile{
+  color: #ff0028;
+  font-weight: 600;
+}
+.OpenProfile{
+  color: #00a85e;
+  font-weight: 600;
 }
