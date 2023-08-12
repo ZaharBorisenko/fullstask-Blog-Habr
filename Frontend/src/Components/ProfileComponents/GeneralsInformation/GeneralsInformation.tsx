@@ -1,29 +1,79 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, useRef, useState} from 'react';
 import st from './GeneralsInformation.module.scss';
 import {IUser} from "../../../redux/Slices/postSlice";
 import {formatDate} from "../../../utils/formatDateUser";
-import {useAppSelector} from "../../../redux/hook/hook";
 import {useParams} from "react-router-dom";
-
+import edit from '../../../assets/img/editName.png';
+import editAvatar from '../../../assets/img/editAvatar.png';
 type propsType = {
     userInfo: IUser | null;
     currentUserId: number;
     privateProfile: boolean;
     handlePrivateProfile: (value:any) => void;
+    nickName:string
+    handleNickName: (value:string) => void;
 }
 
-const GeneralsInformation: FC<propsType> = ({updateProfile,handlePrivateProfile,privateProfile,userInfo, currentUserId}) => {
+const GeneralsInformation: FC<propsType> = ({changeAvatarFiles, nickName, handleNickName, handlePrivateProfile,privateProfile,userInfo, currentUserId}) => {
     const checkboxProfile = useRef<any>();
     const {id} = useParams();
+
+    const [clickUpdateNickName, setClickUpdateNickName] = useState<boolean>(false);
+    const [clickUpdateAvatar, setClickUpdateAvatar] = useState<boolean>(false);
+    const refFilesAvatar = useRef<any>();
+
     return (
         <div className={st.containerInfo}>
             {
                 userInfo === null ? '' :
                     <div className={st.info}>
-                        <img className={st.avatar} src={userInfo.avatar} alt=""/>
+
+
+                        <div className={st.containerAvatar}>
+                            <img className={st.avatar} src={userInfo.avatar} alt=""/>
+                            <img onClick={() => refFilesAvatar.current.click()} className={st.editAvatar} src={editAvatar} alt=""/>
+                            <input type="file" onClick={() => setClickUpdateAvatar(true)} ref={refFilesAvatar} onChange={changeAvatarFiles} hidden={true}/>
+                            {
+                                clickUpdateAvatar && <p className={st.current}>Не забудьте нажать на кнопку "Обновить данные"</p>
+                            }
+                        </div>
+
+
                         <div className={st.name}>
-                            <p>{currentUserId === userInfo._id ? 'Ваш никнейм: ' : 'Никнейм пользователя: '}</p>
-                            <span>{userInfo.nickName}</span>
+                            <div>{currentUserId === userInfo._id ? 'Ваш никнейм: ' : 'Никнейм пользователя: '}</div>
+
+
+                            <div>
+                                <div>
+                                    {
+                                        clickUpdateNickName ?
+                                            <div>
+                                                <input
+                                                    className={st.inputEdit}
+                                                    value={nickName}
+                                                    onChange={event => handleNickName(event.target.value)}
+                                                    type="text"
+                                                />
+                                            </div>
+                                            :
+                                            <div className={st.containerNickName}>
+                                                <span>{userInfo.nickName}</span>
+                                                <img
+                                                    onClick={() => setClickUpdateNickName(true)}
+                                                    className={st.editImg}
+                                                    src={edit}
+                                                    alt=""
+                                                />
+                                            </div>
+
+                                    }
+                                </div>
+                                {
+                                    clickUpdateNickName ? <p className={st.current}>Не забудьте нажать на кнопку "Обновить данные</p> : ''
+                                }
+                            </div>
+
+
                         </div>
                         <div className={st.dateRegister}><p>Дата регистрации:</p>
                             <span>{formatDate(userInfo.createdAt)}</span>

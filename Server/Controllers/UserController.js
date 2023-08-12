@@ -111,7 +111,9 @@ export const updateProfiles = async (req,res) => {
         const newFirstName = req.body.firstName;
         const newLastName = req.body.lastName;
         const newAboutMe = req.body.aboutMe;
-        const newPrivateProfile = req.body.privateProfile
+        const newPrivateProfile = req.body.privateProfile;
+        const newNickName = req.body.nickName;
+        const newAvatar = req.body.avatar;
 
         if (newFirstName) {
             user.firstName = newFirstName;
@@ -125,6 +127,12 @@ export const updateProfiles = async (req,res) => {
         }
         if (newPrivateProfile !== undefined){
             user.privateProfile = newPrivateProfile;
+        }
+        if (newNickName){
+            user.nickName = newNickName;
+        }
+        if (newAvatar){
+            user.avatar = newAvatar;
         }
 
         await user.save();

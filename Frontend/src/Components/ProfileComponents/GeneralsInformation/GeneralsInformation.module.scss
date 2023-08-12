@@ -54,3 +54,38 @@
   color: #00a85e;
   font-weight: 600;
 }
+
+.editImg{
+  cursor: pointer;
+  width: 20px;
+}
+.containerNickName{
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  gap: 0 10px;
+}
+
+.inputEdit{
+  margin-top: 10px;
+  border: 2px solid #d5dddf;
+  border-radius: 5px;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 20px;
+  width: 200px;
+}
+.containerAvatar{
+  position: relative;
+}
+.editAvatar{
+  cursor: pointer;
+  border: 3px solid #d5dddf;
+  padding: 5px;
+  top: 1px;
+  right: 10px;
+  position: absolute;
+  width: 40px;
+  border-radius: 5px;
+}
