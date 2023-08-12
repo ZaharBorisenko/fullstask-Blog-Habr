@@ -23,7 +23,7 @@ const Profile = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const [privateProfile, setPrivateProfile] = useState<boolean>(true);
     const [profileUpdated, setProfileUpdated] = useState(false);
-    console.log(`profileUp ${profileUpdated}`)
+
 
     const userProfile = async () => {
         const response = await axios.get(`/user/${id}`)

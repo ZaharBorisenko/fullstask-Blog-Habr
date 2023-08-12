@@ -26,6 +26,7 @@ export const register = async (req, res) => {
             avatar: data.avatar,
             nickName: data.nickName,
             email: data.email,
+            privateProfile: data.privateProfile,
             passwordHash,
         })
         const user = await doc.save();
@@ -110,6 +111,7 @@ export const updateProfiles = async (req,res) => {
         const newFirstName = req.body.firstName;
         const newLastName = req.body.lastName;
         const newAboutMe = req.body.aboutMe;
+        const newPrivateProfile = req.body.privateProfile
 
         if (newFirstName) {
             user.firstName = newFirstName;
@@ -120,6 +122,9 @@ export const updateProfiles = async (req,res) => {
         }
         if (newAboutMe) {
             user.aboutMe = newAboutMe;
+        }
+        if (newPrivateProfile !== undefined){
+            user.privateProfile = newPrivateProfile;
         }
 
         await user.save();
