@@ -2,6 +2,8 @@ import {validationResult} from "express-validator";
 import bcrypt from "bcrypt";
 import Users from "../Models/User.js";
 import jwt from "jsonwebtoken";
+import user from "../Models/User.js";
+import PostModel from "../Models/Post.js";
 
 export const register = async (req, res) => {
     const data = req.body;
@@ -163,3 +165,12 @@ export const profileUser = async (req, res) => {
         console.log(e);
     }
 };
+
+export const getAllUsers = async (req,res) => {
+    try {
+        const posts = await Users.find();
+        res.json(posts)
+    }catch (e) {
+        res.status(404).json({message: 'Ошибка при получении пользователей'})
+    }
+}

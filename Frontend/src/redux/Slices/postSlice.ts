@@ -42,7 +42,6 @@ const initialState: postState = {
     status: '',
 }
 
-
 export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
     'posts/fetchPost',
     async () => {

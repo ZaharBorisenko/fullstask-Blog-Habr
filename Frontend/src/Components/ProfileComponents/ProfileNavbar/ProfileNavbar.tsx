@@ -1,18 +1,10 @@
-import React, {FC} from 'react';
+import React, from 'react';
 import st from './ProfileNavbar.module.scss';
 
-type propsType = {
-    handleSubPagesProfile: (number:number) => void;
-    subPagesProfile: number;
-}
-const ProfileNavbar:FC<propsType> = ({handleSubPagesProfile,subPagesProfile}) => {
+const ProfileNavbar = () => {
     return (
         <div className={st.navbar}>
-            <div
-                className={`${st.link} ${subPagesProfile === 1 ? st.linkActive : ''}`}
-                onClick={() => handleSubPagesProfile(1)}>
-                Профиль
-            </div>
+            <div className={`${st.link} ${st.linkActive}`}>Профиль</div>
         </div>
     );
 };

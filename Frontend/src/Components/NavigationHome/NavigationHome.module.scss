@@ -1,0 +1,35 @@
+.container{
+  margin-bottom: 10px;
+
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+  width: 780px;
+}
+
+.content{
+  padding: 15px 20px;
+}
+.title{
+  font-size: 20px;
+  color: #333;
+  font-weight: 700;
+  line-height: 1.75rem;
+  margin-bottom: 20px;
+}
+.navbarSettings{
+  display: flex;
+  gap: 0 20px;
+  p{
+    color: #6f7577;
+    font-size: 18px;
+    text-decoration: none;
+    font-weight:500;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+.active{
+  color: #548eaa;
+  padding-bottom: 10px;
+  border-bottom: 3.5px solid #548eaa;
+}

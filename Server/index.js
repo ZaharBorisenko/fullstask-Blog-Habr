@@ -2,7 +2,7 @@ import express from "express";
 import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
-import {login, profile, profileUser, register, updateProfiles} from "./Controllers/UserController.js";
+import {getAllUsers, login, profile, profileUser, register, updateProfiles} from "./Controllers/UserController.js";
 import {create, getAll, getOnePost, getPopularity, remove, update} from "./Controllers/PostController.js";
 import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
@@ -43,6 +43,7 @@ app.get('/posts/:id', getOnePost)
 app.post('/posts',checkAuth,createPostValidation,validationErrors , create)
 app.delete('/posts/:id', checkAuth, remove)
 app.patch('/posts/:id', checkAuth, updatePostValidation,validationErrors, update)
+app.get('/users', getAllUsers);
 
 
 

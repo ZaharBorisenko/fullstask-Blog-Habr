@@ -31,8 +31,11 @@ const GeneralsInformation: FC<propsType> = ({changeAvatarFiles, nickName, handle
 
                         <div className={st.containerAvatar}>
                             <img className={st.avatar} src={userInfo.avatar} alt=""/>
-                            <img onClick={() => refFilesAvatar.current.click()} className={st.editAvatar} src={editAvatar} alt=""/>
-                            <input type="file" onClick={() => setClickUpdateAvatar(true)} ref={refFilesAvatar} onChange={changeAvatarFiles} hidden={true}/>
+                            {
+                                currentUserId === id &&
+                                <div><img onClick={() => refFilesAvatar.current.click()} className={st.editAvatar} src={editAvatar} alt=""/>
+                                    <input type="file" onClick={() => setClickUpdateAvatar(true)} ref={refFilesAvatar} onChange={changeAvatarFiles} hidden={true}/></div>
+                            }
                             {
                                 clickUpdateAvatar && <p className={st.current}>Не забудьте нажать на кнопку "Обновить данные"</p>
                             }
@@ -55,17 +58,20 @@ const GeneralsInformation: FC<propsType> = ({changeAvatarFiles, nickName, handle
                                                     type="text"
                                                 />
                                             </div>
-                                            :
-                                            <div className={st.containerNickName}>
-                                                <span>{userInfo.nickName}</span>
-                                                <img
-                                                    onClick={() => setClickUpdateNickName(true)}
-                                                    className={st.editImg}
-                                                    src={edit}
-                                                    alt=""
-                                                />
-                                            </div>
+                                            : <span>{userInfo.nickName}</span>
+                                    }
 
+                                    {
+                                        currentUserId === id &&
+                                        <div className={st.containerNickName}>
+                                            <span>{userInfo.nickName}</span>
+                                            <img
+                                                onClick={() => setClickUpdateNickName(true)}
+                                                className={st.editImg}
+                                                src={edit}
+                                                alt=""
+                                            />
+                                        </div>
                                     }
                                 </div>
                                 {

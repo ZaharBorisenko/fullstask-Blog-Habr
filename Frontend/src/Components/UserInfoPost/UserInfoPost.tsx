@@ -4,8 +4,6 @@ import {formatDate} from "../../utils/formatDate";
 import {Link} from "react-router-dom";
 
 const UserInfoPost = ({post}) => {
-    console.log(post)
-    console.log(`пользователь создавший пост: ${post.user._id}`)
     return (
         <div className={st.user}>
             <img className={st.avatar} src={post.user.avatar} alt=""/>
