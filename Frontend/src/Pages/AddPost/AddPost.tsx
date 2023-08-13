@@ -71,6 +71,7 @@ export const AddPost = () => {
             setStageAdvancedSettings(true)
         }
     }
+    console.log(tags);
 
     const handleChangeFile = async (event) => {
         try {
@@ -101,12 +102,16 @@ export const AddPost = () => {
        }
     },[])
 
+    const keywordRefactor = (tags) => {
+        if (tags) return tags.map(item => item.value)
+    }
+
     const createSubmitPost = async () => {
         try {
             const params = {
                 title:title,
                 text:text,
-                tags:tags,
+                tags:keywordRefactor(tags),
                 imagePost: `${imageUrl === '' ? 'uploads/Image-Place-Holder.jpg' : imageUrl}`,
                 keywords: keywords,
                 difficultyLevel: level,

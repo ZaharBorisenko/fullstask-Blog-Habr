@@ -11,7 +11,7 @@ import PostDetails from "./Pages/PostDetails/PostDetails";
 import {useAppDispatch, useAppSelector} from "./redux/hook/hook";
 import {useEffect} from "react";
 import {fetchProfile, selectIsAuthenticated} from "./redux/Slices/authSlice";
-import UpdatePost from "./Pages/UpdatePost/UpdatePost";
+import SpecificTagPosts from "./Pages/SpecificTagPosts/SpecificTagPosts";
 
 const App = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
@@ -31,7 +31,8 @@ const App = () => {
                    <Route path="/start" element={<BecomeAuthor/>}/>
                    <Route path="/user/:id" element={<Profile/>}/>
                    <Route path="/register" element={<Register/>}/>
-                   <Route path="/login" element={<Login/>}/>zz
+                   <Route path="/login" element={<Login/>}/>
+                   <Route path="/posts/tag/:tag" element={<SpecificTagPosts/>}/>
                </Routes>
            </div>
        </>

@@ -8,6 +8,7 @@ import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
 import validationErrors from "./middleware/validationErrors.js";
 import cors from 'cors'
+import {IdTags} from "./Controllers/TagsController.js";
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -34,7 +35,7 @@ app.post('/register', registerValid, validationErrors  , register);
 app.post('/login', loginValid,validationErrors , login);
 app.get('/profile', checkAuth, profile);
 app.get('/user/:id', checkAuth, profileUser);
-app.patch('/user/:id',checkAuth, updateProfiles)
+app.patch('/user/:id',checkAuth, updateProfiles);
 
 //ПОСТЫ
 app.get('/posts', getAll)
@@ -44,7 +45,7 @@ app.post('/posts',checkAuth,createPostValidation,validationErrors , create)
 app.delete('/posts/:id', checkAuth, remove)
 app.patch('/posts/:id', checkAuth, updatePostValidation,validationErrors, update)
 app.get('/users', getAllUsers);
-
+app.get('/posts/tag/:tag',IdTags);
 
 
 

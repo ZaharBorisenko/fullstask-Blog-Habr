@@ -1,5 +1,6 @@
 import React, {FC, LegacyRef, useRef} from 'react';
 import st from './advancedSettingsPost.module.scss'
+import InputTags from "../InputTags/InputTags";
 
 type PropsType = {
     tags:string,
@@ -35,7 +36,8 @@ const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime,
 
                 <div>
                     <label style={{marginTop: "20px"}} className={st.label}>*Теги</label>
-                    <input className={st.input} value={tags} onChange={event => handleSetTags(event.target.value)} placeholder="Теги"/>
+                    {/*<input className={st.input} value={tags} onChange={event => handleSetTags(event.target.value)} placeholder="Теги"/>*/}
+                    <InputTags value={tags} handleSetKeywords={handleSetTags} placeholder="Ключевые слова"/>
                     <p className={st.correction}>Выберите от 1 до 5 тегов по теме публикации</p>
 
                     {

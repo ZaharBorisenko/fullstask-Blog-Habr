@@ -46,13 +46,22 @@ export const getOnePost = async (req, res) => {
 
 export const create = async (req, res) => {
     const data = req.body;
+
+    function cleanKeywords(inputKeywords) {
+         // Удаляем пустые ключевые слова
+        return inputKeywords
+            .split(',') // Сначала разбиваем строку по запятым
+            .map(keyword => keyword.trim()) // Удаляем начальные и конечные пробелы у каждого ключевого слова
+            .filter(keyword => keyword !== '');
+    }
+
     try {
         const doc = new PostModel({
             title: data.title,
             text: data.text,
-            tags: data.tags.split(' '),
+            tags: data.tags,
             imagePost: data.imagePost,
-            keywords: data.keywords.split(' '),
+            keywords: cleanKeywords(data.keywords),
             difficultyLevel: data.difficultyLevel,
             readingTime: data.readingTime,
 

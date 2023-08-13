@@ -15,7 +15,7 @@ const Home = () => {
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
     const status = useAppSelector(state => state.posts.status);
-    const [pageSettings, setPageSettings] = useState(3);
+    const [pageSettings, setPageSettings] = useState(1);
 
     const handlePageSettings = (value) => {
         setPageSettings(value);

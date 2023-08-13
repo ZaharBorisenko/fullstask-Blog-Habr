@@ -38,7 +38,7 @@ const PostDetails = () => {
                                     <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
                                 </div>
 
-                                <h1>Заголовок {post.title}</h1>
+                                <h1>{post.title}</h1>
 
                                 <div className={st.info}>
 
@@ -58,8 +58,8 @@ const PostDetails = () => {
 
                                 <div className={st.keywords}>
                                     {
-                                        post.keywords.map((p, index) => (
-                                            <span key={index}>{p}* </span>
+                                        post.keywords?.map((p, index) => (
+                                            <span key={index}>{p}*</span>
                                         ))
                                     }
                                 </div>
@@ -76,7 +76,7 @@ const PostDetails = () => {
                         <p>Теги:</p>
                         {
                             post.tags?.map((tags,index) => (
-                                <Link to={`/`} key={index}>{tags}</Link>
+                                <Link to={`/posts/tag/${tags}`} key={index}>{tags}</Link>
                             ))
                         }
                     </div>
@@ -85,7 +85,7 @@ const PostDetails = () => {
                         <p>Ключевые слова:</p>
                         {
                             post.keywords?.map((keyword,index) => (
-                                <Link to={`/`} key={index}>{keyword}</Link>
+                                <Link to={`/`} key={index}>{keyword},</Link>
                             ))
                         }
                     </div>

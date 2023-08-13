@@ -1,0 +1,26 @@
+.container{
+  display: flex;
+  max-width: 1100px;
+  margin: 0 auto;
+  gap: 15px;
+  align-items: flex-start;
+}
+.title{
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+  width: 780px;
+  margin-bottom: 10px;
+  p{
+    padding: 15px 20px;
+    font-size: 30px;
+    color: #202020;
+    font-weight: 700;
+    line-height: 1.75rem;
+    span{
+      font-family: 'Roboto Slab', serif;
+      border: 2px dotted #548eaa;
+      padding: 5px;
+      border-radius: 5px;
+    }
+  }
+}
