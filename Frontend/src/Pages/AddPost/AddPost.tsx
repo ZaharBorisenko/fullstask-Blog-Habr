@@ -105,6 +105,7 @@ export const AddPost = () => {
     const keywordRefactor = (tags) => {
         if (tags) return tags.map(item => item.value)
     }
+    console.log(keywords);
 
     const createSubmitPost = async () => {
         try {

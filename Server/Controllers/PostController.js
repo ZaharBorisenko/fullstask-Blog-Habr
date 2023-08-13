@@ -109,6 +109,15 @@ export const remove = async (req, res) => {
 
 export const update = async (req, res) => {
     const data = req.body;
+
+    function cleanKeywords(inputKeywords) {
+        // Удаляем пустые ключевые слова
+        return inputKeywords
+            .split(',') // Сначала разбиваем строку по запятым
+            .map(keyword => keyword.trim()) // Удаляем начальные и конечные пробелы у каждого ключевого слова
+            .filter(keyword => keyword !== '');
+    }
+
     try {
         const postId = req.params.id;
 
@@ -119,7 +128,7 @@ export const update = async (req, res) => {
                 text: data.text,
                 tags: data.tags,
                 imagePost: data.imagePost,
-                keywords: data.keywords,
+                keywords: cleanKeywords(data.keywords),
                 user: data.userId
             }
         )

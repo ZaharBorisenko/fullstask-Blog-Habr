@@ -4,6 +4,7 @@ import {IUser} from "../../redux/Slices/postSlice";
 import 'react-quill/dist/quill.snow.css';
 import st from './settingPost.module.scss'
 import '../../assets/styles/global.css'
+import {Link} from "react-router-dom";
 
 type propsTypes = {
     title: string,
@@ -39,7 +40,7 @@ const SettingsPost: FC<propsTypes> = ({isEditPost,title, text, handleSetText, ha
 
             {!isEditPost ? <div className={st.user}>
                 <img className={st.avatar} src={currentUser.avatar} alt=""/>
-                <p className={st.name}>{currentUser.nickName}</p>
+                <Link to={`/user/${currentUser._id}`} className={st.name}>{currentUser.nickName}</Link>
             </div> : ''}
 
             <div className={st.inputs}>

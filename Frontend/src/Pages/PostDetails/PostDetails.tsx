@@ -59,7 +59,7 @@ const PostDetails = () => {
                                 <div className={st.keywords}>
                                     {
                                         post.keywords?.map((p, index) => (
-                                            <span key={index}>{p}*</span>
+                                            <Link to={`/posts/tag/${p}`} key={index}>{p}*</Link>
                                         ))
                                     }
                                 </div>
@@ -85,7 +85,7 @@ const PostDetails = () => {
                         <p>Ключевые слова:</p>
                         {
                             post.keywords?.map((keyword,index) => (
-                                <Link to={`/`} key={index}>{keyword},</Link>
+                                <Link to={`/posts/keywords/${keyword}`} key={index}>{keyword},</Link>
                             ))
                         }
                     </div>

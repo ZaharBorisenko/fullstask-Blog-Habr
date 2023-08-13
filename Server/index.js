@@ -8,7 +8,7 @@ import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
 import validationErrors from "./middleware/validationErrors.js";
 import cors from 'cors'
-import {IdTags} from "./Controllers/TagsController.js";
+import {IdKeywords, IdTags} from "./Controllers/TagsController.js";
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -46,6 +46,7 @@ app.delete('/posts/:id', checkAuth, remove)
 app.patch('/posts/:id', checkAuth, updatePostValidation,validationErrors, update)
 app.get('/users', getAllUsers);
 app.get('/posts/tag/:tag',IdTags);
+app.get('/posts/keywords/:keywords',IdKeywords);
 
 
 

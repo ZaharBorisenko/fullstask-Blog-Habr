@@ -9,6 +9,7 @@ const AllUsers = () => {
         const data = response.data
         setUsers(data)
     }
+    console.log(users);
 
     useEffect(() => {
        getAllUsers();
@@ -20,9 +21,7 @@ const AllUsers = () => {
                         <div className={st.title}>Топ 100 пользователей:</div>
                         <div className={st.rating}>Рейтинг</div>
                     </div>
-                    <div>
                         <UserCard users={users}/>
-                    </div>
             </div>
         </div>
     );

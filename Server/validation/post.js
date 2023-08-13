@@ -13,6 +13,6 @@ export const updatePostValidation = [
     body('text','Введите текст статьи(Не менее 1 символа)').optional().isLength({min: 1}).isString(),
     body('tags','Выберите теги для статьи').optional().isArray(), //isString??
     body('imagePost', 'неверная ссылка на изображение').optional().isString(),
-    body('keywords', 'Напишите ключевые слова').optional().isArray(), //isString??
+    body('keywords', 'Напишите ключевые слова').optional().isString(), //isString??
     body('difficultyLevel', 'Выберите уровень сложности').optional().isString(),
 ]
