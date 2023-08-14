@@ -20,6 +20,8 @@ type PropsType = {
 
 const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime, readingTime,errorMessage,tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
 
+    console.log(tags.length)
+    console.log(keywords.length)
     //правильное склонение
     function declOfNum(number, words) {
         return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
@@ -36,12 +38,10 @@ const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime,
 
                 <div>
                     <label style={{marginTop: "20px"}} className={st.label}>*Теги</label>
-                    {/*<input className={st.input} value={tags} onChange={event => handleSetTags(event.target.value)} placeholder="Теги"/>*/}
                     <InputTags value={tags} handleSetKeywords={handleSetTags} placeholder="Ключевые слова"/>
                     <p className={st.correction}>Выберите от 1 до 5 тегов по теме публикации</p>
-
                     {
-                        tags.length < 1 && <p className={st.ErrorInputSettings}>{errorMessage[0]?.msg}</p>
+                        tags.length < 1 && <p className={st.ErrorInputSettings}>{errorMessage[0]?.msg || errorMessage[1]?.msg}</p>
                     }
                 </div>
 
@@ -50,7 +50,7 @@ const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime,
                     <input className={st.input} value={keywords} onChange={event => handleSetKeywords(event.target.value)} placeholder="Ключевые слова"/>
                     <p className={st.correction}>Введите сюда от 1 до 10 ключевых слов, отделяя их запятыми</p>
                     {
-                        keywords.length < 1 && <p className={st.ErrorInputSettings}>{errorMessage[1]?.msg}</p>
+                        keywords.length < 1 && <p className={st.ErrorInputSettings}>{errorMessage[1]?.msg || errorMessage[0]?.msg}</p>
                     }
                 </div>
 

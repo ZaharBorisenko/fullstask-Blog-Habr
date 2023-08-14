@@ -94,7 +94,7 @@ export const AddPost = () => {
                 setTitle(data.title);
                 setText(data.text);
                 setTags(data.tags);
-                setKeywords(data.keywords)
+                setKeywords(data.keywords.join(','));
                 setLevel(data.difficultyLevel)
                 setReadingTime(data.readingTime)
                 setImageUrl(data.imagePost)

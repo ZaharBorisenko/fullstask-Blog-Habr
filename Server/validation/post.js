@@ -11,8 +11,15 @@ export const createPostValidation = [
 export const updatePostValidation = [
     body('title','Введите заголовок статьи(Не менее 1 символа)').optional().isLength({min: 1}).isString(),
     body('text','Введите текст статьи(Не менее 1 символа)').optional().isLength({min: 1}).isString(),
-    body('tags','Выберите теги для статьи').optional().isArray(), //isString??
+
+    body('tags','Поле является обязательным!').optional().isArray().custom(value => {
+        if (value.length < 1) {
+            throw new Error('Выберите как минимум один тег');
+        }
+        return true;
+    }),
+
     body('imagePost', 'неверная ссылка на изображение').optional().isString(),
-    body('keywords', 'Напишите ключевые слова').optional().isString(), //isString??
+    body('keywords', 'Поле является обязательным!').isLength({min: 1}).optional().isString(), //isString??
     body('difficultyLevel', 'Выберите уровень сложности').optional().isString(),
 ]
