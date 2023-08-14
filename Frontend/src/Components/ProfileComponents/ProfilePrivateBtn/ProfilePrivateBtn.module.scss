@@ -1,0 +1,30 @@
+.container{
+  margin-top: 30px;
+}
+.privateBtn{
+  background-color: transparent;
+  padding: 15px 20px;
+  width: 80%;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  outline: none;
+}
+
+.privateBtnExit{
+  border: 3.5px solid #ff0028;
+  color: #a30000;
+}
+.privateBtnOpen{
+  border: 3.5px solid #00a85e;
+  color: #004a29;
+}
+
+.correction{
+  margin-top: 5px;
+  font-size: 12px;
+  line-height: 18px;
+  color: #777;
+  font-weight: 500;
+}

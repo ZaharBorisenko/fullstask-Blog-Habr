@@ -1,19 +1,19 @@
 import React, {FC, useEffect, useState} from 'react';
 import st from './ProfileUpdate.module.scss'
-import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
-import {modules} from "../../../utils/modulesProfileEdit";
 import axios from "../../../axios";
 import {IUser} from "../../../redux/Slices/postSlice";
 import {useAppSelector} from "../../../redux/hook/hook";
 import {useParams} from "react-router-dom";
+import ProfileUpdateInput from "../ProfileUpdateInput/ProfileUpdateInput";
+import ProfileOpen from "../ProfileOpen/ProfileOpen";
+import ProfileExit from "../ProfileExit/ProfileExit";
 
 
 const ProfileUpdate = () => {
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
     const {id} = useParams();
-
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
     const [aboutMe, setAboutMe] = useState("");
@@ -27,7 +27,6 @@ const ProfileUpdate = () => {
         setLastName(data.lastName || '');
         setAboutMe(data.aboutMe || '');
     }
-    console.log(`Профиль обновление:${update}`);
     const updateProfile = async () => {
         try {
             const params = {
@@ -48,38 +47,36 @@ const ProfileUpdate = () => {
 
     useEffect(() => {
         userProfile()
-        console.log(`RENDER`);
-    },[update])
+        // console.log(`RENDER`);
+    }, [update])
 
     return (
         <div>
-            <div>
-                <div className={st.containerInput}>
-                    <div>
-                        <label className={st.label}>Ваше имя:</label>
-                        <input
-                            value={firstName}
-                            onChange={(event) => setFirstName(event.target.value)}
-                            className={st.input} type="text"
-                            placeholder="Имя.."/>
-                    </div>
-                    <div>
-                        <label className={st.label}>Ваша фамалия:</label>
-                        <input
-                            value={lastName}
-                            onChange={(event) => setLastName(event.target.value)}
-                            className={st.input} type="text"
-                            placeholder="Фамилия..."/>
-                    </div>
-                </div>
+            { userInfo?.privateProfile === false && <div className={st.title}>Профиль</div>}
+            {currentUserId === id &&
+                <ProfileUpdateInput
+                    firstName={firstName}
+                    lastName={lastName}
+                    aboutMe={aboutMe}
+                    UpdateProfileInfo={UpdateProfileInfo}
+                    setFirstName={setFirstName}
+                    setLastName={setLastName}
+                    setAboutMe={setAboutMe}
+                />
+            }
 
-                <div className={st.about}>
-                    <label className={st.label}>Тут вы можете рассказать о себе:</label>
-                    <ReactQuill theme="snow" value={aboutMe} onChange={setAboutMe} modules={modules}/>
-                </div>
+            {currentUserId !== id && userInfo?.privateProfile === true &&
+                <ProfileExit/>
+            }
+            {currentUserId !== id && userInfo?.privateProfile === false &&
+                <ProfileOpen
+                    firstName={firstName}
+                    lastName={lastName}
+                    aboutMe={aboutMe}
+                />
 
-                <button onClick={UpdateProfileInfo} className={st.button}>Обновить данные</button>
-            </div>
+            }
+
         </div>
     );
 };

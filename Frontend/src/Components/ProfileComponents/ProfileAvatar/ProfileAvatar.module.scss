@@ -1,0 +1,25 @@
+.avatar{
+  width: 200px;
+  border-radius: 5px;
+}
+.containerAvatar{
+  position: relative;
+}
+.iconEditAvatar{
+  border-radius: 5px;
+  border: 2px solid #548eaa;
+  position: absolute;
+  top: 0;
+  right: 20px;
+  cursor: pointer;
+}
+
+.avatarUpload{
+  margin-top: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #fff;
+  border: 2px solid silver;
+  color: #909090;
+}

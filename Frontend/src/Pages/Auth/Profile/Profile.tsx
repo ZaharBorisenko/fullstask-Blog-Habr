@@ -9,6 +9,7 @@ import ProfileNavbar from "../../../Components/ProfileComponents/ProfileNavbar/P
 import GeneralsInformation from "../../../Components/ProfileComponents/GeneralsInformation/GeneralsInformation";
 import ProfileSettings from "../../../Components/ProfileComponents/ProfileSettings/ProfileSettings";
 import ProfileUpdate from "../../../Components/ProfileComponents/ProfileUpdate/ProfileUpdate";
+import ProfileInfo from "../../../Components/ProfileComponents/ProfileInfo/ProfileInfo";
 
 const Profile = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
@@ -26,7 +27,7 @@ const Profile = () => {
 
     return (
         <div className={st.container}>
-
+            <ProfileInfo/>
             <div className={st.editUserInfo}>
                 <div className={st.editContent}>
                     <div>
