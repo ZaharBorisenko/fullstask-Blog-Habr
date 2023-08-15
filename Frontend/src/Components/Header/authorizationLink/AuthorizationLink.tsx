@@ -1,8 +1,9 @@
 import React, {FC} from 'react';
 import st from "./AuthorizationLink.module.scss";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
 import {logOut} from "../../../redux/Slices/authSlice";
+import {toast} from "react-toastify";
 
 type AuthorizationLinkType = {
     isAuth: boolean
@@ -14,7 +15,10 @@ type AuthorizationLinkType = {
 const AuthorizationLink:FC<AuthorizationLinkType> = ({userId,isAuth,setOpenAuthorization,openAuthorization}) => {
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
-        if (window.confirm('Вы точно хотите выйти?')) dispatch(logOut())
+        if (window.confirm('Вы точно хотите выйти?')) {
+            dispatch(logOut())
+            toast.warn('Вы вышли из аккаунта!');
+        }
         window.localStorage.removeItem('token');
     }
 

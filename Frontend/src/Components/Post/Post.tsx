@@ -8,40 +8,28 @@ import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchDeletePost} from "../../redux/Slices/postSlice";
 import UserInfoPost from "../UserInfoPost/UserInfoPost";
 import { AiFillDelete,AiFillEdit } from "react-icons/ai";
+import SomethingPost from "./SomethingPost";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
     console.log(post)
-    const dispatch = useAppDispatch();
-    const removePost = (id) => {
-        dispatch(fetchDeletePost(id))
-    }
+
     return (
         <div>
 
             <div className={st.post}>
                 <div className={st.container}>
 
-
-                    {
-                        post?.user._id === currentUserId
-                            ?
-                            <div className={st.interaction}>
-                                <Link to={`/posts/${post._id}/edit`}>
-                                   <AiFillEdit color={"#333"} fontSize={"32px"}/>
-                                </Link>
-
-                                <AiFillDelete className={st.deleteIcon} color={"#333"} fontSize={"32px"} onClick={() => {
-                                    if (window.confirm('Вы точно хотите удалить пост?',)) removePost(post._id)
-                                }}>
-                                    Удалить пост
-                                </AiFillDelete>
-                            </div>
-                            :
-                            ''
-                    }
-
-                    <UserInfoPost post={post}/>
+                    <div className={st.containerDelete}>
+                        <UserInfoPost post={post}/>
+                        {
+                            post?.user._id === currentUserId
+                                ?
+                                <SomethingPost post={post}/>
+                                :
+                                ''
+                        }
+                    </div>
 
                     <Link className={st.title} to={`/posts/${post._id}`}>{post.title}</Link>
 
@@ -62,6 +50,8 @@ const Post = ({post}) => {
                             <img src={view} alt=""/>
                             <div>{post.viewCount}</div>
                         </div>
+
+
                     </div>
 
                     <div className={st.keywords}>

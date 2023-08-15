@@ -8,9 +8,12 @@ import PostMini from "../../Components/MiniPost/PostMini";
 import {formatDate} from "../../utils/formatDate";
 import time from "../../assets/img/time.png";
 import view from "../../assets/img/view.png";
+import SomethingPost from "../../Components/Post/SomethingPost";
+import {useAppSelector} from "../../redux/hook/hook";
 
 const PostDetails = () => {
     const {id} = useParams();
+    const currentUserId = useAppSelector(state => state.auth.data._id);
     const [post, setPost] = useState<PostType>({});
 
     const fetchPost = async () => {
@@ -32,11 +35,19 @@ const PostDetails = () => {
                     {
                         'user' in post && (
                             <div>
-                                <div className={st.user}>
-                                    <img className={st.avatar} src={post.user.avatar} alt=""/>
-                                    <p className={st.name}>{post.user.nickName}</p>
-                                    <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
+                                <div className={st.containerDelete}>
+                                    <div className={st.user}>
+                                        <img className={st.avatar} src={post.user.avatar} alt=""/>
+                                        <p className={st.name}>{post.user.nickName}</p>
+                                        <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
+                                    </div>
+
+                                    {
+                                        post?.user._id === currentUserId ? <SomethingPost post={post}/> : ''
+                                    }
+
                                 </div>
+
 
                                 <h1>{post.title}</h1>
 
@@ -56,6 +67,7 @@ const PostDetails = () => {
                                     </div>
                                 </div>
 
+
                                 <div className={st.keywords}>
                                     {
                                         post.keywords?.map((p, index) => (
@@ -69,7 +81,7 @@ const PostDetails = () => {
                     }
                     <img className={st.img} src={`http://localhost:4000/${post.imagePost}`} alt="error"/>
                     <div>
-                        <div dangerouslySetInnerHTML={{__html: post.text}}></div>
+                        <div className={st.editRedactor} dangerouslySetInnerHTML={{__html: post.text}}></div>
                     </div>
 
                     <div className={st.tagsDetails}>

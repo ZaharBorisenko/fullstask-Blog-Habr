@@ -6,6 +6,7 @@ import {useForm} from "react-hook-form";
 import st from '../Login/Login.module.scss'
 import {AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineUser} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri";
+import {toast} from "react-toastify";
 
 const Register = () => {
 
@@ -32,7 +33,12 @@ const Register = () => {
     const onSubmit = async (values: IValues) => {
         const data = await dispatch(fetchRegister(values));
         console.log(data)
-        if ('token' in data.payload) window.localStorage.setItem('token', data.payload.token);
+        if ('token' in data.payload) {
+            window.localStorage.setItem('token', data.payload.token)
+            toast.success("Вы успешно зарегистрировались!",{
+                autoClose: 2000,
+            })
+        };
     }
 
     useEffect(() => {

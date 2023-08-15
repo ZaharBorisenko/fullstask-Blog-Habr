@@ -115,9 +115,8 @@
 }
 
 .interaction{
-  position: absolute;
-  right: 20px;
   display: flex;
+  align-items: center;
   gap: 0 30px;
 }
 
@@ -186,4 +185,17 @@
 
 .deleteIcon{
   cursor: pointer;
+}
+
+.containerDelete{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.editRedactor{
+  font-size: 18px;
+  letter-spacing: .5px;
+  line-height: 25px;
+  font-weight: 500;
 }

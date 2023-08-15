@@ -31,14 +31,13 @@ const Home = () => {
         return posts.filter(post => post.user._id === currentUserId);
     }, [posts, currentUserId,pageSettings]);
 
-    const momoizedCashPost: PostType[] = useMemo(() => posts,[posts])
 
     return (
         <div style={{marginTop: "20px"}}>
             <div className={st.container}>
                 <div>
                     <NavigationHome pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
-                    {pageSettings == 1 && <AllPost momoizedCashPost={momoizedCashPost} status={status}/>}
+                    {pageSettings == 1 && <AllPost posts={posts} status={status}/>}
                     {pageSettings == 2 && <YourPost userPosts={userPosts} status={status}/>}
                     {pageSettings == 3 &&  <AllUsers/> }
                 </div>

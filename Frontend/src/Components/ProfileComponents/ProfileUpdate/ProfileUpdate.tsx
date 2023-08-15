@@ -8,6 +8,7 @@ import {useParams} from "react-router-dom";
 import ProfileUpdateInput from "../ProfileUpdateInput/ProfileUpdateInput";
 import ProfileOpen from "../ProfileOpen/ProfileOpen";
 import ProfileExit from "../ProfileExit/ProfileExit";
+import {toast} from "react-toastify";
 
 
 const ProfileUpdate = () => {
@@ -35,6 +36,7 @@ const ProfileUpdate = () => {
                 aboutMe,
             }
             const {data} = await axios.patch(`/user/${currentUserId}`, params);
+            toast.success('Информация успешно обновлена')
         } catch (e) {
             console.log(e);
         }

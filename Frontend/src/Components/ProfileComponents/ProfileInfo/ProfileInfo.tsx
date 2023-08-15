@@ -8,6 +8,7 @@ import ProfileNickName from "../ProfileNickName/ProfileNickName";
 import {IUser} from "../../../redux/Slices/postSlice";
 import {formatDate} from "../../../utils/formatDate";
 import ProfilePrivateBtn from "../ProfilePrivateBtn/ProfilePrivateBtn";
+import {toast} from "react-toastify";
 
 const ProfileInfo = () => {
     const {id} = useParams();
@@ -33,6 +34,9 @@ const ProfileInfo = () => {
                 nickName,
             }
             const {data} = await axios.patch(`/user/${currentUserId}`, params);
+            toast.success('Информация успешно обновлена',{
+                autoClose: 1500,
+            })
         } catch (e) {
             console.log(e)
         }
@@ -44,6 +48,9 @@ const ProfileInfo = () => {
                 privateProfile,
             }
             const {data} = await axios.patch(`/user/${currentUserId}`, params);
+            toast.success(`${privateProfile? 'Профиль успешно закрыт' : 'Профиль успешно открыт'}`,{
+                autoClose: 1500,
+            })
         } catch (e) {
             console.log(e)
         }

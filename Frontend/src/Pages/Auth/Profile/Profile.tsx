@@ -1,13 +1,8 @@
-import React, {useEffect, useState} from 'react';
-import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
-import {fetchProfile, selectIsAuthenticated} from "../../../redux/Slices/authSlice";
+import React, {useEffect, } from 'react';
+import {useAppSelector} from "../../../redux/hook/hook";
+import {selectIsAuthenticated} from "../../../redux/Slices/authSlice";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "../../../axios";
 import st from './Profile.module.scss';
-import {IUser} from "../../../redux/Slices/postSlice";
-import ProfileNavbar from "../../../Components/ProfileComponents/ProfileNavbar/ProfileNavbar";
-import GeneralsInformation from "../../../Components/ProfileComponents/GeneralsInformation/GeneralsInformation";
-import ProfileSettings from "../../../Components/ProfileComponents/ProfileSettings/ProfileSettings";
 import ProfileUpdate from "../../../Components/ProfileComponents/ProfileUpdate/ProfileUpdate";
 import ProfileInfo from "../../../Components/ProfileComponents/ProfileInfo/ProfileInfo";
 
@@ -17,8 +12,6 @@ const Profile = () => {
     const navigate = useNavigate();
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
-
-
 
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')

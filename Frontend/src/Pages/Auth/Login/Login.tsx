@@ -6,6 +6,7 @@ import {Link, useNavigate} from "react-router-dom";
 import st from './Login.module.scss';
 import {AiOutlineMail,AiOutlineEyeInvisible,AiOutlineEye} from "react-icons/ai";
 import {RiLockPasswordLine} from "react-icons/ri";
+import {toast} from "react-toastify";
 
 const Login = () => {
     const dispatch = useAppDispatch();
@@ -29,8 +30,12 @@ const Login = () => {
 
     const onSubmit = async (values: IValues) => {
         const data = await dispatch(fetchLogin(values));
-        console.log(data)
-        if ('token' in data.payload) window.localStorage.setItem('token', data.payload.token);
+        if ('token' in data.payload) {
+            window.localStorage.setItem('token', data.payload.token)
+            toast.success("Вы успешно вошли!",{
+                autoClose: 1500,
+            })
+        }
     }
 
     useEffect(() => {

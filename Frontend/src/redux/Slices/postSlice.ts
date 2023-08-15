@@ -53,7 +53,7 @@ export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
 export const fetchDeletePost = createAsyncThunk<any>(
     'post/fetchRemovePost',
     async (id) => {
-        const { data } = await axios.delete(`/posts/${id}`)
+        const { data } = await axios.delete(`/posts/${id}`);
     }
 )
 

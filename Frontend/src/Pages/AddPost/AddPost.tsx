@@ -8,6 +8,7 @@ import 'react-quill/dist/quill.snow.css';
 import AdvancedSettingsPost from "../../Components/AddPostComponents/advancedSettingsPost";
 import PostMini from "../../Components/MiniPost/PostMini";
 import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
+import {toast} from "react-toastify";
 
 
 export const AddPost = () => {
@@ -120,8 +121,9 @@ export const AddPost = () => {
             };
 
             const { data } = isEditPost ? await axios.patch(`/posts/${id}`, params) : await axios.post('/posts', params);
-
-
+            toast.success(`${isEditPost? 'Пост успешно отредактирован' : 'Пост успешно создан'}`,{
+                autoClose: 1500,
+            });
             const idPost = isEditPost ? id : data._id;
 
             navigate(`/posts/${idPost}`);
