@@ -9,6 +9,7 @@ import {IUser} from "../../../redux/Slices/postSlice";
 import {formatDate} from "../../../utils/formatDate";
 import ProfilePrivateBtn from "../ProfilePrivateBtn/ProfilePrivateBtn";
 import {toast} from "react-toastify";
+import SkeletonLeftInfo from "../../Skeleton/SkeletonLeftInfo";
 
 const ProfileInfo = () => {
     const {id} = useParams();
@@ -18,6 +19,7 @@ const ProfileInfo = () => {
     const [nickName, setNickName] = useState<string>('')
     const [dateRegister, setDateRegister] = useState<string>('');
     const [privateProfile, setPrivateProfile] = useState<boolean>(true);
+    const [updated, setUpdated] = useState(false)
     const fetchUser = async () => {
         const response = await axios.get(`/user/${id}`);
         const data:IUser = response.data;
@@ -25,6 +27,7 @@ const ProfileInfo = () => {
         setNickName(data.nickName)
         setDateRegister(data.createdAt || '');
         setPrivateProfile(data.privateProfile);
+        setUpdated(true)
     }
 
     const updateProfile = async () => {
@@ -68,30 +71,35 @@ const ProfileInfo = () => {
     return (
         <div className={st.container}>
             <div className={st.content}>
-                <ProfileAvatar
-                    avatar={avatar}
-                    handleUpdateProfile={handleUpdateProfile}
-                    setAvatar={setAvatar}
-                />
-                <ProfileNickName
-                    nickName={nickName}
-                    setNickName={setNickName}
-                    handleUpdateProfile={handleUpdateProfile}
-                />
-                
-                <div className={st.containerRegister}>
-                    <p>Дата регистрации: </p>
-                    <p className={st.register}>{formatDate(dateRegister)}</p>
-                </div>
+                {
+                    !updated ? <SkeletonLeftInfo/>
+                        :
+                        <div>
+                            <ProfileAvatar
+                                avatar={avatar}
+                                handleUpdateProfile={handleUpdateProfile}
+                                setAvatar={setAvatar}
+                            />
+                            <ProfileNickName
+                                nickName={nickName}
+                                setNickName={setNickName}
+                                handleUpdateProfile={handleUpdateProfile}
+                            />
 
-                {currentUserId === id &&
-                    <ProfilePrivateBtn
-                        privateProfile={privateProfile}
-                        setPrivateProfile={setPrivateProfile}
-                        updateProfilePrivate={updateProfilePrivate}
-                    />
+                            <div className={st.containerRegister}>
+                                <p>Дата регистрации: </p>
+                                <p className={st.register}>{formatDate(dateRegister)}</p>
+                            </div>
+
+                            {currentUserId === id &&
+                                <ProfilePrivateBtn
+                                    privateProfile={privateProfile}
+                                    setPrivateProfile={setPrivateProfile}
+                                    updateProfilePrivate={updateProfilePrivate}
+                                />
+                            }
+                        </div>
                 }
-                
             </div>
         </div>
     );

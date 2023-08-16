@@ -5,14 +5,17 @@ import {IUser} from "../../redux/Slices/postSlice";
 import Post from "../../Components/Post/Post";
 import PostMini from "../../Components/MiniPost/PostMini";
 import st from './SpecificTagPosts.module.scss'
+import SkeletonPost from "../../Components/Skeleton/SkeletonPost";
 const SpecificTagPosts = () => {
     const {tag} = useParams();
     const [tagsPost, setTagsPost] = useState<Array<IUser>>([]);
-
+    const [upload, setUpload] = useState(false);
+    console.log(upload)
     const fetchTagsId = async () => {
         const response = await axios.get(`/posts/tag/${tag}`)
         const data = response.data
         setTagsPost(data)
+        setUpload(true)
     }
 
     useEffect(() => {
@@ -27,8 +30,9 @@ const SpecificTagPosts = () => {
                         <p>Посты с тегом <span>{tag}</span></p>
                     </div>
                     {
+                        !upload ? <SkeletonPost/> :
                         tagsPost.map(post => (
-                            <Post post={post} key={post._id}/>
+                            <Post upload={upload} post={post} key={post._id}/>
                         ))
                     }
                 </div>

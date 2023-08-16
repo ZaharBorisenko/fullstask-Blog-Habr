@@ -17,7 +17,9 @@ const AuthorizationLink:FC<AuthorizationLinkType> = ({userId,isAuth,setOpenAutho
     const handleLogOut = () => {
         if (window.confirm('Вы точно хотите выйти?')) {
             dispatch(logOut())
-            toast.warn('Вы вышли из аккаунта!');
+            toast.warn('Вы вышли из аккаунта!',{
+                autoClose: 1500,
+            });
         }
         window.localStorage.removeItem('token');
     }

@@ -5,15 +5,18 @@ import axios from "../../axios";
 import st from "../SpecificTagPosts/SpecificTagPosts.module.scss";
 import Post from "../../Components/Post/Post";
 import PostMini from "../../Components/MiniPost/PostMini";
+import SkeletonPost from "../../Components/Skeleton/SkeletonPost";
 
 const SpecificKeywordsPosts = () => {
     const {keywords} = useParams();
     const [keywordPost, setKeywordPost] = useState<Array<IUser>>([]);
+    const [upload, setUpload] = useState(false);
 
     const fetchKeywordsPost = async () => {
         const response = await axios.get(`/posts/keywords/${keywords}`);
         const data = response.data;
         setKeywordPost(data);
+        setUpload(true);
     }
 
     useEffect(() => {
@@ -29,6 +32,7 @@ const SpecificKeywordsPosts = () => {
                         <p>Ключевое слово: <span>{keywords}</span></p>
                     </div>
                     {
+                        !upload ? <SkeletonPost/> :
                         keywordPost?.map(keyword => (
                             <Post post={keyword} key={keyword._id}/>
                         ))
