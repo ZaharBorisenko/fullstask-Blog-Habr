@@ -3,7 +3,15 @@ import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
 import {getAllUsers, login, profile, profileUser, register, updateProfiles} from "./Controllers/UserController.js";
-import {create, getAll, getOnePost, getPopularity, remove, update} from "./Controllers/PostController.js";
+import {
+    create,
+    getAll,
+    getAllPostUser,
+    getOnePost,
+    getPopularity,
+    remove,
+    update
+} from "./Controllers/PostController.js";
 import {createPostValidation, updatePostValidation} from "./validation/post.js";
 import multer from 'multer'
 import validationErrors from "./middleware/validationErrors.js";
@@ -39,6 +47,7 @@ app.patch('/user/:id',checkAuth, updateProfiles);
 
 //ПОСТЫ
 app.get('/posts', getAll)
+app.get('/postsUser', getAllPostUser)
 app.get('/posts/popularity', getPopularity)
 app.get('/posts/:id', getOnePost)
 app.post('/posts',checkAuth,createPostValidation,validationErrors , create)

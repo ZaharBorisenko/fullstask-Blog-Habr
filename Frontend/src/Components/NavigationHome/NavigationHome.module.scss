@@ -10,11 +10,7 @@
   padding: 15px 20px;
 }
 .title{
-  font-size: 20px;
-  color: #333;
-  font-weight: 700;
-  line-height: 1.75rem;
-  margin-bottom: 20px;
+
 }
 .navbarSettings{
   display: flex;
@@ -32,4 +28,15 @@
   color: #548eaa;
   padding-bottom: 10px;
   border-bottom: 3.5px solid #548eaa;
+}
+.titleContainer{
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 0 30px;
+
+  font-size: 20px;
+  color: #333;
+  font-weight: 700;
+  line-height: 1.75rem;
 }

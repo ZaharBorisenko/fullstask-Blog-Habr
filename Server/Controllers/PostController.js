@@ -1,10 +1,35 @@
 import PostModel from "../Models/Post.js";
 
 
-export const getAll = async (req, res) => {
+export const getAllPostUser = async (req, res) => {
     try {
         const posts = await PostModel.find().populate('user').sort({createdAt: -1}).exec();
         res.json(posts)
+    } catch (e) {
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось получить статьи'
+        })
+    }
+}
+
+export const getAll = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit); // По умолчанию 10 записей на страницу
+        const page = parseInt(req.query.page); // По умолчанию первая страница
+
+        const skip = (page - 1) * limit;
+
+        const posts = await PostModel.find()
+            .populate('user')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+
+        const totalPosts = await PostModel.countDocuments(); // Получаем общее количество постов
+
+        res.json({posts,totalPosts});
     } catch (e) {
         console.log(e)
         res.status(403).json({

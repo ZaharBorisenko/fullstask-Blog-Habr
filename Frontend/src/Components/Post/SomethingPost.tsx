@@ -9,7 +9,6 @@ import {toast} from "react-toastify";
 const SomethingPost = ({post}) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    console.log(post._id)
     const removePost = (id) => {
         dispatch(fetchDeletePost(id))
         navigate('/');

@@ -12,7 +12,6 @@ import SomethingPost from "./SomethingPost";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
-    console.log(post)
 
     return (
         <div>

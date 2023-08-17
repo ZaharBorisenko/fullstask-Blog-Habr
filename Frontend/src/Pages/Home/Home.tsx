@@ -1,5 +1,4 @@
 import React, {useEffect, useMemo, useState} from 'react';
-import Post from "../../Components/Post/Post";
 import st from './Home.module.scss'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPost, PostType} from "../../redux/Slices/postSlice";
@@ -9,6 +8,7 @@ import YourPost from "../../Components/Posts/YourPost";
 import AllPost from "../../Components/Posts/AllPost";
 import AllUsers from "../../Components/AllUsers/AllUsers";
 
+
 const Home = () => {
     const dispatch = useAppDispatch();
     const posts = useAppSelector(state => state.posts.posts);
@@ -17,29 +17,40 @@ const Home = () => {
     const status = useAppSelector(state => state.posts.status);
     const [pageSettings, setPageSettings] = useState(1);
 
+    const [currentPagePost, setCurrentPagePost] = useState(1);
+    const [limit, setLimit] = useState(5);
+
+
     const handlePageSettings = (value) => {
         setPageSettings(value);
     }
-
+    console.log(currentPagePost)
     useEffect(() => {
         document.title = "IT Odyssey | Home"
-        dispatch(fetchPost())
-    },[])
+        dispatch(fetchPost({limit: limit, page: currentPagePost})).then((result) => {
+            const {post, totalPage} = result.payload;
+        })
+    }, [currentPagePost,pageSettings])
 
     //вывод постов которые создал пользователь
-    const userPosts: PostType[] = useMemo(() => {
-        return posts.filter(post => post.user._id === currentUserId);
-    }, [posts, currentUserId,pageSettings]);
 
 
     return (
         <div style={{marginTop: "20px"}}>
             <div className={st.container}>
                 <div>
-                    <NavigationHome pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
-                    {pageSettings == 1 && <AllPost posts={posts} status={status}/>}
-                    {pageSettings == 2 && <YourPost userPosts={userPosts} status={status}/>}
-                    {pageSettings == 3 &&  <AllUsers/> }
+                    <NavigationHome currentPagePost={currentPagePost} pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
+                    {pageSettings == 1 &&
+                        <AllPost
+                            posts={posts}
+                            status={status}
+                            limit={limit}
+                            currentPagePost={currentPagePost}
+                            setCurrentPagePost={setCurrentPagePost}
+                        />
+                    }
+                    {pageSettings == 2 && <YourPost setCurrentPagePost={setCurrentPagePost} status={status}/>}
+                    {pageSettings == 3 && <AllUsers/>}
                 </div>
                 <PostMini/>
             </div>

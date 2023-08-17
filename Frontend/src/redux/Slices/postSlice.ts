@@ -32,20 +32,31 @@ export interface PostType {
     _id: string;
 }
 
- type postState = {
+type postState = {
     posts: PostType[]
     status: string,
-
+    totalPosts: number
+    postsUser: PostType[]
 }
 const initialState: postState = {
     posts: [],
     status: '',
+    totalPosts: 1,
+    postsUser: [],
 }
 
-export const fetchPost = createAsyncThunk<Partial<PostType[]>>(
+export const fetchPost = createAsyncThunk<Partial<PostType[]>, { limit: number; page:number }>(
     'posts/fetchPost',
+    async ({limit,page}) => {
+        const {data}  = await axios.get(`/posts?limit=${limit}&page=${page}`)
+        return data
+    }
+)
+
+export const fetchPostAllUser = createAsyncThunk<Partial<PostType[]>>(
+    'posts/fetchPostAllUser',
     async () => {
-        const {data}  = await axios.get('/posts')
+        const {data}  = await axios.get(`/postsUser`)
         return data
     }
 )
@@ -71,8 +82,9 @@ const postSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(fetchPost.fulfilled, (state:Draft<postState>,action:PayloadAction<any>) => {
-                state.posts = action.payload;
+                state.posts = action.payload.posts;
                 state.status = 'loaded';
+                state.totalPosts = action.payload.totalPosts;
             })
             .addCase(fetchPost.rejected, (state:Draft<postState>) => {
                 state.posts = []
@@ -81,6 +93,9 @@ const postSlice = createSlice({
             .addCase(fetchDeletePost.pending, (state:Draft<postState>,action:PayloadAction<any>) => {
                 state.posts = state.posts.filter(post => post._id !== action.meta.arg)
             } )
+            .addCase(fetchPostAllUser.fulfilled, (state:Draft<postState>,action:PayloadAction<any>) => {
+                state.postsUser = action.payload;
+            })
     }
 })
 
