@@ -22,6 +22,7 @@ const NavigationHome:FC<propsType> = ({handlePageSettings,pageSettings,currentPa
                     <p onClick={() => handlePageSettings(1)}  className={`${pageSettings === 1 && st.active}`}>Статьи</p>
                     <p onClick={() => handlePageSettings(2)}  className={`${pageSettings === 2 && st.active}`}>Ваши посты</p>
                     <p onClick={() => handlePageSettings(3)}  className={`${pageSettings === 3 && st.active}`}>Авторы</p>
+                    <p onClick={() => handlePageSettings(4)}  className={`${pageSettings === 4 && st.active}`}>Все теги</p>
                 </div>
             </div>
         </div>

@@ -7,6 +7,7 @@ import NavigationHome from "../../Components/NavigationHome/NavigationHome";
 import YourPost from "../../Components/Posts/YourPost";
 import AllPost from "../../Components/Posts/AllPost";
 import AllUsers from "../../Components/AllUsers/AllUsers";
+import AllTags from "../../Components/AllTags/AllTags";
 
 
 const Home = () => {
@@ -24,7 +25,6 @@ const Home = () => {
     const handlePageSettings = (value) => {
         setPageSettings(value);
     }
-    console.log(currentPagePost)
     useEffect(() => {
         document.title = "IT Odyssey | Home"
         dispatch(fetchPost({limit: limit, page: currentPagePost})).then((result) => {
@@ -51,6 +51,7 @@ const Home = () => {
                     }
                     {pageSettings == 2 && <YourPost setCurrentPagePost={setCurrentPagePost} status={status}/>}
                     {pageSettings == 3 && <AllUsers/>}
+                    {pageSettings == 4 && <AllTags/>}
                 </div>
                 <PostMini/>
             </div>

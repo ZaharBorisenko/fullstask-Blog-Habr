@@ -8,6 +8,18 @@ export const IdTags = async (req,res) => {
         console.log(e)
     }
 }
+export const AllTags = async (req,res) => {
+    try {
+        const AllTags = await PostModel.aggregate([
+            {$unwind: "$tags"},
+            {$group: {_id: "$tags", count:{$sum: 1}}},
+            { $sort: { count: -1 } }
+        ])
+        res.json(AllTags);
+    }catch (e) {
+        console.log(e)
+    }
+}
 
 export const IdKeywords = async (req,res) => {
     const keyword = req.params.keywords;

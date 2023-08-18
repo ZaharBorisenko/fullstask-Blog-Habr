@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Post from "../Post/Post";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPost, fetchPostAllUser} from "../../redux/Slices/postSlice";
+import Skeleton from "../Skeleton/SkeletonPost";
 
 const YourPost = ({status,setCurrentPagePost}) => {
     const currentUser = useAppSelector(state => state.auth.data);
@@ -19,7 +20,7 @@ const YourPost = ({status,setCurrentPagePost}) => {
         <div>
             <div>
                 {
-                    status === 'loading' ? <h1>ЗАГРУЗКА</h1>
+                    status === 'loading' ? <Skeleton/>
                         :
                         userPosts.map(post => (
                             <Post post={post} key={post._id}  />

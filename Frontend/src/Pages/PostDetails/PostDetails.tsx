@@ -71,7 +71,7 @@ const PostDetails = () => {
                                 <div className={st.keywords}>
                                     {
                                         post.keywords?.map((p, index) => (
-                                            <Link to={`/posts/tag/${p}`} key={index}>{p}*</Link>
+                                            <Link to={`/posts/keyword/${p}`} key={index}>{p}*</Link>
                                         ))
                                     }
                                 </div>
