@@ -14,7 +14,10 @@ const YourPost = ({status,setCurrentPagePost}) => {
     useEffect(() => {
         dispatch(fetchPostAllUser())
         setCurrentPagePost(1);
-    },[userPosts])
+        return () => {
+            console.log('размонтирование компонента')
+        }
+    },[])
 
     return (
         <div>

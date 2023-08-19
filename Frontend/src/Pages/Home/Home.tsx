@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import st from './Home.module.scss'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPost, PostType} from "../../redux/Slices/postSlice";
@@ -8,6 +8,7 @@ import YourPost from "../../Components/Posts/YourPost";
 import AllPost from "../../Components/Posts/AllPost";
 import AllUsers from "../../Components/AllUsers/AllUsers";
 import AllTags from "../../Components/AllTags/AllTags";
+import Cookie from "../../Components/Cookie/Cookie";
 
 
 const Home = () => {
@@ -32,7 +33,6 @@ const Home = () => {
         })
     }, [currentPagePost,pageSettings])
 
-    //вывод постов которые создал пользователь
 
 
     return (
@@ -55,6 +55,8 @@ const Home = () => {
                 </div>
                 <PostMini/>
             </div>
+
+            <Cookie/>
         </div>
     );
 };
