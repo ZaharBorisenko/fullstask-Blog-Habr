@@ -5,16 +5,15 @@ import {useAppSelector} from "../../redux/hook/hook";
 type propsType = {
     handlePageSettings: (value:number) => void;
     pageSettings: number,
-    currentPagePost: number,
 }
-const NavigationHome:FC<propsType> = ({handlePageSettings,pageSettings,currentPagePost}) => {
+const NavigationHome:FC<propsType> = ({handlePageSettings,pageSettings}) => {
     return (
         <div className={st.container}>
             <div className={st.content}>
                 <div className={st.titleContainer}>
                     <div className={st.title}>Все потоки</div>
                     {pageSettings == 1 && <div>|</div>}
-                    {pageSettings == 1 && <div>Страница  №{currentPagePost}</div>}
+                    {pageSettings == 1 && <div>Страница  №</div>}
 
 
                 </div>

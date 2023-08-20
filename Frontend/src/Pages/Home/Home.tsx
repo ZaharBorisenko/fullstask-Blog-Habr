@@ -14,19 +14,7 @@ import {fetchSortPopularityPost} from "../../redux/Slices/sortiPost";
 
 
 const Home = () => {
-    const dispatch = useAppDispatch();
-    const posts = useAppSelector(state => state.posts.posts);
-    const popularityPost = useAppSelector(state => state.sortPopularity.postsPopularity);
-
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
-    const status = useAppSelector(state => state.posts.status);
-    const [pageSettings, setPageSettings] = useState(1);
-
-    const [currentPagePost, setCurrentPagePost] = useState(1);
-    const [limit, setLimit] = useState(5);
-
-    const [sortCount, setSortCount] = useState(1);
+    const [pageSettings, setPageSettings] = useState(1); //страница навигации
 
 
     const handlePageSettings = (value) => {
@@ -34,17 +22,7 @@ const Home = () => {
     }
     useEffect(() => {
         document.title = "IT Odyssey | Home"
-        if (sortCount == 1) {
-            dispatch(fetchPost({limit: limit, page: currentPagePost})).then((result) => {
-                const {post, totalPage} = result.payload;
-            })
-        }
-        if (sortCount == 2) {
-            dispatch(fetchSortPopularityPost({limit:limit, page:currentPagePost})).then((result) => {
-                const {postsPopularity, totalPopularPosts} = result.payload
-            })
-        }
-    }, [currentPagePost,pageSettings,sortCount])
+    }, [pageSettings])
 
 
 
@@ -52,20 +30,12 @@ const Home = () => {
         <div style={{marginTop: "20px"}}>
             <div className={st.container}>
                 <div>
-                    <NavigationHome currentPagePost={currentPagePost} pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
+                    <NavigationHome pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
 
                     <SortPanel/>
 
-                    {pageSettings == 1 &&
-                        <AllPost
-                            posts={posts}
-                            status={status}
-                            limit={limit}
-                            currentPagePost={currentPagePost}
-                            setCurrentPagePost={setCurrentPagePost}
-                        />
-                    }
-                    {pageSettings == 2 && <YourPost setCurrentPagePost={setCurrentPagePost} status={status}/>}
+                    {pageSettings == 1 && <AllPost/>}
+                    {pageSettings == 2 && <YourPost/>}
                     {pageSettings == 3 && <AllUsers/>}
                     {pageSettings == 4 && <AllTags/>}
                 </div>

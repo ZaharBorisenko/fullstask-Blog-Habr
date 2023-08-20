@@ -1,40 +1,20 @@
 import React, {useEffect, useState} from 'react';
 import Post from "../Post/Post";
 import Skeleton from "../Skeleton/SkeletonPost";
-import {createTheme, Pagination, ThemeProvider} from "@mui/material";
-import {useAppSelector} from "../../redux/hook/hook";
-import st from './AllPost.module.scss'
-const AllPost = ({posts, status, limit, currentPagePost, setCurrentPagePost}) => {
-    const totalCount = useAppSelector(state => state.posts.totalPosts);
-    const [countPage, setCountPage] = useState(0)
+import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
+import {fetchPost} from "../../redux/Slices/postSlice";
 
-    const theme = createTheme({
-        components: {
-            // Name of the component
-            MuiPaginationItem: {
-                styleOverrides: {
-                    // Name of the slot
-                    root: {
-                        // Some CSS
-                        fontSize: '26px',
-                        padding: '25px 20px',
-                    },
-                },
-            },
-        },
-    });
-    const upClick = () => {
-        window.scrollTo({
-            top: 0,
-            left: 0,
-            behavior: 'smooth',
-        });
-    };
-
+const AllPost = () => {
+    const dispatch = useAppDispatch();
+    const posts = useAppSelector(state => state.posts.posts);
+    const status = useAppSelector(state => state.posts.status);
+    //пагинация
+    const [currentPagePost, setCurrentPagePost] = useState(1);
+    const [limit, setLimit] = useState(5);
 
     useEffect(() => {
-        setCountPage(Math.ceil(totalCount / limit))
-    }, [posts])
+        dispatch(fetchPost({limit: limit, page: currentPagePost}))
+    },[currentPagePost])
 
     return (
         <div>
@@ -45,21 +25,6 @@ const AllPost = ({posts, status, limit, currentPagePost, setCurrentPagePost}) =>
                         <Post post={post} key={post._id}/>
                     ))
             }
-
-            <div className={st.paginationContainer}>
-                <ThemeProvider theme={theme}>
-                    <Pagination
-                        count={countPage}
-                        page={currentPagePost}
-                        onChange={(_,num) => {
-                            setCurrentPagePost(num)
-                            upClick();
-                        }}
-                        color="primary"
-                    />
-                </ThemeProvider>
-            </div>
-
         </div>
     );
 };

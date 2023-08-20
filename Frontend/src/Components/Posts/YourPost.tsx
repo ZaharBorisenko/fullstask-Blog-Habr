@@ -4,16 +4,17 @@ import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPost, fetchPostAllUser} from "../../redux/Slices/postSlice";
 import Skeleton from "../Skeleton/SkeletonPost";
 
-const YourPost = ({status,setCurrentPagePost}) => {
+const YourPost = () => {
     const currentUser = useAppSelector(state => state.auth.data);
     const posts = useAppSelector(state => state.posts.postsUser);
     const currentUserId = currentUser._id;
+    const status = useAppSelector(state => state.posts.status);
     const userPosts = posts.filter(post => post.user._id === currentUserId)
     const dispatch = useAppDispatch()
 
+
     useEffect(() => {
         dispatch(fetchPostAllUser())
-        setCurrentPagePost(1);
         return () => {
             console.log('размонтирование компонента')
         }
