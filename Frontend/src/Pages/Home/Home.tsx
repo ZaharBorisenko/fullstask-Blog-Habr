@@ -9,11 +9,15 @@ import AllPost from "../../Components/Posts/AllPost";
 import AllUsers from "../../Components/AllUsers/AllUsers";
 import AllTags from "../../Components/AllTags/AllTags";
 import Cookie from "../../Components/Cookie/Cookie";
+import SortPanel from "../../Components/SortPanel/SortPanel";
+import {fetchSortPopularityPost} from "../../redux/Slices/sortiPost";
 
 
 const Home = () => {
     const dispatch = useAppDispatch();
     const posts = useAppSelector(state => state.posts.posts);
+    const popularityPost = useAppSelector(state => state.sortPopularity.postsPopularity);
+
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
     const status = useAppSelector(state => state.posts.status);
@@ -22,16 +26,25 @@ const Home = () => {
     const [currentPagePost, setCurrentPagePost] = useState(1);
     const [limit, setLimit] = useState(5);
 
+    const [sortCount, setSortCount] = useState(1);
+
 
     const handlePageSettings = (value) => {
         setPageSettings(value);
     }
     useEffect(() => {
         document.title = "IT Odyssey | Home"
-        dispatch(fetchPost({limit: limit, page: currentPagePost})).then((result) => {
-            const {post, totalPage} = result.payload;
-        })
-    }, [currentPagePost,pageSettings])
+        if (sortCount == 1) {
+            dispatch(fetchPost({limit: limit, page: currentPagePost})).then((result) => {
+                const {post, totalPage} = result.payload;
+            })
+        }
+        if (sortCount == 2) {
+            dispatch(fetchSortPopularityPost({limit:limit, page:currentPagePost})).then((result) => {
+                const {postsPopularity, totalPopularPosts} = result.payload
+            })
+        }
+    }, [currentPagePost,pageSettings,sortCount])
 
 
 
@@ -40,6 +53,9 @@ const Home = () => {
             <div className={st.container}>
                 <div>
                     <NavigationHome currentPagePost={currentPagePost} pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
+
+                    <SortPanel/>
+
                     {pageSettings == 1 &&
                         <AllPost
                             posts={posts}

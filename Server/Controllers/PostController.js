@@ -169,3 +169,28 @@ export const update = async (req, res) => {
         })
     }
 }
+//сортировка
+
+export const sortPopularity = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit); // По умолчанию 10 записей на страницу
+        const page = parseInt(req.query.page); // По умолчанию первая страница
+
+        const skip = (page - 1) * limit;
+
+        const postsPopularity = await PostModel.find()
+            .sort({ viewCount: -1 })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+
+        const totalPopularPosts = await PostModel.countDocuments(); // Получаем общее количество популярных постов
+        res.json({postsPopularity:postsPopularity, totalPopularPosts:totalPopularPosts})
+
+    } catch (e) {
+        console.log(e)
+        res.status(403).json({
+            message: 'Не удалось получить статьи'
+        })
+    }
+}

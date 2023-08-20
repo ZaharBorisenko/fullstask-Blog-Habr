@@ -3,6 +3,7 @@ import postSlice from "../Slices/postSlice";
 import popularityPostSlice from "../Slices/popularityPostSlice";
 import authSlice from "../Slices/authSlice";
 import tagsSlice from "../Slices/TagsSlice";
+import sortPost from '../Slices/sortiPost'
 
 const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ const store = configureStore({
         postsPopularity: popularityPostSlice,
         auth: authSlice,
         tags: tagsSlice,
+        sortPopularity: sortPost,
     }
 })
 
