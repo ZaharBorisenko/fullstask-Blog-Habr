@@ -1,0 +1,58 @@
+.container{
+  box-shadow: 0px 5px 5px -1px rgba(34, 60, 80, 0.2);
+  background-color: white;
+  width: 780px;
+  margin-bottom: 10px;
+  border-top: 2px solid #b9b9b9;
+}
+
+.sortBy{
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.containerSort{
+  background-color: #f9f9f9;
+  height: 0;
+  overflow: hidden;
+  transition: height .5s;
+}
+.containerSortActive{
+  height: auto;
+}
+.contentSort{
+  padding: 15px 20px;
+}
+
+.sortParams2{
+  margin-top: 20px;
+}
+.sortParamsTitle{
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+  line-height: 16px;
+  margin-bottom: 10px;
+}
+.containerBtn{
+  display: flex;
+  gap: 0 10px;
+}
+.sortParamsBtn{
+  cursor: pointer;
+  border: 1px solid #548eaa;
+  padding: 5px 10px;
+  background-color: white;
+  font-size: 16px;
+  font-weight: 500;
+  color: #3e273d;
+  border-radius: 3px;
+}
+.sortParamsBtnActive{
+  background-color: #548eaa;
+  color: white;
+}

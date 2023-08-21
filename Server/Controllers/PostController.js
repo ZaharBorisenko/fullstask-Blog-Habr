@@ -15,8 +15,8 @@ export const getAllPostUser = async (req, res) => {
 
 export const getAll = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit); // По умолчанию 10 записей на страницу
-        const page = parseInt(req.query.page); // По умолчанию первая страница
+        const limit = parseInt(req.query.limit);
+        const page = parseInt(req.query.page);
 
         const skip = (page - 1) * limit;
 
@@ -170,11 +170,11 @@ export const update = async (req, res) => {
     }
 }
 //сортировка
-
+// по популярности
 export const sortPopularity = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit); // По умолчанию 10 записей на страницу
-        const page = parseInt(req.query.page); // По умолчанию первая страница
+        const limit = parseInt(req.query.limit);
+        const page = parseInt(req.query.page);
 
         const skip = (page - 1) * limit;
 
@@ -194,3 +194,36 @@ export const sortPopularity = async (req, res) => {
         })
     }
 }
+// по времени чтения
+export const sortPostsByReadingTime = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit);
+        const page = parseInt(req.query.page);
+        const sortBy = req.query.sortBy;
+
+        const skip = (page - 1) * limit;
+
+        let sortDirection = 1;
+        if (sortBy === 'ascReadingTime') {
+            sortDirection = 1;
+        } else if (sortBy === 'descReadingTime') {
+            sortDirection = -1;
+        }
+
+        const postsByReadingTime = await PostModel.find()
+            .sort({ readingTime: sortDirection })
+            .skip(skip)
+            .limit(limit)
+            .exec();
+
+        res.json(postsByReadingTime);
+
+    } catch (e) {
+        console.log(e);
+        res.status(403).json({
+            message: 'Не удалось получить статьи'
+        });
+    }
+}
+// по алфавиту
+//по времени создания(по умолнанию сортируются по от большего к меньшему)

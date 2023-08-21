@@ -10,7 +10,7 @@ import {
     getOnePost,
     getPopularity,
     remove,
-    sortPopularity,
+    sortPopularity, sortPostsByReadingTime,
     update
 } from "./Controllers/PostController.js";
 import {createPostValidation, updatePostValidation} from "./validation/post.js";
@@ -47,7 +47,8 @@ app.get('/user/:id', checkAuth, profileUser);
 app.patch('/user/:id',checkAuth, updateProfiles);
 
 //сортировка
-app.get('/posts/popularitySort', sortPopularity)
+app.get('/posts/popularitySort', sortPopularity);
+app.get('/posts/readingTime', sortPostsByReadingTime);
 
 //ПОСТЫ
 app.get('/posts', getAll)

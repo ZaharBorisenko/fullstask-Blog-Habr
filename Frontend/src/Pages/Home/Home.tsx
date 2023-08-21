@@ -15,8 +15,7 @@ import {fetchSortPopularityPost} from "../../redux/Slices/sortiPost";
 
 const Home = () => {
     const [pageSettings, setPageSettings] = useState(1); //страница навигации
-
-
+    const [sortBy, setSortBy] = useState('');
     const handlePageSettings = (value) => {
         setPageSettings(value);
     }
@@ -32,9 +31,9 @@ const Home = () => {
                 <div>
                     <NavigationHome pageSettings={pageSettings} handlePageSettings={handlePageSettings}/>
 
-                    <SortPanel/>
+                    <SortPanel sortBy={sortBy} setSortBy={setSortBy}/>
 
-                    {pageSettings == 1 && <AllPost/>}
+                    {pageSettings == 1 && <AllPost sortBy={sortBy}/>}
                     {pageSettings == 2 && <YourPost/>}
                     {pageSettings == 3 && <AllUsers/>}
                     {pageSettings == 4 && <AllTags/>}

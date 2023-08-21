@@ -11,7 +11,7 @@ const store = configureStore({
         postsPopularity: popularityPostSlice,
         auth: authSlice,
         tags: tagsSlice,
-        sortPopularity: sortPost,
+        sortPost: sortPost,
     }
 })
 
