@@ -3,11 +3,13 @@ import st from './SortPanel.module.scss'
 import {MdKeyboardArrowUp, MdKeyboardArrowDown} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {sortParams} from "../../redux/Slices/sortiPost";
+import {setPage} from "../../redux/Slices/postSlice";
 
-const SortPanel = ({sortBy, setSortBy}) => {
+const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
     const [sortShow, setSortShow] = useState(false)
     const sortParamsSelect = useAppSelector(state => state.sortPost.sortParams)
-    console.log(sortParamsSelect);
+    const pageCount = useAppSelector(state => state.posts.currentPagePost);
+    console.log(pageCount)
     const dispatch = useAppDispatch();
     return (
         <div className={st.container}>
@@ -23,40 +25,43 @@ const SortPanel = ({sortBy, setSortBy}) => {
                         <p className={st.sortParamsTitle}>Сначала показывать</p>
                         <div className={st.containerBtn}>
                             <button
-                                onClick={() => dispatch(sortParams(''))}
+                                onClick={() => {dispatch(sortParams('')); dispatch(setPage(1))}}
                                 className={`${st.sortParamsBtn} ${sortParamsSelect == '' && st.sortParamsBtnActive}`}>
                                 Новые
                             </button>
                             <button
-                                onClick={() => dispatch(sortParams('popularity'))}
+                                onClick={() => {dispatch(sortParams('popularity')); dispatch(setPage(1))}}
                                 className={`${st.sortParamsBtn} ${sortParamsSelect == 'popularity' && st.sortParamsBtnActive}`}>
                                 Популярные
                             </button>
                         </div>
                     </div>
 
-                    <div className={st.sortParams2}>
-                        <p className={st.sortParamsTitle}>По времени чтения</p>
-                        <div className={st.containerBtn}>
-                            <button
-                                onClick={() => {
-                                    dispatch(sortParams('readingTime'))
-                                    setSortBy('descReadingTime')
-                                }}
-                                className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'descReadingTime' && st.sortParamsBtnActive}`}>
-                                Много времени
-                            </button>
-                            <button
-                                onClick={() => {
-                                    dispatch(sortParams('readingTime'))
-                                    setSortBy('ascReadingTime')
-                                }}
-                                className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'ascReadingTime' && st.sortParamsBtnActive}`}>
-                                Мало времени
-                            </button>
+                    {
+                        pageSettings === 1 &&
+                        <div className={st.sortParams2}>
+                            <p className={st.sortParamsTitle}>По времени чтения</p>
+                            <div className={st.containerBtn}>
+                                <button
+                                    onClick={() => {
+                                        {dispatch(sortParams('readingTime')); dispatch(setPage(1))}
+                                        setSortBy('descReadingTime')
+                                    }}
+                                    className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'descReadingTime' && st.sortParamsBtnActive}`}>
+                                    Много времени
+                                </button>
+                                <button
+                                    onClick={() => {
+                                        {dispatch(sortParams('readingTime')); dispatch(setPage(1))}
+                                        setSortBy('ascReadingTime')
+                                    }}
+                                    className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'ascReadingTime' && st.sortParamsBtnActive}`}>
+                                    Мало времени
+                                </button>
 
+                            </div>
                         </div>
-                    </div>
+                    }
 
                 </div>
             </div>

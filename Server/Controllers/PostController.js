@@ -178,7 +178,7 @@ export const sortPopularity = async (req, res) => {
 
         const skip = (page - 1) * limit;
 
-        const postsPopularity = await PostModel.find()
+        const postsPopularity = await PostModel.find().populate('user')
             .sort({ viewCount: -1 })
             .skip(skip)
             .limit(limit)
@@ -210,7 +210,7 @@ export const sortPostsByReadingTime = async (req, res) => {
             sortDirection = -1;
         }
 
-        const postsByReadingTime = await PostModel.find()
+        const postsByReadingTime = await PostModel.find().populate('user')
             .sort({ readingTime: sortDirection })
             .skip(skip)
             .limit(limit)

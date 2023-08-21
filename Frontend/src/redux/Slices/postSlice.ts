@@ -33,12 +33,14 @@ export interface PostType {
 }
 
 type postState = {
+    currentPagePost: number
     posts: PostType[]
     status: string,
     totalPosts: number
     postsUser: PostType[]
 }
 const initialState: postState = {
+    currentPagePost: 1,
     posts: [],
     status: '',
     totalPosts: 1,
@@ -72,7 +74,8 @@ const postSlice = createSlice({
     name: 'post',
     initialState,
     reducers: {
-        setPost: ((state,action) => {
+        setPage: ((state:Draft<postState>,action) => {
+            state.currentPagePost = action.payload
         })
     },
     extraReducers: (builder) => {
@@ -101,3 +104,4 @@ const postSlice = createSlice({
 
 
 export default postSlice.reducer;
+export const {setPage} = postSlice.actions

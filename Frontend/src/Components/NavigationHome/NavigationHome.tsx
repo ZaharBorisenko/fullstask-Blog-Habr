@@ -1,27 +1,58 @@
 import React, {FC} from 'react';
 import st from './NavigationHome.module.scss'
 import {Link} from "react-router-dom";
-import {useAppSelector} from "../../redux/hook/hook";
+import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
+import {sortParams} from "../../redux/Slices/sortiPost";
+
 type propsType = {
-    handlePageSettings: (value:number) => void;
+    handlePageSettings: (value: number) => void;
     pageSettings: number,
 }
-const NavigationHome:FC<propsType> = ({handlePageSettings,pageSettings}) => {
+const NavigationHome: FC<propsType> = ({handlePageSettings, pageSettings}) => {
+    const pageCount = useAppSelector(state => state.posts.currentPagePost);
+    const sortParamsSelector = useAppSelector(state => state.sortPost.sortParams)
+    const dispatch = useAppDispatch();
     return (
         <div className={st.container}>
             <div className={st.content}>
                 <div className={st.titleContainer}>
                     <div className={st.title}>Все потоки</div>
                     {pageSettings == 1 && <div>|</div>}
-                    {pageSettings == 1 && <div>Страница  №</div>}
+                    {pageSettings == 1 && <div>Страница №{pageCount}</div>}
 
 
                 </div>
                 <div className={st.navbarSettings}>
-                    <p onClick={() => handlePageSettings(1)}  className={`${pageSettings === 1 && st.active}`}>Статьи</p>
-                    <p onClick={() => handlePageSettings(2)}  className={`${pageSettings === 2 && st.active}`}>Ваши посты</p>
-                    <p onClick={() => handlePageSettings(3)}  className={`${pageSettings === 3 && st.active}`}>Авторы</p>
-                    <p onClick={() => handlePageSettings(4)}  className={`${pageSettings === 4 && st.active}`}>Все теги</p>
+
+                    <p onClick={() => {
+                        handlePageSettings(1)
+                        dispatch(sortParams(''))
+                    }}
+                       className={`${pageSettings === 1 && st.active}`}>
+                        Статьи
+                    </p>
+
+                    <p onClick={() => {
+                        handlePageSettings(2)
+                        dispatch(sortParams(''))
+                    }}
+                       className={`${pageSettings === 2 && st.active}`}>
+                        Ваши посты
+                    </p>
+
+                    <p onClick={() => {
+                        handlePageSettings(3)
+                    }}
+                       className={`${pageSettings === 3 && st.active}`}>
+                        Авторы
+                    </p>
+
+                    <p onClick={() => {
+                        handlePageSettings(4)
+                    }}
+                       className={`${pageSettings === 4 && st.active}`}>
+                        Все теги
+                    </p>
                 </div>
             </div>
         </div>
