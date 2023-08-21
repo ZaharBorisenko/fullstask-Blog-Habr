@@ -33,7 +33,11 @@ const Header = () => {
                 <div className={st.authorization}>
 
                     {
-                        isAuth ? <Link className={st.addPost} to="/createPost">Написать публикацию</Link>
+                        isAuth ?
+                            <div className={st.containerIsAuth}>
+                                <Link className={st.favourites} to="/favourites">Избранное <span>(1)</span></Link>
+                                <Link className={st.addPost} to="/createPost">Написать публикацию</Link>
+                            </div>
                             :
                             <div
                                 ref={correction}

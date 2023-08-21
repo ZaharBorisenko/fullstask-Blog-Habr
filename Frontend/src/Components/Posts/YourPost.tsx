@@ -13,7 +13,6 @@ const YourPost = () => {
 
 
     const sortParams = useAppSelector(state => state.sortPost.sortParams)
-    console.log(sortParams)
     //посты по умолчанию
     const posts = useAppSelector(state => state.posts.postsUser);
 

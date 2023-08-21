@@ -107,8 +107,12 @@
 
 .items{
   margin-top: 30px;
+  display: flex;
+  align-items: center;
+  gap: 0 40px;
 }
 .item{
+  cursor: pointer;
   display: flex;
   align-items: center;
   gap: 0 8px;

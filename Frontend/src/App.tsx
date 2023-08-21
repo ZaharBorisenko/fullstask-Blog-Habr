@@ -13,6 +13,7 @@ import {useEffect} from "react";
 import {fetchProfile, selectIsAuthenticated} from "./redux/Slices/authSlice";
 import SpecificTagPosts from "./Pages/SpecificTagPosts/SpecificTagPosts";
 import SpecificKeywordsPosts from "./Pages/SpecificKeywordsPosts/SpecificKeywordsPosts";
+import Favourites from "./Pages/Favourites/Favourites";
 
 const App = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
@@ -27,6 +28,7 @@ const App = () => {
                <Routes>
                    <Route path="/" element={<Home/>}/>
                    <Route path="/posts/:id" element={<PostDetails/>}/>
+                   <Route path={"/favourites"} element={<Favourites/>}/>
                    <Route path="/posts/:id/edit" element={<AddPost/>}/>
                    <Route path="/createPost" element={<AddPost/>}/>
                    <Route path="/start" element={<BecomeAuthor/>}/>

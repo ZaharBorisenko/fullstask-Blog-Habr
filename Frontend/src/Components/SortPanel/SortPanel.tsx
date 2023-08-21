@@ -9,7 +9,6 @@ const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
     const [sortShow, setSortShow] = useState(false)
     const sortParamsSelect = useAppSelector(state => state.sortPost.sortParams)
     const pageCount = useAppSelector(state => state.posts.currentPagePost);
-    console.log(pageCount)
     const dispatch = useAppDispatch();
     return (
         <div className={st.container}>

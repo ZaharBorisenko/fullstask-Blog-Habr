@@ -2,16 +2,20 @@ import React from 'react';
 import st from './Post.module.scss'
 import time from '../../assets/img/time.png'
 import view from '../../assets/img/view.png'
-import comments from '../../assets/img/comments.png'
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {fetchDeletePost} from "../../redux/Slices/postSlice";
 import UserInfoPost from "../UserInfoPost/UserInfoPost";
-import { AiFillDelete,AiFillEdit } from "react-icons/ai";
 import SomethingPost from "./SomethingPost";
+import { BsFillBookmarkFill,BsFillBookmarkCheckFill } from "react-icons/bs";
+import { BiSolidComment } from "react-icons/bi";
+import {setPostFavourites} from "../../redux/Slices/postFavourites";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
+
+    // const dispatch = useAppDispatch();
+    // const postFavourites = useAppSelector(state => state.postFavourites.postFavourites)
+    // console.log(postFavourites);
 
     return (
         <div>
@@ -68,7 +72,16 @@ const Post = ({post}) => {
 
                     <div className={st.items}>
                         <div className={st.item}>
-                            <img src={comments} alt=""/>
+                            <BiSolidComment fontSize={"30px"}/>
+                            <div>3</div>
+                        </div>
+                        <div className={st.item}>
+                            <BsFillBookmarkFill
+                                fontSize={"30px"}
+                                onClick={() => {
+                                   // dispatch(setPostFavourites(post))
+                                }}
+                            />
                             <div>3</div>
                         </div>
                     </div>
