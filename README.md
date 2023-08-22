@@ -1,7 +1,7 @@
 ≡ Краткое описание проекта.
 # IT Odyssey | FullStack приложение.Платформа для блогов и не только.
 ***
-#Описание проекта
+##Описание проекта
 
 Технологии используемые для создания веб-приложения:
 
@@ -11,6 +11,5 @@
 | Redux Toolkit | Node.js      | WebStorm    |
 | JavaScript    | Express.js   |             |
 | TypeScript    |
-| Redux Toolkit |
 | SASS/SCSS     |
 | CSS modules   |
