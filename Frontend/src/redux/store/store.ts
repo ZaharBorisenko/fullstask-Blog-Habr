@@ -5,6 +5,18 @@ import authSlice from "../Slices/authSlice";
 import tagsSlice from "../Slices/TagsSlice";
 import sortPost from '../Slices/sortiPost'
 import postFavourites from "../Slices/postFavourites";
+import {postFavouritesPersistConfig} from "../../utils/persistConfig";
+
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+} from 'redux-persist'
 
 const store = configureStore({
     reducer: {
@@ -13,9 +25,18 @@ const store = configureStore({
         auth: authSlice,
         tags: tagsSlice,
         sortPost: sortPost,
-        postFavourites: postFavourites,
-    }
+        postFavourites: postFavouritesPersistConfig(postFavourites),
+    },
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware({
+            serializableCheck: {
+                ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+            },
+        }),
 })
+
+
+export const persistor = persistStore(store)
 
 export default store
 

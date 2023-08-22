@@ -9,6 +9,7 @@ import {selectIsAuthenticated} from "../../redux/Slices/authSlice";
 const Header = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const user = useAppSelector(state => state.auth.data);
+    const postFavouritesLength = useAppSelector(state => (state.postFavourites.postFavourites).length);
     const userId = user._id;
     const [openAuthorization, setOpenAuthorization] = useState<boolean>(false);
     const isOpenAuthorization = (isOpen: boolean): void => {
@@ -39,7 +40,7 @@ const Header = () => {
                     {
                         isAuth ?
                             <div className={st.containerIsAuth}>
-                                <Link className={st.favourites} to="/favourites">Избранное <span>()</span></Link>
+                                <Link className={st.favourites} to="/favourites">Избранное <span>({postFavouritesLength})</span></Link>
                                 <Link className={st.addPost} to="/createPost">Написать публикацию</Link>
                             </div>
                             :

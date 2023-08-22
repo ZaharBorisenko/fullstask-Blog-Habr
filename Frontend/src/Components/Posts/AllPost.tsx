@@ -26,15 +26,8 @@ const AllPost = ({sortBy}) => {
     const totalCountPagePagination = Math.ceil(totalCountPosts / limit);
 
     useEffect(() => {
-        if (sortParams === '') {
-            if (posts.length === 0) {
-                dispatch(fetchPost({ limit, page: currentPagePost }));
-            }
-        } else if (sortParams === 'popularity') {
-            if (postsPopularity.length === 0) {
-                dispatch(fetchSortPopularityPost({ limit, page: currentPagePost }));
-            }
-        }
+        sortParams == '' && dispatch(fetchPost({ limit, page: currentPagePost }));
+        sortParams == 'popularity' && dispatch(fetchSortPopularityPost({limit, page: currentPagePost}));
         sortParams == 'readingTime' && dispatch(fetchSortReadingTimePost({
             limit: limit,
             page: currentPagePost,
@@ -45,10 +38,10 @@ const AllPost = ({sortBy}) => {
 
     useEffect(() => {
         window.scrollTo({
-            top:0,
+            top: 0,
             behavior: "smooth",
         })
-    },[currentPagePost])
+    }, [currentPagePost])
 
     return (
         <div>
