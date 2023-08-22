@@ -1,27 +1,26 @@
-import React, {FC, LegacyRef, useRef} from 'react';
+import React, {ChangeEvent, FC, LegacyRef, useRef} from 'react';
 import st from './advancedSettingsPost.module.scss'
 import InputTags from "../InputTags/InputTags";
+import {PostType} from "../../redux/Slices/postSlice";
+import {errorMessageType, tagsType} from "../../utils/Types";
 
 type PropsType = {
-    tags:string,
-    handleSetTags: (value:string) => void,
+    tags:Array<tagsType>,
+    handleSetTags: (value:Array<tagsType>) => void,
     keywords:string,
     handleSetKeywords: (value:string) => void,
     level: string,
     handleSetLevel:(value:string) => void,
-    handleChangeFile:(event:any) => void,
+    handleChangeFile:(event:ChangeEvent<HTMLInputElement>) => void,
     imageUrl:string,
     onClickRemoveImage: () => void,
-    errorMessage: [],
+    errorMessage: Array<errorMessageType>,
     readingTime: number,
     calculatingReadingTime: (value:string) => void,
     isEditPost:boolean
 };
 
 const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime, readingTime,errorMessage,tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
-
-    console.log(tags.length)
-    console.log(keywords.length)
     //правильное склонение
     function declOfNum(number, words) {
         return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];

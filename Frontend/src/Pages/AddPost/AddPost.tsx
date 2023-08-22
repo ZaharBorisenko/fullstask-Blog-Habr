@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import st from './AddPost.module.scss';
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
@@ -9,6 +9,8 @@ import AdvancedSettingsPost from "../../Components/AddPostComponents/advancedSet
 import PostMini from "../../Components/MiniPost/PostMini";
 import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
 import {toast} from "react-toastify";
+import {PostType} from "../../redux/Slices/postSlice";
+import {errorMessageType, tagsType} from "../../utils/Types";
 
 
 export const AddPost = () => {
@@ -16,40 +18,42 @@ export const AddPost = () => {
     const {id} = useParams();
     let isAuth = useAppSelector(selectIsAuthenticated);
     const currentUser = useAppSelector(state => state.auth.data);
-    const [title, setTitle] = useState('');
-    const [text, setText] = useState(''); //text
-    const [tags, setTags] = useState('');
-    const [imageUrl, setImageUrl] = useState('uploads/Image-Place-Holder.jpg');
-    const [keywords, setKeywords] = useState('');
-    const [level, setLevel] = useState('Не указан');
-    const [readingTime, setReadingTime] = useState(0);
-    const [validation, setValidation] = useState(true);
-    const [stageAdvancedSettings, setStageAdvancedSettings] = useState(false)
-    const [errorMessage, setErrorMessage] = useState<[]>([]);
+    const [title, setTitle] = useState<string>('');
+    const [text, setText] = useState<string>(''); //text
+    const [tags, setTags] = useState<Array<tagsType>>([]);
+    console.log(tags)
+    const [imageUrl, setImageUrl] = useState<string>('uploads/Image-Place-Holder.jpg');
+    const [keywords, setKeywords] = useState<string>('');
+    const [level, setLevel] = useState<string>('Не указан');
+    const [readingTime, setReadingTime] = useState<number>(0);
+    const [validation, setValidation] = useState<boolean>(true);
+    const [stageAdvancedSettings, setStageAdvancedSettings] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<Array<errorMessageType>>([]);
 
-    const isEditPost = Boolean(id);
+    const isEditPost:boolean = Boolean(id);
 
-    const handleSetTags = (value) => {
+    const handleSetTags = (value:Array<tagsType>): void => {
+        console.log(value)
         setTags(value)
     }
-    const handleSetKeywords = (value) => {
+    const handleSetKeywords = (value:string): void => {
         setKeywords(value)
     }
-    const handleSetLevel = (value) => {
+    const handleSetLevel = (value:string): void => {
         setLevel(value)
     }
-    const handleSetTitle = (value) => {
+    const handleSetTitle = (value:string): void => {
         setTitle(value)
     }
-    const handleSetText = (value) => {
+    const handleSetText = (value:string): void => {
         setText(value)
     }
 
     //ТАК КАК РЕДАКТОР ДОБАВЛЯЕТ НЕКОТОРЫЕ ТЕГИ В ТЕКСТ,НУЖНО ИХ УБРАТЬ C ПОМОЩЬЮ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ,
     // ЧТОБЫ ВРЕМЯ ПРОЧТЕНИЯ СЧИТАЛОСЬ КОРРЕКТНО
-    const calculatingReadingTime = (value) => {
+    const calculatingReadingTime = (value:string): void => {
         let textReg = text.replace(/<[^>]*>/g, '');
-        const averageReadingSpeed = 300;
+        const averageReadingSpeed:number = 600;
         let additionalTime = 0;
 
         if (value === 'Простой') {
@@ -59,7 +63,7 @@ export const AddPost = () => {
         } else if (value === 'Сложный') {
             additionalTime = 4;
         }else additionalTime = 0;
-        setReadingTime(Math.ceil((textReg.length / 300) + additionalTime));
+        setReadingTime(Math.ceil((textReg.length / averageReadingSpeed) + additionalTime));
     }
 
     const isValidation = () => {
@@ -72,12 +76,11 @@ export const AddPost = () => {
             setStageAdvancedSettings(true)
         }
     }
-    console.log(tags);
 
-    const handleChangeFile = async (event) => {
+    const handleChangeFile = async (event:ChangeEvent<HTMLInputElement>) => {
         try {
             const formData = new FormData();
-            formData.append('image', event.target.files[0]);
+            formData.append('image', event.target?.files[0]);
             const {data} = await axios.post('/upload', formData);
             setImageUrl(data.url);
         }catch (e) {
@@ -85,7 +88,7 @@ export const AddPost = () => {
         }
     };
 
-    const onClickRemoveImage = () => {
+    const onClickRemoveImage = (): void => {
         setImageUrl('');
     };
 
@@ -103,17 +106,16 @@ export const AddPost = () => {
        }
     },[])
 
-    const keywordRefactor = (tags) => {
+    const tagsRefactor = (tags:Array<tagsType>) => {
         if (tags) return tags.map(item => item.value)
     }
-    console.log(keywords);
 
     const createSubmitPost = async () => {
         try {
             const params = {
                 title:title,
                 text:text,
-                tags:keywordRefactor(tags),
+                tags:tagsRefactor(tags),
                 imagePost: `${imageUrl === '' ? 'uploads/Image-Place-Holder.jpg' : imageUrl}`,
                 keywords: keywords,
                 difficultyLevel: level,
