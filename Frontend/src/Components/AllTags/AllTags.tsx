@@ -24,8 +24,6 @@ const AllTags = () => {
         const updatedTags = [tag, ...favouritesTags];
         setFavouritesTags(updatedTags);
         localStorage.setItem('favouritesTags', JSON.stringify(updatedTags));
-
-
     }
 
     function handleDragOver(e){

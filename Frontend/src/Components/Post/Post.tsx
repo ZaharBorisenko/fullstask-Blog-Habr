@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import st from './Post.module.scss'
 import time from '../../assets/img/time.png'
 import view from '../../assets/img/view.png'
@@ -6,16 +6,16 @@ import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import UserInfoPost from "../UserInfoPost/UserInfoPost";
 import SomethingPost from "./SomethingPost";
-import { BsFillBookmarkFill,BsFillBookmarkCheckFill } from "react-icons/bs";
-import { BiSolidComment } from "react-icons/bi";
-import {setPostFavourites} from "../../redux/Slices/postFavourites";
+import {BsFillBookmarkFill, BsFillBookmarkCheckFill} from "react-icons/bs";
+import {BiSolidComment} from "react-icons/bi";
+import {removePostFavourites, setPostFavourites} from "../../redux/Slices/postFavourites";
+import {toast} from "react-toastify";
 
 const Post = ({post}) => {
     const currentUserId = useAppSelector(state => state.auth.data._id);
+    const postFavourites = useAppSelector(state => state.postFavourites.postFavourites);
 
-    // const dispatch = useAppDispatch();
-    // const postFavourites = useAppSelector(state => state.postFavourites.postFavourites)
-    // console.log(postFavourites);
+    const dispatch = useAppDispatch();
 
     return (
         <div>
@@ -76,13 +76,31 @@ const Post = ({post}) => {
                             <div>3</div>
                         </div>
                         <div className={st.item}>
-                            <BsFillBookmarkFill
-                                fontSize={"30px"}
-                                onClick={() => {
-                                   // dispatch(setPostFavourites(post))
-                                }}
-                            />
-                            <div>3</div>
+                            {
+                                postFavourites.some(favouritesPost => favouritesPost._id === post._id) ?
+                                    (
+                                        <BsFillBookmarkCheckFill
+                                            fontSize={"30px"}
+                                            onClick={() => {
+                                                dispatch(removePostFavourites(post))
+                                                toast.error("Публикация удалена из избранного", {
+                                                    autoClose: 1500,
+                                                })
+                                            }}
+                                        />
+
+                                    ) : (
+                                        <BsFillBookmarkFill
+                                            fontSize={"30px"}
+                                            onClick={() => {
+                                                dispatch(setPostFavourites(post))
+                                                toast.success("Публикация добавлена в избранное", {
+                                                    autoClose: 1500,
+                                                })
+                                            }}
+                                        />
+                                    )
+                            }
                         </div>
                     </div>
                 </div>

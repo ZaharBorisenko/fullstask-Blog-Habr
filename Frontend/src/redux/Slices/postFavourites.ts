@@ -15,9 +15,15 @@ const postFavouritesSlice = createSlice({
     reducers: {
         setPostFavourites: (state:Draft<favouritesState>, action:PayloadAction<any>) => {
             state.postFavourites = [...state.postFavourites, action.payload]
+        },
+        removePostFavourites: (state:Draft<favouritesState>, action:PayloadAction<any>) => {
+            state.postFavourites = state.postFavourites.filter(post => post._id !== action.payload._id)
+        },
+        removeAllPostFavourites: (state:Draft<favouritesState>) => {
+            state.postFavourites = []
         }
     }
 })
 
-export const {setPostFavourites} = postFavouritesSlice.actions
+export const {setPostFavourites,removePostFavourites,removeAllPostFavourites} = postFavouritesSlice.actions
 export default postFavouritesSlice.reducer;

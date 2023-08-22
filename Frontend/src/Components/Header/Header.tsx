@@ -1,6 +1,6 @@
 import {Link} from "react-router-dom";
 import st from './Header.module.scss';
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import AuthorizationLink from "./authorizationLink/AuthorizationLink";
 import profileIcon from '../../assets/img/profileIcon.png'
 import {useAppSelector} from "../../redux/hook/hook";
@@ -21,6 +21,10 @@ const Header = () => {
         if (e.target !== correction.current && e.target !== profile.current) setOpenAuthorization(false)
     })
 
+    useEffect(() => {
+
+    },[])
+
     return (
         <header className={st.header}>
             <div className={st.container}>
@@ -35,7 +39,7 @@ const Header = () => {
                     {
                         isAuth ?
                             <div className={st.containerIsAuth}>
-                                <Link className={st.favourites} to="/favourites">Избранное <span>(1)</span></Link>
+                                <Link className={st.favourites} to="/favourites">Избранное <span>()</span></Link>
                                 <Link className={st.addPost} to="/createPost">Написать публикацию</Link>
                             </div>
                             :
