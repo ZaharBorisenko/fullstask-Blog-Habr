@@ -18,6 +18,7 @@ import multer from 'multer'
 import validationErrors from "./middleware/validationErrors.js";
 import cors from 'cors'
 import {AllTags, IdKeywords, IdTags} from "./Controllers/TagsController.js";
+import {createComment, getCommentsByPost} from "./Controllers/CommentPostController.js";
 const app = express();
 app.use(cors())
 app.use(express.json());
@@ -62,6 +63,10 @@ app.get('/users', getAllUsers);
 app.get('/posts/tag/:tag',IdTags);
 app.get('/allTags',AllTags);
 app.get('/posts/keywords/:keywords',IdKeywords);
+//комментарии
+app.get('/comments/:postId', getCommentsByPost)
+app.post('/createComments/:postId',checkAuth, createComment);
+// app.delete('/comments/:postId', )
 
 
 

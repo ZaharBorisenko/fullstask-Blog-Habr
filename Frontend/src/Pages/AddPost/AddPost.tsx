@@ -9,7 +9,6 @@ import AdvancedSettingsPost from "../../Components/AddPostComponents/advancedSet
 import PostMini from "../../Components/MiniPost/PostMini";
 import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
 import {toast} from "react-toastify";
-import {PostType} from "../../redux/Slices/postSlice";
 import {errorMessageType, tagsType} from "../../utils/Types";
 
 

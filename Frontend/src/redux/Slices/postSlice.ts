@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
 import axios from '../../axios'
+import {IComments} from "./commentsSlice";
 
 export interface IUser {
     avatar: string,
@@ -30,6 +31,7 @@ export interface PostType {
     viewCount: number;
     __v?: number;
     _id: string;
+    comments?: Array<IComments>;
 }
 
 type postState = {
