@@ -110,6 +110,8 @@ const PostDetails = () => {
 
 
                 <Comments/>
+
+
             </div>
 
             <PostMini/>

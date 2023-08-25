@@ -12,7 +12,7 @@ export const getCommentsByPost = async (req, res) => {
         }
 
         // Находим комментарии, связанные с этим постом
-        const comments = await CommentsPost.find({ _id: { $in: post.comments } });
+        const comments = await CommentsPost.find({ _id: { $in: post.comments } }).populate('user');
 
         res.json(comments);
     } catch (e) {

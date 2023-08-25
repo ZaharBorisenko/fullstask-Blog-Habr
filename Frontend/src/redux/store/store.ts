@@ -17,6 +17,7 @@ import {
     PURGE,
     REGISTER,
 } from 'redux-persist'
+import commentsSlice from "../Slices/commentsSlice";
 
 const store = configureStore({
     reducer: {
@@ -26,6 +27,7 @@ const store = configureStore({
         tags: tagsSlice,
         sortPost: sortPost,
         postFavourites: postFavouritesPersistConfig(postFavourites),
+        comments: commentsSlice,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware({

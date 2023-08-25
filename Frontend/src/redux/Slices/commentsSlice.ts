@@ -28,6 +28,15 @@ export const fetchComments = createAsyncThunk<Partial<IComments[]>>(
     }
 )
 
+export const createComment = createAsyncThunk(
+    'comments/createComment',
+    async ({ id, comment, userId }) => {
+        const response = await axios.post(`/createComments/${id}`, { comment, userId });
+        return response.data;
+    }
+);
+
+
 const commentSlice = createSlice({
     name: 'comments',
     initialState,
@@ -46,6 +55,9 @@ const commentSlice = createSlice({
             .addCase(fetchComments.rejected, (state:Draft<commentsState>) => {
                 state.status = 'rejected';
             })
+            .addCase(createComment.fulfilled, (state:Draft<commentsState>, action:PayloadAction<any>) => {
+                state.comments.push(action.payload);
+            });
     })
 })
 

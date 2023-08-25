@@ -8,6 +8,7 @@
   max-width: 740px
 }
 .title{
+  padding: 15px 20px;
   color: #333;
   font-size: 1rem;
   font-weight: 700;
@@ -15,4 +16,12 @@
     color: #548eaa;
     margin-left: 10px;
   }
+}
+
+.containerComments{
+  margin-bottom: 25px;
+}
+.commentText{
+  line-height: 1.375rem;
+  color: #333;
 }
