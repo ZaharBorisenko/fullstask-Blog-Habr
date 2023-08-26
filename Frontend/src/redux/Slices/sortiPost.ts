@@ -42,7 +42,7 @@ const sortPost = createSlice({
     name: 'sortPost',
     initialState,
     reducers: {
-        sortParams: (state:Draft<sortPost>, action:PayloadAction<string>) => {
+        setSortParams: (state:Draft<sortPost>, action:PayloadAction<string>) => {
             state.sortParams = action.payload
         }
     },
@@ -72,5 +72,5 @@ const sortPost = createSlice({
     })
 })
 
-export const {sortParams} = sortPost.actions;
+export const {setSortParams} = sortPost.actions;
 export default sortPost.reducer

@@ -5,6 +5,7 @@ import comments from '../../assets/img/comments.png'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPopularity} from "../../redux/Slices/popularityPostSlice";
 import {Link} from "react-router-dom";
+import {BiSolidComment} from "react-icons/bi";
 
 ;
 const PostMini = () => {
@@ -28,8 +29,7 @@ const PostMini = () => {
                                 <div>{post.viewCount}</div>
                             </div>
                             <div className={st.info}>
-                                <img src={comments} alt=""/>
-                                <div>3</div>
+                                <BiSolidComment color={"#929ca5"} fontSize={"30px"}/>
                             </div>
                         </div>
                         <hr className={st.hr}/>

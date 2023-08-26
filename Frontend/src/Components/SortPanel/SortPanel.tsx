@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import st from './SortPanel.module.scss'
 import {MdKeyboardArrowUp, MdKeyboardArrowDown} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {sortParams} from "../../redux/Slices/sortiPost";
+import {setSortParams} from "../../redux/Slices/sortiPost";
 import {setPage} from "../../redux/Slices/postSlice";
 
 const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
@@ -24,12 +24,12 @@ const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
                         <p className={st.sortParamsTitle}>Сначала показывать</p>
                         <div className={st.containerBtn}>
                             <button
-                                onClick={() => {dispatch(sortParams('')); dispatch(setPage(1))}}
+                                onClick={() => {dispatch(setSortParams('')); dispatch(setPage(1))}}
                                 className={`${st.sortParamsBtn} ${sortParamsSelect == '' && st.sortParamsBtnActive}`}>
                                 Новые
                             </button>
                             <button
-                                onClick={() => {dispatch(sortParams('popularity')); dispatch(setPage(1))}}
+                                onClick={() => {dispatch(setSortParams('popularity')); dispatch(setPage(1))}}
                                 className={`${st.sortParamsBtn} ${sortParamsSelect == 'popularity' && st.sortParamsBtnActive}`}>
                                 Популярные
                             </button>
@@ -43,7 +43,7 @@ const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
                             <div className={st.containerBtn}>
                                 <button
                                     onClick={() => {
-                                        {dispatch(sortParams('readingTime')); dispatch(setPage(1))}
+                                        {dispatch(setSortParams('readingTime')); dispatch(setPage(1))}
                                         setSortBy('descReadingTime')
                                     }}
                                     className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'descReadingTime' && st.sortParamsBtnActive}`}>
@@ -51,7 +51,7 @@ const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
                                 </button>
                                 <button
                                     onClick={() => {
-                                        {dispatch(sortParams('readingTime')); dispatch(setPage(1))}
+                                        {dispatch(setSortParams('readingTime')); dispatch(setPage(1))}
                                         setSortBy('ascReadingTime')
                                     }}
                                     className={`${st.sortParamsBtn} ${sortParamsSelect == 'readingTime' && sortBy == 'ascReadingTime' && st.sortParamsBtnActive}`}>

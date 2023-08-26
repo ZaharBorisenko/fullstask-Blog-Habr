@@ -72,8 +72,7 @@ const Post = ({post}) => {
 
                     <div className={st.items}>
                         <div className={st.item}>
-                            <BiSolidComment fontSize={"30px"}/>
-                            <div>3</div>
+                            <BiSolidComment color={"#929ca5"} fontSize={"30px"}/>
                         </div>
                         <div className={st.item}>
                             {
@@ -81,6 +80,7 @@ const Post = ({post}) => {
                                     (
                                         <BsFillBookmarkCheckFill
                                             fontSize={"30px"}
+                                            color={"#929ca5"}
                                             onClick={() => {
                                                 dispatch(removePostFavourites(post))
                                                 toast.error("Публикация удалена из избранного", {
@@ -92,6 +92,7 @@ const Post = ({post}) => {
                                     ) : (
                                         <BsFillBookmarkFill
                                             fontSize={"30px"}
+                                            color={"#929ca5"}
                                             onClick={() => {
                                                 dispatch(setPostFavourites(post))
                                                 toast.success("Публикация добавлена в избранное", {

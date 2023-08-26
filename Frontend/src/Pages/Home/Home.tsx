@@ -11,16 +11,14 @@ import SortPanel from "../../Components/SortPanel/SortPanel";
 
 
 const Home = () => {
-    const [pageSettings, setPageSettings] = useState(1); //страница навигации
-    const [sortBy, setSortBy] = useState('');
-    const handlePageSettings = (value) => {
+    const [pageSettings, setPageSettings] = useState<number>(1); //страница навигации
+    const [sortBy, setSortBy] = useState<string>('');
+    const handlePageSettings = (value:number): void => {
         setPageSettings(value);
     }
     useEffect(() => {
         document.title = "IT Odyssey | Home"
     }, [])
-
-
 
     return (
         <div style={{marginTop: "20px"}}>

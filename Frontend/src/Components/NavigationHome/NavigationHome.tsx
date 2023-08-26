@@ -1,15 +1,14 @@
 import React, {FC} from 'react';
 import st from './NavigationHome.module.scss'
-import {Link} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {sortParams} from "../../redux/Slices/sortiPost";
+import {setSortParams} from "../../redux/Slices/sortiPost";
 
 type propsType = {
     handlePageSettings: (value: number) => void;
     pageSettings: number,
 }
 const NavigationHome: FC<propsType> = ({handlePageSettings, pageSettings}) => {
-    const pageCount = useAppSelector(state => state.posts.currentPagePost);
+    const pageCount:number = useAppSelector(state => state.posts.currentPagePost);
     const sortParamsSelector = useAppSelector(state => state.sortPost.sortParams)
     const dispatch = useAppDispatch();
     return (
@@ -26,7 +25,7 @@ const NavigationHome: FC<propsType> = ({handlePageSettings, pageSettings}) => {
 
                     <p onClick={() => {
                         handlePageSettings(1)
-                        dispatch(sortParams(''))
+                        dispatch(setSortParams(''))
                     }}
                        className={`${pageSettings === 1 && st.active}`}>
                         Статьи
@@ -34,7 +33,7 @@ const NavigationHome: FC<propsType> = ({handlePageSettings, pageSettings}) => {
 
                     <p onClick={() => {
                         handlePageSettings(2)
-                        dispatch(sortParams(''))
+                        dispatch(setSortParams(''))
                     }}
                        className={`${pageSettings === 2 && st.active}`}>
                         Ваши посты
