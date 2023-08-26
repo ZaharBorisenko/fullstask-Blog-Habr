@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import React, {ChangeEvent, useEffect} from 'react';
 import st from './AddPost.module.scss';
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
@@ -8,50 +8,33 @@ import 'react-quill/dist/quill.snow.css';
 import AdvancedSettingsPost from "../../Components/AddPostComponents/advancedSettingsPost";
 import PostMini from "../../Components/MiniPost/PostMini";
 import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
-import {toast} from "react-toastify";
-import {errorMessageType, tagsType} from "../../utils/Types";
+import {useCreatePost} from "../../hook/useCreatePost";
+import {createSubmitPost} from "../../utils/CreateFunction/createSubmitPost";
 
 
 export const AddPost = () => {
     const navigate = useNavigate();
     const {id} = useParams();
-    let isAuth = useAppSelector(selectIsAuthenticated);
-    const currentUser = useAppSelector(state => state.auth.data);
-    const [title, setTitle] = useState<string>('');
-    const [text, setText] = useState<string>(''); //text
-    const [tags, setTags] = useState<Array<tagsType>>([]);
-    console.log(tags)
-    const [imageUrl, setImageUrl] = useState<string>('uploads/Image-Place-Holder.jpg');
-    const [keywords, setKeywords] = useState<string>('');
-    const [level, setLevel] = useState<string>('Не указан');
-    const [readingTime, setReadingTime] = useState<number>(0);
-    const [validation, setValidation] = useState<boolean>(true);
-    const [stageAdvancedSettings, setStageAdvancedSettings] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<Array<errorMessageType>>([]);
+    const createPost = useCreatePost();
 
+    const isAuth = useAppSelector(selectIsAuthenticated);
+    const currentUser = useAppSelector(state => state.auth.data);
     const isEditPost:boolean = Boolean(id);
 
-    const handleSetTags = (value:Array<tagsType>): void => {
-        console.log(value)
-        setTags(value)
-    }
-    const handleSetKeywords = (value:string): void => {
-        setKeywords(value)
-    }
-    const handleSetLevel = (value:string): void => {
-        setLevel(value)
-    }
-    const handleSetTitle = (value:string): void => {
-        setTitle(value)
-    }
-    const handleSetText = (value:string): void => {
-        setText(value)
-    }
 
-    //ТАК КАК РЕДАКТОР ДОБАВЛЯЕТ НЕКОТОРЫЕ ТЕГИ В ТЕКСТ,НУЖНО ИХ УБРАТЬ C ПОМОЩЬЮ РЕГУЛЯРНОГО ВЫРАЖЕНИЯ,
-    // ЧТОБЫ ВРЕМЯ ПРОЧТЕНИЯ СЧИТАЛОСЬ КОРРЕКТНО
-    const calculatingReadingTime = (value:string): void => {
-        let textReg = text.replace(/<[^>]*>/g, '');
+    const isValidation = () => {
+        if ( createPost.title.length < 1 ||  createPost.text.length < 1) {
+            createPost.setValidation(false)
+            createPost.setStageAdvancedSettings(false)
+        }
+        else {
+            createPost.setValidation(true)
+            createPost.setStageAdvancedSettings(true)
+        }
+    }
+     const calculatingReadingTime = (value:string): void => {
+
+        let textReg = createPost.text.replace(/<[^>]*>/g, '');
         const averageReadingSpeed:number = 600;
         let additionalTime = 0;
 
@@ -62,18 +45,7 @@ export const AddPost = () => {
         } else if (value === 'Сложный') {
             additionalTime = 4;
         }else additionalTime = 0;
-        setReadingTime(Math.ceil((textReg.length / averageReadingSpeed) + additionalTime));
-    }
-
-    const isValidation = () => {
-        if (title.length < 1 || text.length < 1) {
-            setValidation(false)
-            setStageAdvancedSettings(false)
-        }
-        else {
-            setValidation(true)
-            setStageAdvancedSettings(true)
-        }
+        createPost.setReadingTime(Math.ceil((textReg.length / averageReadingSpeed) + additionalTime));
     }
 
     const handleChangeFile = async (event:ChangeEvent<HTMLInputElement>) => {
@@ -81,59 +53,30 @@ export const AddPost = () => {
             const formData = new FormData();
             formData.append('image', event.target?.files[0]);
             const {data} = await axios.post('/upload', formData);
-            setImageUrl(data.url);
+            createPost.setImageUrl(data.url);
         }catch (e) {
             console.log(`Ошибка при загрузке ${e}`)
         }
     };
 
     const onClickRemoveImage = (): void => {
-        setImageUrl('');
+        createPost.setImageUrl('');
     };
 
     useEffect(() => {
        if (id){
             axios.get(`/posts/${id}`).then( ({data}) => {
-                setTitle(data.title);
-                setText(data.text);
-                setTags(data.tags);
-                setKeywords(data.keywords.join(','));
-                setLevel(data.difficultyLevel)
-                setReadingTime(data.readingTime)
-                setImageUrl(data.imagePost)
+                createPost.handleSetTitle(data.title);
+                createPost.handleSetText(data.text);
+                createPost.handleSetTags(data.tags);
+                createPost.handleSetKeywords(data.keywords.join(','));
+                createPost.handleSetLevel(data.difficultyLevel)
+                createPost.setReadingTime(data.readingTime)
+                createPost.setImageUrl(data.imagePost)
             })
        }
     },[])
 
-    const tagsRefactor = (tags:Array<tagsType>) => {
-        if (tags) return tags.map(item => item.value)
-    }
-
-    const createSubmitPost = async () => {
-        try {
-            const params = {
-                title:title,
-                text:text,
-                tags:tagsRefactor(tags),
-                imagePost: `${imageUrl === '' ? 'uploads/Image-Place-Holder.jpg' : imageUrl}`,
-                keywords: keywords,
-                difficultyLevel: level,
-                readingTime: readingTime,
-            };
-
-            const { data } = isEditPost ? await axios.patch(`/posts/${id}`, params) : await axios.post('/posts', params);
-            toast.success(`${isEditPost? 'Пост успешно отредактирован' : 'Пост успешно создан'}`,{
-                autoClose: 1500,
-            });
-            const idPost = isEditPost ? id : data._id;
-
-            navigate(`/posts/${idPost}`);
-        }catch (error) {
-            if (error.response || error.response.data || error.response.data.message) {
-                setErrorMessage(error.response.data)
-            }
-        }
-    }
 
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')
@@ -151,29 +94,29 @@ export const AddPost = () => {
                 <div className={st.post}>
 
                     {
-                        !stageAdvancedSettings ?
+                        !createPost.stageAdvancedSettings ?
                             <SettingsPost
-                                title={title}
-                                handleSetTitle={handleSetTitle}
-                                text={text}
-                                handleSetText={handleSetText}
+                                title={createPost.title}
+                                handleSetTitle={createPost.handleSetTitle}
+                                text={createPost.text}
+                                handleSetText={createPost.handleSetText}
                                 currentUser={currentUser}
-                                validation={validation}
+                                validation={createPost.validation}
                                 isEditPost={isEditPost}
 
                             /> :
                             <AdvancedSettingsPost
-                                tags={tags}
-                                handleSetTags={handleSetTags}
-                                keywords={keywords}
-                                handleSetKeywords={handleSetKeywords}
-                                level={level}
-                                handleSetLevel={handleSetLevel}
+                                tags={createPost.tags}
+                                handleSetTags={createPost.handleSetTags}
+                                keywords={createPost.keywords}
+                                handleSetKeywords={createPost.handleSetKeywords}
+                                level={createPost.level}
+                                handleSetLevel={createPost.handleSetLevel}
                                 handleChangeFile={handleChangeFile}
-                                imageUrl={imageUrl}
+                                imageUrl={createPost.imageUrl}
                                 onClickRemoveImage={onClickRemoveImage}
-                                errorMessage={errorMessage}
-                                readingTime={readingTime}
+                                errorMessage={createPost.errorMessage}
+                                readingTime={createPost.readingTime}
                                 calculatingReadingTime={calculatingReadingTime}
                                 isEditPost={isEditPost}
                             />
@@ -181,15 +124,15 @@ export const AddPost = () => {
                     }
 
                     {
-                        !stageAdvancedSettings ?
+                        !createPost.stageAdvancedSettings ?
                             <button className={st.button} onClick={() => {
                                 isValidation()
-                                calculatingReadingTime('Не указано');
+                                calculatingReadingTime('Не указан');
                             }}>{isEditPost ? 'Далее к редактированию': 'Далее к настройкам'}</button>
                             :
                             <div className={st.containerBtn}>
-                                <button className={`${st.button} ${st.buttonPublic}`} onClick={createSubmitPost}>{isEditPost ? 'Отредактировать' : 'Опубликовать пост'}</button>
-                                <button className={`${st.button} ${st.buttonBack}`} onClick={() => setStageAdvancedSettings(false)}>Назад</button>
+                                <button className={`${st.button} ${st.buttonPublic}`} onClick={() => createSubmitPost(isEditPost,id)}>{isEditPost ? 'Отредактировать' : 'Опубликовать пост'}</button>
+                                <button className={`${st.button} ${st.buttonBack}`} onClick={() => createPost.setStageAdvancedSettings(false)}>Назад</button>
                             </div>
                     }
                 </div>
