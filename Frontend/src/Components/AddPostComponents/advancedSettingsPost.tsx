@@ -1,7 +1,6 @@
-import React, {ChangeEvent, FC, LegacyRef, useRef} from 'react';
+import React, {ChangeEvent, FC, useRef} from 'react';
 import st from './advancedSettingsPost.module.scss'
 import InputTags from "../InputTags/InputTags";
-import {PostType} from "../../redux/Slices/postSlice";
 import {errorMessageType, tagsType} from "../../utils/Types";
 
 type PropsType = {
