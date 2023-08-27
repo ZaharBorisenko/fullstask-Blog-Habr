@@ -1,9 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from "../Post/Post.module.scss";
 import {formatDate} from "../../utils/formatDate";
 import {Link} from "react-router-dom";
-
-const UserInfoPost = ({post}) => {
+import {PostType} from "../../redux/Slices/postSlice";
+type propsType = {
+    post:PostType
+}
+const UserInfoPost:FC<propsType> = ({post}) => {
     return (
         <div className={st.user}>
             <img className={st.avatar} src={post.user.avatar} alt=""/>

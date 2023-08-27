@@ -1,24 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import st from './AllTags.module.scss'
-import {fetchAllTags} from "../../redux/Slices/TagsSlice";
+import {fetchAllTags, ITags} from "../../redux/Slices/TagsSlice";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {Link} from "react-router-dom";
 
 const AllTags = () => {
     const dispatch = useAppDispatch();
-    const tags = useAppSelector(state => state.tags.tags);
+    const tags:ITags[] = useAppSelector(state => state.tags.tags);
 
 
-    const [favouritesTags, setFavouritesTags] = useState([]);
-    const [DragItem, setDragItem] = useState(false);
-    console.log(DragItem);
+    const [favouritesTags, setFavouritesTags] = useState<ITags[]>([]);
+    const [DragItem, setDragItem] = useState<boolean>(false);
 
-    function handleOnDrag(e, favouritesTags) {
+    function handleOnDrag(e:React.DragEvent<HTMLDivElement>, favouritesTags: string): void {
+        console.log(typeof favouritesTags)
         e.dataTransfer.setData("tag",favouritesTags)
         setDragItem(true)
     }
 
-    function handleOnDrop(e){
+    function handleOnDrop(e:React.DragEvent<HTMLDivElement>): void{
+        console.log(e)
         const tagString = e.dataTransfer.getData("tag")
         const tag = JSON.parse(tagString)
         const updatedTags = [tag, ...favouritesTags];
@@ -26,11 +27,11 @@ const AllTags = () => {
         localStorage.setItem('favouritesTags', JSON.stringify(updatedTags));
     }
 
-    function handleDragOver(e){
+    function handleDragOver(e:React.DragEvent<HTMLDivElement>): void{
         e.preventDefault();
     }
 
-    function clearFavouritesTags() {
+    function clearFavouritesTags(): void {
         localStorage.removeItem('favouritesTags');
         setFavouritesTags([]);
     }

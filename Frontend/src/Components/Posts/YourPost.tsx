@@ -1,32 +1,28 @@
 import React, {useEffect, useState} from 'react';
 import Post from "../Post/Post";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {fetchPost, fetchPostAllUser} from "../../redux/Slices/postSlice";
+import {fetchPost, fetchPostAllUser, IUser, PostType} from "../../redux/Slices/postSlice";
 import Skeleton from "../Skeleton/SkeletonPost";
 import {fetchSortPopularityPost} from "../../redux/Slices/sortiPost";
 
 const YourPost = () => {
     const dispatch = useAppDispatch()
+    const currentUser:IUser = useAppSelector(state => state.auth.data);
+    const currentUserId:string = currentUser._id;
+    const sortParams:string = useAppSelector(state => state.sortPost.sortParams)
 
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
-
-
-    const sortParams = useAppSelector(state => state.sortPost.sortParams)
     //посты по умолчанию
-    const posts = useAppSelector(state => state.posts.postsUser);
-
-    const status = useAppSelector(state => state.posts.status);
+    const posts:PostType[] = useAppSelector(state => state.posts.postsUser);
     const userPosts = posts.filter(post => post.user._id === currentUserId)
-    console.log(userPosts)
-
+    const status:string = useAppSelector(state => state.posts.status);
+    //посты пользователя отсортированы по популярности
     const userPopularityPosts = Array.from(userPosts).sort((a,b) => b.viewCount - a.viewCount);
-    console.log(userPopularityPosts)
 
 
 
     useEffect(() => {
         sortParams == '' && dispatch(fetchPostAllUser())
+        console.log('render')
     },[sortParams])
 
     return (

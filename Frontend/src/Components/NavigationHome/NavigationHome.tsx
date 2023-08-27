@@ -9,7 +9,6 @@ type propsType = {
 }
 const NavigationHome: FC<propsType> = ({handlePageSettings, pageSettings}) => {
     const pageCount:number = useAppSelector(state => state.posts.currentPagePost);
-    const sortParamsSelector = useAppSelector(state => state.sortPost.sortParams)
     const dispatch = useAppDispatch();
     return (
         <div className={st.container}>

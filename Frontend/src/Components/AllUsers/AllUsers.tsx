@@ -3,16 +3,16 @@ import axios from "../../axios";
 import st from './AllUsers.module.scss'
 import UserCard from "./UserCard/UserCard";
 import SkeletonUsersAll from "../Skeleton/SkeletonUsersAll";
+import {IUser} from "../../redux/Slices/postSlice";
 const AllUsers = () => {
-    const [users, setUsers] = useState([]);
-    const [upload, setUpload] = useState(false);
-    const getAllUsers = async () => {
+    const [users, setUsers] = useState<IUser[]>([]);
+    const [upload, setUpload] = useState<boolean>(false);
+    const getAllUsers = async ():Promise<void> => {
         const response = await axios.get(`/users`);
         const data = response.data
         setUsers(data)
         setUpload(true)
     }
-    console.log(users);
 
     useEffect(() => {
        getAllUsers();

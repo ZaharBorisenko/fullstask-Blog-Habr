@@ -10,12 +10,12 @@ import {BsFillBookmarkFill, BsFillBookmarkCheckFill} from "react-icons/bs";
 import {BiSolidComment} from "react-icons/bi";
 import {removePostFavourites, setPostFavourites} from "../../redux/Slices/postFavourites";
 import {toast} from "react-toastify";
+import {PostType} from "../../redux/Slices/postSlice";
 
 const Post = ({post}) => {
-    const currentUserId = useAppSelector(state => state.auth.data._id);
-    const postFavourites = useAppSelector(state => state.postFavourites.postFavourites);
-
     const dispatch = useAppDispatch();
+    const currentUserId:string = useAppSelector(state => state.auth.data._id);
+    const postFavourites:PostType[] = useAppSelector(state => state.postFavourites.postFavourites);
 
     return (
         <div>

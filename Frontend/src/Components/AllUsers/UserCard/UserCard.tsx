@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from './UserCard.module.scss';
 import {Link} from "react-router-dom";
-const UserCard = ({users}) => {
+import {IUser} from "../../../redux/Slices/postSlice";
+
+type propsType = {
+    users: IUser[]
+}
+const UserCard:FC<propsType> = ({users}) => {
     console.log(users)
     return (
         <div style={{marginTop: "30px"}}>

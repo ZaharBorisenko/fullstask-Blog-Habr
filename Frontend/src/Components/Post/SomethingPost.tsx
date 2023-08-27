@@ -1,15 +1,17 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from "./Post.module.scss";
 import {Link, useNavigate} from "react-router-dom";
 import {AiFillDelete, AiFillEdit} from "react-icons/ai";
-import {fetchDeletePost} from "../../redux/Slices/postSlice";
+import {fetchDeletePost, PostType} from "../../redux/Slices/postSlice";
 import {useAppDispatch} from "../../redux/hook/hook";
 import {toast} from "react-toastify";
-
-const SomethingPost = ({post}) => {
+type propsType = {
+    post:PostType
+}
+const SomethingPost:FC<propsType> = ({post}) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const removePost = (id) => {
+    const removePost = (id:string): void => {
         dispatch(fetchDeletePost(id))
         navigate('/');
     }

@@ -6,11 +6,12 @@ import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPopularity} from "../../redux/Slices/popularityPostSlice";
 import {Link} from "react-router-dom";
 import {BiSolidComment} from "react-icons/bi";
+import {PostType} from "../../redux/Slices/postSlice";
 
 ;
 const PostMini = () => {
     let dispatch = useAppDispatch()
-    let postPopularity = useAppSelector(state => state.postsPopularity.popularityPosts)
+    let postPopularity:PostType[] = useAppSelector(state => state.postsPopularity.popularityPosts)
     useEffect(() => {
         dispatch(fetchPopularity())
     },[])

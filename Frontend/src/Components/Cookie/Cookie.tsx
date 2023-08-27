@@ -3,9 +3,9 @@ import st from './Cookie.module.scss';
 import cookie from '../../assets/img/cookie.svg'
 const Cookie = () => {
 
-    const [activeCookie, setActiveCookie] = useState(false);
+    const [activeCookie, setActiveCookie] = useState<boolean>(false);
 
-    const handleActiveCookie = () => {
+    const handleActiveCookie = (): void => {
         setActiveCookie(false)
         localStorage.setItem('cookie', JSON.stringify(activeCookie));
     }

@@ -1,14 +1,20 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import st from './SortPanel.module.scss'
 import {MdKeyboardArrowUp, MdKeyboardArrowDown} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {setSortParams} from "../../redux/Slices/sortiPost";
 import {setPage} from "../../redux/Slices/postSlice";
 
-const SortPanel = ({sortBy, setSortBy,pageSettings}) => {
-    const [sortShow, setSortShow] = useState(false)
-    const sortParamsSelect = useAppSelector(state => state.sortPost.sortParams)
-    const pageCount = useAppSelector(state => state.posts.currentPagePost);
+type propsType = {
+    sortBy: string,
+    setSortBy: (sortBy:string) => void
+    pageSettings: number
+}
+
+const SortPanel:FC<propsType> = ({sortBy, setSortBy,pageSettings}) => {
+    const [sortShow, setSortShow] = useState<boolean>(false)
+    const sortParamsSelect:string = useAppSelector(state => state.sortPost.sortParams)
+    const pageCount:number = useAppSelector(state => state.posts.currentPagePost);
     const dispatch = useAppDispatch();
     return (
         <div className={st.container}>
