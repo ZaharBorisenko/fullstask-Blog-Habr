@@ -1,9 +1,20 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from "./ProfileUpdateInput.module.scss";
 import ReactQuill from "react-quill";
 import {modules} from "../../../utils/modulesProfileEdit";
 
-const ProfileUpdateInput = ({firstName,lastName,aboutMe,UpdateProfileInfo,setFirstName,setLastName,setAboutMe}) => {
+
+type propsType = {
+    firstName: string,
+    lastName: string,
+    aboutMe: string,
+    UpdateProfileInfo: () => void,
+    setFirstName: (firstName:string) => void,
+    setLastName: (lastName:string) => void,
+    setAboutMe: (aboutMe:string) => void,
+}
+
+const ProfileUpdateInput:FC<propsType> = ({firstName,lastName,aboutMe,UpdateProfileInfo,setFirstName,setLastName,setAboutMe}) => {
     return (
         <div>
             <div>

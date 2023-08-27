@@ -4,16 +4,18 @@ import {AiOutlineEdit} from "react-icons/ai";
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../redux/hook/hook";
 import axios from "../../../axios";
+import {IUser} from "../../../redux/Slices/postSlice";
 
 type propsType = {
     avatar: string,
-    handleUpdateProfile: () => void
+    handleUpdateProfile: () => void,
+    setAvatar: (avatar:string) => void
 }
 
 const ProfileAvatar:FC<propsType> = ({avatar,handleUpdateProfile,setAvatar}) => {
     const {id} = useParams();
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
+    const currentUser:IUser = useAppSelector(state => state.auth.data);
+    const currentUserId:string = currentUser._id;
 
     const handleChangeFile = async (event) => {
         try {

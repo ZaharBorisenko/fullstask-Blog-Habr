@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import st from './ProfileUpdate.module.scss'
 import 'react-quill/dist/quill.snow.css';
 import axios from "../../../axios";
@@ -12,12 +12,12 @@ import {toast} from "react-toastify";
 
 
 const ProfileUpdate = () => {
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
+    const currentUser:IUser = useAppSelector(state => state.auth.data);
+    const currentUserId:string = currentUser._id;
     const {id} = useParams();
     const [firstName, setFirstName] = useState<string>('');
     const [lastName, setLastName] = useState<string>('');
-    const [aboutMe, setAboutMe] = useState("");
+    const [aboutMe, setAboutMe] = useState<string>("");
     const [userInfo, setUserInfo] = useState<IUser | null>(null);
     const [update, setUpdate] = useState(false);
     const userProfile = async () => {
@@ -28,7 +28,7 @@ const ProfileUpdate = () => {
         setLastName(data.lastName || '');
         setAboutMe(data.aboutMe || '');
     }
-    const updateProfile = async () => {
+    const updateProfile = async (): Promise<void> => {
         try {
             const params = {
                 firstName,
@@ -42,7 +42,7 @@ const ProfileUpdate = () => {
         }
     }
 
-    const UpdateProfileInfo = () => {
+    const UpdateProfileInfo = (): void => {
         setUpdate(true);
         updateProfile();
     }

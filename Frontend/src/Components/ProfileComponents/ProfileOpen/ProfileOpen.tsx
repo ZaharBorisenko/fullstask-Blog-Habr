@@ -1,6 +1,13 @@
-import React from 'react';
+import React, {FC} from 'react';
 import st from './ProfileOpen.module.scss'
-const ProfileOpen = ({firstName,lastName,aboutMe}) => {
+
+type propsType = {
+    firstName: string,
+    lastName: string,
+    aboutMe: string,
+}
+
+const ProfileOpen:FC<propsType> = ({firstName,lastName,aboutMe}) => {
     return (
         <div>
             <div className={st.containerInput}>

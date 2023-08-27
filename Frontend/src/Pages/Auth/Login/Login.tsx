@@ -14,9 +14,9 @@ const Login = () => {
     const navigate = useNavigate();
     const errorValid = useAppSelector(state => state.auth.error);
 
-    const [showPassword, setShowPassword] = useState(false);
+    const [showPassword, setShowPassword] = useState<boolean>(false);
 
-    const handleShowPassword = () => {
+    const handleShowPassword = ():void => {
         setShowPassword(!showPassword);
     }
 
@@ -28,7 +28,7 @@ const Login = () => {
         mode: "onSubmit"
     })
 
-    const onSubmit = async (values: IValues) => {
+    const onSubmit = async (values): Promise<void> => {
         const data = await dispatch(fetchLogin(values));
         if ('token' in data.payload) {
             window.localStorage.setItem('token', data.payload.token)

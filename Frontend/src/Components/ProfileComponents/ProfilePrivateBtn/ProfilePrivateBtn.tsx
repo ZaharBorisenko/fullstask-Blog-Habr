@@ -1,9 +1,15 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {FC, MutableRefObject, useRef} from 'react';
 import st from './ProfilePrivateBtn.module.scss';
-import axios from "../../../axios";
 
-const ProfilePrivateBtn = ({privateProfile, setPrivateProfile, updateProfilePrivate}) => {
-    const buttonPatchPrivate = useRef<any>();
+
+type propsType = {
+    privateProfile: boolean,
+    setPrivateProfile: (privateProfile:boolean) => void,
+    updateProfilePrivate: () => Promise<void>,
+}
+
+const ProfilePrivateBtn:FC<propsType> = ({privateProfile, setPrivateProfile, updateProfilePrivate}) => {
+    const buttonPatchPrivate = useRef() as MutableRefObject<HTMLButtonElement>
     return (
         <div className={st.container}>
             <div>

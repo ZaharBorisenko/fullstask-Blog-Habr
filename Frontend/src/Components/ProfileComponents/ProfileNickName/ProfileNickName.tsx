@@ -1,18 +1,24 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import st from './ProfileNickName.module.scss'
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../redux/hook/hook";
 import {AiOutlineEdit} from "react-icons/ai";
 import { FiCheck } from "react-icons/fi";
 
-const ProfileNickName = ({nickName,setNickName,handleUpdateProfile}) => {
+type postType = {
+    nickName:string,
+    setNickName: (nickName:string) => void,
+    handleUpdateProfile: () => void
+}
+
+const ProfileNickName:FC<postType> = ({nickName,setNickName,handleUpdateProfile}) => {
 
     const {id} = useParams();
     const currentUser = useAppSelector(state => state.auth.data);
     const currentUserId = currentUser._id;
-    const [isEdit, setIsEdit] = useState(false);
+    const [isEdit, setIsEdit] = useState<boolean>(false);
 
-    const handleUpdateNickName = () => {
+    const handleUpdateNickName = (): void => {
         handleUpdateProfile()
         setIsEdit(false)
     }

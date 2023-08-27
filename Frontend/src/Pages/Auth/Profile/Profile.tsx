@@ -10,8 +10,6 @@ const Profile = () => {
     let isAuth = useAppSelector(selectIsAuthenticated);
     const {id} = useParams();
     const navigate = useNavigate();
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
 
     useEffect(() => {
         if (!window.localStorage.getItem('token') && !isAuth) navigate('/login')

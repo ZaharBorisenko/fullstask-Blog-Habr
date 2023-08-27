@@ -13,8 +13,8 @@ import SkeletonLeftInfo from "../../Skeleton/SkeletonLeftInfo";
 
 const ProfileInfo = () => {
     const {id} = useParams();
-    const currentUser = useAppSelector(state => state.auth.data);
-    const currentUserId = currentUser._id;
+    const currentUser:IUser = useAppSelector(state => state.auth.data);
+    const currentUserId:string= currentUser._id;
     const [avatar, setAvatar] = useState<string>('')
     const [nickName, setNickName] = useState<string>('')
     const [dateRegister, setDateRegister] = useState<string>('');
@@ -30,7 +30,7 @@ const ProfileInfo = () => {
         setUpdated(true)
     }
 
-    const updateProfile = async () => {
+    const updateProfile = async (): Promise<void> => {
         try {
             const params = {
                 avatar,
@@ -45,7 +45,7 @@ const ProfileInfo = () => {
         }
     }
 
-    const updateProfilePrivate = async () => {
+    const updateProfilePrivate = async (): Promise<void> => {
         try {
             const params = {
                 privateProfile,
@@ -59,7 +59,7 @@ const ProfileInfo = () => {
         }
     }
 
-    const handleUpdateProfile = () => {
+    const handleUpdateProfile = (): void => {
         updateProfile();
     }
 
