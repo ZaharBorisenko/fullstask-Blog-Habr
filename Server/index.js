@@ -4,6 +4,7 @@ import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
 import {getAllUsers, login, profile, profileUser, register, updateProfiles} from "./Controllers/UserController.js";
 import dotenv from 'dotenv';
+import {fileURLToPath} from 'url';
 dotenv.config()
 import {
     create,
@@ -30,19 +31,18 @@ mongoose.connect(process.env.MONGODB)
     .catch((e) => console.log(`error ${e}`))
 
 
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 //
-// const __dirname = path.resolve();
-// const distPath = path.join(__dirname, "../frontend/dist");
 //
-// app.use(express.static(distPath));
+// const frontendBuildPath = path.join(__dirname, '../Frontend/dist'); // Путь к сборке фронтенда
+// app.use(express.static(frontendBuildPath));
 //
-// app.get("*", function (req, res) {
-//     res.sendFile(path.join(distPath, "index.html"), function (err) {
-//         if (err) {
-//             res.status(500).send(err);
-//         }
-//     });
+// // Обработка всех запросов, кроме API, направлять на index.html
+// app.get('*', (req, res) => {
+//     res.sendFile(path.join(frontendBuildPath, 'index.html'));
 // });
+//
 
 //=== загрузка картинок на сервер.
 app.use('/uploads',express.static('uploads'))
