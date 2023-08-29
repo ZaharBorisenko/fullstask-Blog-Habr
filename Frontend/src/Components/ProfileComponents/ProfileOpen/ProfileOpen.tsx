@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from './ProfileOpen.module.scss'
 
 type propsType = {

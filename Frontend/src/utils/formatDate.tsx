@@ -1,7 +1,7 @@
-export const formatDate = (date) => {
+export const formatDate = (date:string) => {
     const createdAt = date;
-    const createdDate = new Date(createdAt);
-    const currentTime = new Date();
+    const createdDate:any = new Date(createdAt);
+    const currentTime:any = new Date();
     const timeDifferenceInMilliseconds = currentTime - createdDate;
 
     const millisecondsInMinute = 1000 * 60;

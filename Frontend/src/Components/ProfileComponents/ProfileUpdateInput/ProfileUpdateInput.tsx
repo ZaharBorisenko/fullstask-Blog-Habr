@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from "./ProfileUpdateInput.module.scss";
 import ReactQuill from "react-quill";
 import {modules} from "../../../utils/modulesProfileEdit";

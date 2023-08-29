@@ -1,7 +1,7 @@
 import {IUser} from "./postSlice";
 import {createAsyncThunk, createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
 import axios from "../../axios";
-
+//@ts-ignore
 export interface IComments {
     _id: any,
     comment: string,
@@ -20,15 +20,15 @@ const initialState: commentsState = {
     status: '',
 }
 
-export const fetchComments = createAsyncThunk<Partial<IComments[]>>(
+export const fetchComments = createAsyncThunk<Partial<IComments[]>,{postId:string}>(
     'comment/fetchComments',
-    async (postId) => {
+    async ({postId}) => {
         const {data} = await  axios.get(`/comments/${postId}`)
         return data
     }
 )
 
-export const createComment = createAsyncThunk(
+export const createComment = createAsyncThunk<Partial<any>, {id:string, comment:string,userId:string}>(
     'comments/createComment',
     async ({ id, comment, userId }) => {
         const response = await axios.post(`/createComments/${id}`, { comment, userId });

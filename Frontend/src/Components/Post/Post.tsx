@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {FC} from 'react';
 import st from './Post.module.scss'
 import time from '../../assets/img/time.png'
 import view from '../../assets/img/view.png'
@@ -12,7 +12,11 @@ import {removePostFavourites, setPostFavourites} from "../../redux/Slices/postFa
 import {toast} from "react-toastify";
 import {PostType} from "../../redux/Slices/postSlice";
 
-const Post = ({post}) => {
+type typeProps = {
+    post: PostType
+}
+
+const Post:FC<typeProps> = ({post}) => {
     const dispatch = useAppDispatch();
     const currentUserId:string = useAppSelector(state => state.auth.data._id);
     const postFavourites:PostType[] = useAppSelector(state => state.postFavourites.postFavourites);
@@ -59,7 +63,7 @@ const Post = ({post}) => {
 
                     <div className={st.keywords}>
                         {
-                            post.keywords.map((p, index) => (
+                            post.keywords.map((p:string, index:number) => (
                                 <Link to={`/posts/keywords/${p}`} key={index}>{p}* </Link>
                             ))
                         }

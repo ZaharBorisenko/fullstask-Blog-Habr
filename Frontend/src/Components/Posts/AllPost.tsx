@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import Post from "../Post/Post";
 import Skeleton from "../Skeleton/SkeletonPost";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPost, setPage} from "../../redux/Slices/postSlice";
-import sortPost, {fetchSortPopularityPost, fetchSortReadingTimePost} from "../../redux/Slices/sortiPost";
+import {fetchSortPopularityPost, fetchSortReadingTimePost} from "../../redux/Slices/sortiPost";
 import {Pagination} from "@mui/material";
 
-const AllPost = ({sortBy}) => {
+const AllPost = ({sortBy}: {sortBy:string}) => {
     const dispatch = useAppDispatch();
     const sortParams = useAppSelector(state => state.sortPost.sortParams)
     // ===Посты по умолчанию==========================================
@@ -21,7 +21,7 @@ const AllPost = ({sortBy}) => {
     const postsReadingTimeStatus = useAppSelector(state => state.sortPost.statusPostsReadingTime)
     //=======================Для пагинации==========================================
     const currentPagePost = useAppSelector(state => state.posts.currentPagePost);
-    const [limit, setLimit] = useState(5);
+    const [limit] = useState(5);
     const totalCountPosts = useAppSelector(state => state.posts.totalPosts);
     const totalCountPagePagination = Math.ceil(totalCountPosts / limit);
 
@@ -52,7 +52,7 @@ const AllPost = ({sortBy}) => {
                         {
                             status === 'loading' ? <Skeleton/>
                                 :
-                                posts.map(post => (
+                                posts?.map(post => (
                                     <Post post={post} key={post._id}/>
                                 ))
                         }
@@ -65,7 +65,7 @@ const AllPost = ({sortBy}) => {
                         {
                             postsPopularityStatus === 'loading' ? <Skeleton/>
                                 :
-                                postsPopularity.map(post => (
+                                postsPopularity?.map(post => (
                                     <Post post={post} key={post._id}/>
                                 ))
                         }
@@ -78,7 +78,7 @@ const AllPost = ({sortBy}) => {
                         {
                             postsReadingTimeStatus === 'loading' ? <Skeleton/>
                                 :
-                                postsReadingTime.map(post => (
+                                postsReadingTime?.map(post => (
                                     <Post post={post} key={post._id}/>
                                 ))
                         }

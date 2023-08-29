@@ -3,6 +3,8 @@ import mongoose from 'mongoose';
 import {loginValid, registerValid} from "./validation/auth.js";
 import checkAuth from "./middleware/CheckAuth.js";
 import {getAllUsers, login, profile, profileUser, register, updateProfiles} from "./Controllers/UserController.js";
+import dotenv from 'dotenv';
+dotenv.config()
 import {
     create,
     getAll,
@@ -19,12 +21,28 @@ import validationErrors from "./middleware/validationErrors.js";
 import cors from 'cors'
 import {AllTags, IdKeywords, IdTags} from "./Controllers/TagsController.js";
 import {createComment, getCommentsByPost} from "./Controllers/CommentPostController.js";
+import path from "path";
 const app = express();
 app.use(cors())
 app.use(express.json());
-mongoose.connect('mongodb+srv://ZaharWeb:3660253zahar@cluster0.rnt64hw.mongodb.net/blog')
+mongoose.connect(process.env.MONGODB)
     .then(() => console.log('connect'))
     .catch((e) => console.log(`error ${e}`))
+
+
+//
+// const __dirname = path.resolve();
+// const distPath = path.join(__dirname, "../frontend/dist");
+//
+// app.use(express.static(distPath));
+//
+// app.get("*", function (req, res) {
+//     res.sendFile(path.join(distPath, "index.html"), function (err) {
+//         if (err) {
+//             res.status(500).send(err);
+//         }
+//     });
+// });
 
 //=== загрузка картинок на сервер.
 app.use('/uploads',express.static('uploads'))
@@ -68,27 +86,7 @@ app.get('/comments/:postId', getCommentsByPost)
 app.post('/createComments/:postId',checkAuth, createComment);
 // app.delete('/comments/:postId', )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const port = 4000
-app.listen(port, (e) => {
+app.listen(process.env.PORT, (e) => {
     if (e) return console.log(`ERROR ${e}`)
-    console.log(`Сервер запущен на порту localhost:${port}`)
+    console.log(`Сервер запущен на порту localhost:${process.env.PORT}`)
 })

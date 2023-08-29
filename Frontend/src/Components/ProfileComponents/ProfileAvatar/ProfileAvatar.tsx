@@ -1,4 +1,4 @@
-import React, {FC, useRef} from 'react';
+import {FC, useRef} from 'react';
 import st from './ProfileAvatar.module.scss'
 import {AiOutlineEdit} from "react-icons/ai";
 import {useParams} from "react-router-dom";
@@ -17,7 +17,7 @@ const ProfileAvatar:FC<propsType> = ({avatar,handleUpdateProfile,setAvatar}) => 
     const currentUser:IUser = useAppSelector(state => state.auth.data);
     const currentUserId:string = currentUser._id;
 
-    const handleChangeFile = async (event) => {
+    const handleChangeFile = async (event:any) => {
         try {
             const formData = new FormData();
             formData.append('image', event.target.files[0]);

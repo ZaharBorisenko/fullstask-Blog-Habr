@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from './NavigationHome.module.scss'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {setSortParams} from "../../redux/Slices/sortiPost";

@@ -1,4 +1,3 @@
-import React from 'react';
 import st from './ProfileExit.module.scss'
 import { AiOutlineUnlock } from "react-icons/ai";
 const ProfileExit = () => {

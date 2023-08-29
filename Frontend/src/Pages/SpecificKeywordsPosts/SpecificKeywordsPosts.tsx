@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {IUser} from "../../redux/Slices/postSlice";
+import {useEffect, useState} from 'react';
+import {PostType} from "../../redux/Slices/postSlice";
 import {useParams} from "react-router-dom";
 import axios from "../../axios";
 import st from "../SpecificTagPosts/SpecificTagPosts.module.scss";
@@ -9,7 +9,8 @@ import SkeletonPost from "../../Components/Skeleton/SkeletonPost";
 
 const SpecificKeywordsPosts = () => {
     const {keywords} = useParams();
-    const [keywordPost, setKeywordPost] = useState<Array<IUser>>([]);
+    const [keywordPost, setKeywordPost] = useState<Array<PostType>>([]);
+    console.log(keywordPost)
     const [upload, setUpload] = useState(false);
 
     const fetchKeywordsPost = async () => {

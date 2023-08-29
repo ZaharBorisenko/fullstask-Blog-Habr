@@ -1,5 +1,5 @@
 //функция для преобразования времени:
-export function formatDate(dateString) {
+export function formatDate(dateString:any) {
     const months = [
         "января", "февраля", "марта", "апреля", "мая", "июня",
         "июля", "августа", "сентября", "октября", "ноября", "декабря"

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import st from './Cookie.module.scss';
 import cookie from '../../assets/img/cookie.svg'
 const Cookie = () => {

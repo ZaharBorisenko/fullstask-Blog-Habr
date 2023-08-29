@@ -1,16 +1,15 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "../../axios";
-import {IUser} from "../../redux/Slices/postSlice";
+import {PostType} from "../../redux/Slices/postSlice";
 import Post from "../../Components/Post/Post";
 import PostMini from "../../Components/MiniPost/PostMini";
 import st from './SpecificTagPosts.module.scss'
 import SkeletonPost from "../../Components/Skeleton/SkeletonPost";
 const SpecificTagPosts = () => {
     const {tag} = useParams();
-    const [tagsPost, setTagsPost] = useState<Array<IUser>>([]);
+    const [tagsPost, setTagsPost] = useState<Array<PostType>>([]);
     const [upload, setUpload] = useState(false);
-    console.log(upload)
     const fetchTagsId = async () => {
         const response = await axios.get(`/posts/tag/${tag}`)
         const data = response.data
@@ -32,7 +31,7 @@ const SpecificTagPosts = () => {
                     {
                         !upload ? <SkeletonPost/> :
                         tagsPost.map(post => (
-                            <Post upload={upload} post={post} key={post._id}/>
+                            <Post post={post} key={post._id}/>
                         ))
                     }
                 </div>

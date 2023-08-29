@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import st from './Comments.module.scss'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchComments, IComments} from "../../redux/Slices/commentsSlice";
@@ -12,7 +12,7 @@ const Comments = () => {
     const {id} = useParams();
 
     useEffect(() => {
-        dispatch(fetchComments(id))
+        dispatch(fetchComments({postId: id as string}))
         console.log("render")
     }, [commentsLength])
 

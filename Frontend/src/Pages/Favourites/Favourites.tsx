@@ -1,12 +1,12 @@
-import React from 'react';
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import Post from "../../Components/Post/Post";
 import st from './Favourites.module.scss'
 import PostMini from "../../Components/MiniPost/PostMini";
 import {removeAllPostFavourites} from "../../redux/Slices/postFavourites";
 import {toast} from "react-toastify";
+import {PostType} from "../../redux/Slices/postSlice";
 const Favourites = () => {
-    const postFavourites = useAppSelector(state => state.postFavourites.postFavourites)
+    const postFavourites:PostType[] = useAppSelector(state => state.postFavourites.postFavourites);
     const dispatch = useAppDispatch()
     return (
         <div className={st.container}>
@@ -25,7 +25,7 @@ const Favourites = () => {
                    </div>
                 </div>
                 {
-                    postFavourites.map(post => (
+                    postFavourites.map((post:PostType) => (
                         <Post key={post._id} post={post}/>
                     ))
                 }

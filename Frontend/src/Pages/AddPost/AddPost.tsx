@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useEffect, useState} from 'react';
+import {ChangeEvent, useEffect, useState} from 'react';
 import st from './AddPost.module.scss';
 import {useNavigate, useParams} from "react-router-dom";
 import {useAppSelector} from "../../redux/hook/hook";
@@ -10,6 +10,7 @@ import PostMini from "../../Components/MiniPost/PostMini";
 import SettingsPost from "../../Components/AddPostComponents/SettingsPost";
 import {errorMessageType, tagsType} from "../../utils/Types";
 import {toast} from "react-toastify";
+import {AxiosError} from "axios";
 
 
 export const AddPost = () => {
@@ -72,9 +73,11 @@ export const AddPost = () => {
             const idPost = isEditPost ? id : data._id;
 
             navigate(`/posts/${idPost}`);
-        }catch (error) {
-            if (error.response || error.response.data || error.response.data.message) {
-                setErrorMessage(error.response.data)
+        }catch (error: unknown) {
+            if (error instanceof AxiosError) {
+                if (error.response && error.response.data && error.response.data.message) {
+                    setErrorMessage(error.response.data.message);
+                }
             }
         }
     }
@@ -109,7 +112,7 @@ export const AddPost = () => {
     const handleChangeFile = async (event:ChangeEvent<HTMLInputElement>) => {
         try {
             const formData = new FormData();
-            formData.append('image', event.target?.files[0]);
+            formData.append('image', event.target?.files![0]);
             const {data} = await axios.post('/upload', formData);
             setImageUrl(data.url);
         }catch (e) {

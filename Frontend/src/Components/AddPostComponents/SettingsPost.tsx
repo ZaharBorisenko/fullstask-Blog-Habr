@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import {FC} from 'react';
 import ReactQuill from "react-quill";
 import {IUser} from "../../redux/Slices/postSlice";
 import 'react-quill/dist/quill.snow.css';

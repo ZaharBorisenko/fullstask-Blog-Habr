@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import axios from "../../axios";
 import st from './AllUsers.module.scss'
 import UserCard from "./UserCard/UserCard";

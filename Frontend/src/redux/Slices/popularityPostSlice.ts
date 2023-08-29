@@ -1,5 +1,6 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft} from "@reduxjs/toolkit";
 import axios from '../../axios'
+//@ts-ignore
 interface User {
     avatar: string,
     createdAt?: string;

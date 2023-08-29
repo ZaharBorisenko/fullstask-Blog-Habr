@@ -1,7 +1,9 @@
 import {createSlice, createAsyncThunk, PayloadAction, Draft, createSelector} from "@reduxjs/toolkit";
 import axios from "../../axios";
 import {IUser} from "./postSlice";
+import {AxiosError} from "axios";
 
+//@ts-ignore
 
 interface ILoginState {
     data: any
@@ -30,9 +32,11 @@ export const fetchLogin = createAsyncThunk(
         try {
             const {data} = await axios.post('/login', params)
             return data;
-        } catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                return rejectWithValue(error.response.data.message);
+        } catch (error: unknown) {
+            if (error instanceof AxiosError){
+                if (error.response && error.response.data && error.response.data.message) {
+                    return rejectWithValue(error.response.data.message);
+                }
             }
             return rejectWithValue('Произошла ошибка входа');
         }
@@ -46,9 +50,11 @@ export const fetchRegister = createAsyncThunk(
         try {
             const {data} = await axios.post('/register',params)
             return data;
-        }catch (error) {
-            if (error.response && error.response.data && error.response.data.message) {
-                return rejectWithValue(error.response.data.message);
+        }catch (error: unknown) {
+            if (error instanceof AxiosError){
+                if (error.response && error.response.data && error.response.data.message) {
+                    return rejectWithValue(error.response.data.message);
+                }
             }
             return rejectWithValue('Произошла ошибка регистрации');
         }
@@ -58,7 +64,7 @@ export const fetchRegister = createAsyncThunk(
 
 export const fetchProfile = createAsyncThunk(
     'auth/fetchProfile',
-    async (params) => {
+    async () => {
         const {data} = await axios.get('/profile')
         return data;
     }
@@ -113,8 +119,8 @@ const authSlice = createSlice({
 
 // Добавляем селектор для проверки наличия данных
 export const selectIsAuthenticated = createSelector(
-    (state) => state.auth.data,
-    (data) => !!Object.keys(data).length
+    (state) => state.auth.data as IUser | undefined,
+    (data) => !!data && !!Object.keys(data).length
 );
 export const {logOut} = authSlice.actions
 export default authSlice.reducer

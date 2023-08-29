@@ -1,14 +1,20 @@
-import React from 'react';
-import st from './InputTags.module.scss'
 import Select from 'react-select';
 import {options} from "../../utils/OptionSelect";
-const InputTags = ({handleSetKeywords,value}) => {
+import {FC} from "react";
+
+type propsType ={
+    value:any,
+    handleSetTags: any,
+}
+
+const InputTags:FC<propsType> = ({handleSetTags,value}) => {
+    console.log(value)
     return (
         <div>
             <Select
                 options={options}
                 defaultValue={value}
-                onChange={handleSetKeywords}
+                onChange={handleSetTags}
                 placeholder="Теги"
                 isMulti
                 isSearchable

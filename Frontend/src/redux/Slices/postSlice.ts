@@ -14,7 +14,7 @@ export interface IUser {
     firstName?: string,
     lastName?: string,
     aboutMe?: string,
-    privateProfile: boolean,
+    privateProfile?: boolean,
 }
 
 export interface PostType {
@@ -65,10 +65,11 @@ export const fetchPostAllUser = createAsyncThunk<Partial<PostType[]>>(
     }
 )
 
-export const fetchDeletePost = createAsyncThunk<any>(
+export const fetchDeletePost = createAsyncThunk<Partial<PostType>,{id:string}>(
     'post/fetchRemovePost',
-    async (id) => {
+    async ({id}) => {
         const { data } = await axios.delete(`/posts/${id}`);
+        return data
     }
 )
 
@@ -95,8 +96,9 @@ const postSlice = createSlice({
                 state.posts = []
                 state.status = 'error';
             })
-            .addCase(fetchDeletePost.pending, (state:Draft<postState>,action:PayloadAction<any>) => {
-                state.posts = state.posts.filter(post => post._id !== action.meta.arg)
+            .addCase(fetchDeletePost.pending, (state:Draft<postState>,action:PayloadAction<any, string, { arg: { id: string } }>) => {
+                console.log(action)
+                state.posts = state.posts.filter(post => post._id !== action.meta.arg.id)
             } )
             .addCase(fetchPostAllUser.fulfilled, (state:Draft<postState>,action:PayloadAction<any>) => {
                 state.postsUser = action.payload;

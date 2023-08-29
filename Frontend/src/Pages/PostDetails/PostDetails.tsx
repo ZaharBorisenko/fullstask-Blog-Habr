@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import axios from "../../axios";
 import {PostType} from "../../redux/Slices/postSlice";
@@ -15,7 +15,7 @@ import Comments from "../../Components/Comments/Comments";
 const PostDetails = () => {
     const {id} = useParams();
     const currentUserId = useAppSelector(state => state.auth.data._id);
-    const [post, setPost] = useState<PostType>({});
+    const [post, setPost] = useState<PostType>({} as PostType);
 
     const fetchPost = async () => {
         const response = await axios.get(`/posts/${id}`);
@@ -41,7 +41,7 @@ const PostDetails = () => {
                                         <div className={st.user}>
                                             <img className={st.avatar} src={post.user.avatar} alt=""/>
                                             <p className={st.name}>{post.user.nickName}</p>
-                                            <p className={st.timeAgo}>{formatDate(post.createdAt)}</p>
+                                            <p className={st.timeAgo}>{formatDate(post.createdAt!)}</p>
                                         </div>
 
                                         {

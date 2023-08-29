@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import {FC, useState} from 'react';
 import st from './SortPanel.module.scss'
 import {MdKeyboardArrowUp, MdKeyboardArrowDown} from "react-icons/md";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
@@ -14,7 +14,6 @@ type propsType = {
 const SortPanel:FC<propsType> = ({sortBy, setSortBy,pageSettings}) => {
     const [sortShow, setSortShow] = useState<boolean>(false)
     const sortParamsSelect:string = useAppSelector(state => state.sortPost.sortParams)
-    const pageCount:number = useAppSelector(state => state.posts.currentPagePost);
     const dispatch = useAppDispatch();
     return (
         <div className={st.container}>

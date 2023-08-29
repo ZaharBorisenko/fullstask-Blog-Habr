@@ -1,4 +1,4 @@
-import React, {FC, MutableRefObject, useRef} from 'react';
+import {FC, MutableRefObject, useRef} from 'react';
 import st from './ProfilePrivateBtn.module.scss';
 
 

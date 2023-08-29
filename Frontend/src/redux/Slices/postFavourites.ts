@@ -1,7 +1,5 @@
 import {PostType} from "./postSlice";
 import {createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
-
-
 type favouritesState = {
     postFavourites:PostType[];
 }

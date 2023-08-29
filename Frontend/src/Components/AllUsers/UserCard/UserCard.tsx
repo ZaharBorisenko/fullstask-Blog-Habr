@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from './UserCard.module.scss';
 import {Link} from "react-router-dom";
 import {IUser} from "../../../redux/Slices/postSlice";

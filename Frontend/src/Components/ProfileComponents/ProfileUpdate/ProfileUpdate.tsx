@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import st from './ProfileUpdate.module.scss'
 import 'react-quill/dist/quill.snow.css';
 import axios from "../../../axios";
@@ -37,6 +37,7 @@ const ProfileUpdate = () => {
             }
             const {data} = await axios.patch(`/user/${currentUserId}`, params);
             toast.success('Информация успешно обновлена')
+            return data
         } catch (e) {
             console.log(e);
         }

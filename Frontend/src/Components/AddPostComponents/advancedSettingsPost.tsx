@@ -1,11 +1,10 @@
-import React, {ChangeEvent, FC, useRef} from 'react';
-import st from './advancedSettingsPost.module.scss'
+import {ChangeEvent, FC, useRef} from 'react';
 import InputTags from "../InputTags/InputTags";
-import {errorMessageType, tagsType} from "../../utils/Types";
-
+import {errorMessageType} from "../../utils/Types";
+import st from './advancedSettingsPost.module.scss';
 type PropsType = {
-    tags:Array<tagsType>,
-    handleSetTags: (value:Array<tagsType>) => void,
+    tags:any,
+    handleSetTags: any,
     keywords:string,
     handleSetKeywords: (value:string) => void,
     level: string,
@@ -21,7 +20,7 @@ type PropsType = {
 
 const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime, readingTime,errorMessage,tags,handleSetTags,keywords,handleSetKeywords,level,handleSetLevel,handleChangeFile,imageUrl,onClickRemoveImage}) => {
     //правильное склонение
-    function declOfNum(number, words) {
+    function declOfNum(number:number, words:string[]):string {
         return words[(number % 100 > 4 && number % 100 < 20) ? 2 : [2, 0, 1, 1, 1, 2][(number % 10 < 5) ? Math.abs(number) % 10 : 5]];
     }
 
@@ -36,7 +35,7 @@ const AdvancedSettingsPost:FC<PropsType> = ({isEditPost, calculatingReadingTime,
 
                 <div>
                     <label style={{marginTop: "20px"}} className={st.label}>*Теги</label>
-                    <InputTags value={tags} handleSetKeywords={handleSetTags} placeholder="Ключевые слова"/>
+                    <InputTags value={tags} handleSetTags={handleSetTags}/>
                     <p className={st.correction}>Выберите от 1 до 5 тегов по теме публикации</p>
                     {
                         tags.length < 1 && <p className={st.ErrorInputSettings}>{errorMessage[0]?.msg || errorMessage[1]?.msg}</p>

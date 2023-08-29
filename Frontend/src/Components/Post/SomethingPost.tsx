@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from "./Post.module.scss";
 import {Link, useNavigate} from "react-router-dom";
 import {AiFillDelete, AiFillEdit} from "react-icons/ai";
@@ -12,7 +12,7 @@ const SomethingPost:FC<propsType> = ({post}) => {
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
     const removePost = (id:string): void => {
-        dispatch(fetchDeletePost(id))
+        dispatch(fetchDeletePost({id:id}))
         navigate('/');
     }
     return (

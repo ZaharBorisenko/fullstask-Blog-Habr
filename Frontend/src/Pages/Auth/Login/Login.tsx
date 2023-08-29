@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useForm} from "react-hook-form";
 import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
 import {fetchLogin, IValues, selectIsAuthenticated} from "../../../redux/Slices/authSlice";
@@ -20,7 +20,7 @@ const Login = () => {
         setShowPassword(!showPassword);
     }
 
-    const {register, handleSubmit, setError, formState: {errors, isValid}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         defaultValues: {
             email: '',
             password: '',
@@ -28,7 +28,7 @@ const Login = () => {
         mode: "onSubmit"
     })
 
-    const onSubmit = async (values): Promise<void> => {
+    const onSubmit = async (values:IValues): Promise<void> => {
         const data = await dispatch(fetchLogin(values));
         if ('token' in data.payload) {
             window.localStorage.setItem('token', data.payload.token)

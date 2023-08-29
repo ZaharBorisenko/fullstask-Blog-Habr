@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import {FC} from 'react';
 import st from "./AuthorizationLink.module.scss";
-import {Link, useNavigate, useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
+import {Link} from "react-router-dom";
+import {useAppDispatch} from "../../../redux/hook/hook";
 import {logOut} from "../../../redux/Slices/authSlice";
 import {toast} from "react-toastify";
 
@@ -12,7 +12,7 @@ type AuthorizationLinkType = {
     userId: string
 }
 
-const AuthorizationLink:FC<AuthorizationLinkType> = ({userId,isAuth,setOpenAuthorization,openAuthorization}) => {
+const AuthorizationLink:FC<AuthorizationLinkType> = ({userId,isAuth,setOpenAuthorization}) => {
     const dispatch = useAppDispatch();
     const handleLogOut = () => {
         if (window.confirm('Вы точно хотите выйти?')) {

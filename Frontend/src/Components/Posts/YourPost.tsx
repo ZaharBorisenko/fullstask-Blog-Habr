@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import Post from "../Post/Post";
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
-import {fetchPost, fetchPostAllUser, IUser, PostType} from "../../redux/Slices/postSlice";
+import {fetchPostAllUser, IUser, PostType} from "../../redux/Slices/postSlice";
 import Skeleton from "../Skeleton/SkeletonPost";
-import {fetchSortPopularityPost} from "../../redux/Slices/sortiPost";
 
 const YourPost = () => {
     const dispatch = useAppDispatch()
@@ -34,7 +33,7 @@ const YourPost = () => {
                         {
                             status === 'loading' ? <Skeleton/>
                                 :
-                                userPosts.map(post => (
+                                userPosts?.map(post => (
                                     <Post post={post} key={post._id}  />
                                 ))
                         }
@@ -47,7 +46,7 @@ const YourPost = () => {
                         {
                             status === 'loading' ? <Skeleton/>
                                 :
-                                userPopularityPosts.map(post => (
+                                userPopularityPosts?.map(post => (
                                     <Post post={post} key={post._id}  />
                                 ))
                         }

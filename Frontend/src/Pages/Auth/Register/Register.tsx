@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
-import {fetchLogin, fetchRegister, IValues, selectIsAuthenticated} from "../../../redux/Slices/authSlice";
+import {fetchRegister, IValues, selectIsAuthenticated} from "../../../redux/Slices/authSlice";
 import {Link, useNavigate} from "react-router-dom";
 import {useForm} from "react-hook-form";
 import st from '../Login/Login.module.scss'
@@ -20,7 +20,7 @@ const Register = () => {
         setShowPassword(!showPassword);
     }
 
-    const {register, handleSubmit, setError, formState: {errors, isValid}} = useForm({
+    const {register, handleSubmit, formState: {errors}} = useForm({
         defaultValues: {
             nickName: '',
             email: '',

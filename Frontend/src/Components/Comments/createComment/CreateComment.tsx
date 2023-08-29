@@ -1,7 +1,6 @@
-import React, {ChangeEvent, useState} from 'react';
+import {ChangeEvent, useState} from 'react';
 import st from './createComment.module.scss'
 import {useAppDispatch, useAppSelector} from "../../../redux/hook/hook";
-import axios from "../../../axios";
 import {useParams} from "react-router-dom";
 import {createComment} from "../../../redux/Slices/commentsSlice";
 const CreateComment = () => {
@@ -12,7 +11,7 @@ const CreateComment = () => {
 
     const createSubmitComment = async () => {
         try {
-           await dispatch(createComment({id,comment,userId:currentUserId}))
+           await dispatch(createComment({id:id as string,comment:comment,userId:currentUserId}))
             setComment('');
         }catch (e) {
             console.log(e)

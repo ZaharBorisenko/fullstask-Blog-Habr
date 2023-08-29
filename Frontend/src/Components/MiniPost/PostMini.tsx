@@ -1,14 +1,12 @@
-import React, {useEffect} from 'react';
+import {useEffect} from 'react';
 import st from './PostMini.module.scss'
 import view from '../../assets/img/view.png'
-import comments from '../../assets/img/comments.png'
 import {useAppDispatch, useAppSelector} from "../../redux/hook/hook";
 import {fetchPopularity} from "../../redux/Slices/popularityPostSlice";
 import {Link} from "react-router-dom";
 import {BiSolidComment} from "react-icons/bi";
 import {PostType} from "../../redux/Slices/postSlice";
 
-;
 const PostMini = () => {
     let dispatch = useAppDispatch()
     let postPopularity:PostType[] = useAppSelector(state => state.postsPopularity.popularityPosts)

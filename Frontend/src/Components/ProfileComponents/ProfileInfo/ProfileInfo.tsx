@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import axios from "../../../axios";
 import st from './ProfileInfo.module.scss';
@@ -26,7 +26,7 @@ const ProfileInfo = () => {
         setAvatar(data.avatar);
         setNickName(data.nickName)
         setDateRegister(data.createdAt || '');
-        setPrivateProfile(data.privateProfile);
+        setPrivateProfile(data.privateProfile!);
         setUpdated(true)
     }
 
@@ -40,6 +40,7 @@ const ProfileInfo = () => {
             toast.success('Информация успешно обновлена',{
                 autoClose: 1500,
             })
+            return data
         } catch (e) {
             console.log(e)
         }
@@ -54,6 +55,7 @@ const ProfileInfo = () => {
             toast.success(`${privateProfile? 'Профиль успешно закрыт' : 'Профиль успешно открыт'}`,{
                 autoClose: 1500,
             })
+            return data
         } catch (e) {
             console.log(e)
         }

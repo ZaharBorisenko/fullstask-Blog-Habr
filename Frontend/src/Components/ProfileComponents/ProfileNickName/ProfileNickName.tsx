@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import {FC, useState} from 'react';
 import st from './ProfileNickName.module.scss'
 import {useParams} from "react-router-dom";
 import {useAppSelector} from "../../../redux/hook/hook";

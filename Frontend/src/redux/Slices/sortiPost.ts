@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
 import {PostType} from "./postSlice";
 import axios from "../../axios";
-
+//@ts-ignore
 
 type sortPost = {
     sortParams: string

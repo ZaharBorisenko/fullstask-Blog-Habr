@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import st from './Home.module.scss'
 import PostMini from "../../Components/MiniPost/PostMini";
 import NavigationHome from "../../Components/NavigationHome/NavigationHome";

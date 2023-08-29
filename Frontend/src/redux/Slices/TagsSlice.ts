@@ -1,6 +1,6 @@
 import {createAsyncThunk, createSlice, Draft, PayloadAction} from "@reduxjs/toolkit";
 import axios from "../../axios";
-
+//@ts-ignore
 export interface ITags {
     _id: string,
     count: number,
@@ -28,7 +28,7 @@ const TagsSlice = createSlice({
     name:'tags',
     initialState,
     reducers: {
-        setTags: ((state,action) => {
+        setTags: (() => {
         })
     },
     extraReducers: (builder) => {

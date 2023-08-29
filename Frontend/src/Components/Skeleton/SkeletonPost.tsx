@@ -1,8 +1,8 @@
-import React from "react"
+
 import ContentLoader from "react-content-loader"
 import st from '../Post/Post.module.scss';
 
-const MyLoader = (props) => (
+const MyLoader = () => (
     <div className={st.post}>
         <ContentLoader className={st.container}
             speed={2}
@@ -11,7 +11,6 @@ const MyLoader = (props) => (
             viewBox="0 0 780 620"
             backgroundColor="#c7c7c7"
             foregroundColor="#ecebeb"
-            {...props}
         >
             <rect x="60" y="6" rx="3" ry="3" width="77" height="20" />
             <circle cx="21" cy="16" r="16" />

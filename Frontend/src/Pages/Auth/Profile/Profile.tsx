@@ -1,4 +1,4 @@
-import React, {useEffect, } from 'react';
+import {useEffect} from 'react';
 import {useAppSelector} from "../../../redux/hook/hook";
 import {selectIsAuthenticated} from "../../../redux/Slices/authSlice";
 import {useNavigate, useParams} from "react-router-dom";
